@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/styles_login.css">
+    <link rel="icon" href="../img/ciclista.png">
+    <title>Iniciar Sesión</title>
+</head>
+
+<body>
+    <div class="form_login">
+        <form method="POST" id="formularioLogin">
+            <div class="texto">
+                <h1>Iniciar Sesión</h1>
+            </div>
+            <div class="correo">
+                <input type="email" placeholder="Correo electrónico" id="correo" required>
+            </div>
+            <div class="contrasena">
+                <input type="password" placeholder="Clave" id="clave" required>
+            </div>
+            <div class="recordar">
+                <div class="custom-checkbox">
+                    <input type="checkbox" id="recordar">
+                    <span class="checkbox-toggle"></span>
+                </div>
+                <label for="recordar">Recordar sesión</label>
+            </div>
+            <div class="login">
+                <input type="submit" class="boton" id="btn_login" value="Iniciar Sesión">
+            </div>
+            <div class="intermedio"></div>
+            <div class="registro">
+                <input type="button" class="btn" value="Registrarse"
+                    onclick="window.location.href='../HTML/index_registro.html'">
+            </div>
+        </form>
+    </div>
+
+    <script src="../JS/login.js"></script>
+</body>
+
+</html>

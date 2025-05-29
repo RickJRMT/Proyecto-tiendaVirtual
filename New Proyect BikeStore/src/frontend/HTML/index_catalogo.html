@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/ciclista.png">
+    <title>Bike Store</title>
+    <link rel="stylesheet" href="../CSS/styles_catalogo.css">
+</head>
+
+<body>
+    <header id="header">
+        <div class="menu_container">
+            <a href="../HTML/index_home.html">
+                <img src="../img/ciclista.png" alt="" class="logo_img">
+            </a>
+            <div class="cont_hyper">
+                <ul>
+                    <li> <a href="../HTML/index_catalogo.html"> Bicicletas</a></li>
+                    <li> <a href="../HTML/index_catalogo.html"> Accesorios</a></li>
+                    <li> <a href="../HTML/index_catalogo.html"> Repuestos </a></li>
+                </ul>
+            </div>
+            <div class="buscar">
+                <div class="buscar_container">
+                    <input type="search" class="buscar_input" placeholder="Buscar productos">
+                    <input type="button" class="buscador_boton" value="­">
+                </div>
+            </div>
+            <div class="container_users_carrito">
+                <ul class="users">
+                    <li> <img src="../img/img_home/avatar.png" alt="" class="avatar_img"></li>
+                    <li class="iniciar_session"> <a href="../HTML/index_login.html"> Iniciar sessión </a>
+                    </li>
+                </ul>
+                <ul class="carrito_contenedor">
+                    <li> <a href="../HTML/index_carrito.html"> <img
+                                src="../img/img_home/iconos/carrito-de-compras.png" alt="" class="carrito_img">
+                            <span class="carrito_notificacion" id="contador_carrito">0</span> </a>
+                    </li>
+                    <li class="carrito_texto"><a href="../HTML/index_carrito.html"> Carrito </a> </li>
+                </ul>
+            </div>
+        </div>
+        <div class="btn_menu">
+            <label for="btn_menu">
+                <img src="../img/img_catalogo/menu_hamburger.png" alt="" class="menu_icono">
+            </label>
+            <input type="checkbox" id="btn_menu">
+            <div class="container_menu_desple">
+                <div class="cont_menu">
+                    <nav>
+                        <ul>
+                            <li> <a href="../HTML/index_login.html"> Iniciar sessión </a></li>
+                            <li> <a href="../HTML/index_catalogo.html"> Bicicletas</a></li>
+                            <li> <a href="../HTML/index_catalogo.html"> Accesorios</a></li>
+                            <li> <a href="../HTML/index_catalogo.html"> Repuestos </a></li>
+                            <li> <a href="#"> Contactanos </a></li>
+                        </ul>
+                    </nav>
+                    <label for="btn_menu" class="icon_equis"> X </label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor para la notificación -->
+    <div id="notificacion" class="notificacion hidden"></div>
+
+    <!-- Carrusel de imagenes -->
+    <div class="cap">
+        <h2>¡Encuentra el equipo perfecto!</h2>
+    </div>
+    <div class="slider_frame">
+        <ul>
+            <li> <img src="../img/img_home/slider/carru4.jpg" alt=""> </li>
+            <li> <img src="../img/img_home/slider/carru2.jpg" alt=""> </li>
+            <li> <img src="../img/img_home/slider/carru1.jpg" alt=""> </li>
+            <li> <img src="../img/img_home/slider/carru3.jpg" alt=""> </li>
+
+        </ul>
+    </div>
+
+    <main class="products_container_todos">
+        <div class="filtraje">
+            <label for="filtrado">
+                Filtrar por:
+            </label>
+            <select name="filtrado" id="filtrado">
+                <option value=""> Menor precio </option>
+                <option value=""> Mayor precio </option>
+                <option value=""> Más puntuados </option>
+            </select>
+        </div>
+        <div class="product_content">
+            <!-- Bicicletas -->
+            <div class="product">
+                <img src="../img/img_home/Biciletas/1.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Bicicleta de Montaña Pro</h3>
+                    <p class="precio">$2.500.000</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_1">Añadir al carrito</button>
+            </div>
+            <div class="product">
+                <img src="../img/img_home/Biciletas/9.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Bicicleta de Excursión</h3>
+                    <p class="precio">$1.700.000</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_2">Añadir al carrito</button>
+            </div>
+
+            <!-- Cascos -->
+            <div class="product">
+                <img src="../img/img_home/Biciletas/casco1.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Casco Protector Básico</h3>
+                    <p class="precio">$30.000</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_3">Añadir al carrito</button>
+            </div>
+            <div class="product">
+                <img src="../img/img_home/Biciletas/casco2.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Casco Profesional</h3>
+                    <p class="precio">$85.000</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_4">Añadir al carrito</button>
+            </div>
+
+            <!-- Luces -->
+            <div class="product">
+                <img src="../img/img_home/Biciletas/luces1.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Luz Delantera LED</h3>
+                    <p class="precio">$25.999</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_5">Añadir al carrito</button>
+            </div>
+            <div class="product">
+                <img src="../img/img_home/Biciletas/luces2.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Luz Delantera a Prueba de Agua</h3>
+                    <p class="precio">$60.000</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_6">Añadir al carrito</button>
+            </div>
+
+            <!-- Kits -->
+            <div class="product">
+                <img src="../img/img_home/Biciletas/kit1.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Kit Básico para Bicicleta</h3>
+                    <p class="precio">$35.600</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_7">Añadir al carrito</button>
+            </div>
+            <div class="product">
+                <img src="../img/img_home/Biciletas/kit3.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Kit Completo para Bicicleta</h3>
+                    <p class="precio">$15.560</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_8">Añadir al carrito</button>
+            </div>
+
+            <!-- Bombas de Aire -->
+            <div class="product">
+                <img src="../img/img_home/Biciletas/bomb1.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Bomba de Aire Manual</h3>
+                    <p class="precio">$45.000</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_9">Añadir al carrito</button>
+            </div>
+
+            <!-- Repuestos -->
+            <div class="product">
+                <img src="../img/img_home/Biciletas/respuesto1.png" alt="">
+                <div class="product_txt">
+                    <h3>Kit de Repuestos Básicos</h3>
+                    <p class="precio">$43.230</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_10">Añadir al carrito</button>
+            </div>
+
+            <!-- Herramientas -->
+            <div class="product">
+                <img src="../img/img_home/Biciletas/kit7.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Kit de Herramientas Profesional</h3>
+                    <p class="precio">$50.060</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_11">Añadir al carrito</button>
+            </div>
+
+            <!-- Accesorios -->
+            <div class="product">
+                <img src="../img/img_home/Biciletas/termo1.jpg" alt="">
+                <div class="product_txt">
+                    <h3>Porta Termo para Bicicleta</h3>
+                    <p class="precio">$28.500</p>
+                </div>
+                <div class="cantidad-control-btn">
+                    <button class="cantidad-btn disminuir-btn">-</button>
+                    <input type="text" class="mostrar-cantidad" value="1" readonly>
+                    <button class="cantidad-btn aumentar-btn">+</button>
+                </div>
+                <button class="agregar_carrito" id="producto_12">Añadir al carrito</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="row">
+            <div class="col1">
+                <h4> Datos de contacto </h4>
+                <ul>
+                    <li> <a href="#">323 2902755</a></li>
+                    <li> <a href="#">Juandavid6870@gmail.com</a></li>
+                    <li> <a href="#">San pedro</a></li>
+                    <li> <a href="#">Dato 4</a></li>
+                </ul>
+            </div>
+            <!-- <div class="col2">
+                <h4> <a href="#">PQRS </a> </h4>
+                <p> <a href="#"> Peticiones </a> </p>
+                <p> <a href="#">Quejas </a> </p>
+                <p> <a href="#">Reclamos </a></p>
+                <p> <a href="#"> Sugerencias</a></p>
+            </div> -->
+            <div class="col3">
+                <h4> Contactanos </h4>
+                <img src="../img/img_catalogo/iconos/instagram.png" alt="img1">
+                <img src="../img/img_catalogo/iconos/facebook.png" alt="img2">
+                <img src="../img/img_catalogo/iconos/whatsapp.png" alt="img3">
+            </div>
+        </div>
+    </footer>
+    <script src="../JS/script_catalogo.js"></script>
+    <script src="../JS/carrito_manager.js"></script>
+</body>
+
+</html>

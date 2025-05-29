@@ -1,0 +1,278 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../img/img_login_registro/fondo.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: none;
+}
+
+.form_registro {
+    width: 400px;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 15px 25px rgba(255, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.texto h1 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+#formularioCliente {
+    width: 100%;
+}
+
+.nombre,
+.apellido,
+.telefono,
+.direccion,
+.correo,
+.contrasena,
+.confirmar_contra {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.nombre input,
+.apellido input,
+.telefono input,
+.direccion input,
+.correo input,
+.contrasena input,
+.confirmar_contra input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.nombre input::placeholder,
+.apellido input::placeholder,
+.telefono input::placeholder,
+.direccion input::placeholder,
+.correo input::placeholder,
+.contrasena input::placeholder,
+.confirmar_contra input::placeholder {
+    color: #aaa;
+}
+
+.nombre input:focus,
+.apellido input:focus,
+.telefono input:focus,
+.direccion input:focus,
+.correo input:focus,
+.contrasena input:focus,
+.confirmar_contra input:focus {
+    border-bottom: 1px solid #ff0000;
+}
+
+.terminos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.custom-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.custom-checkbox input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkbox-toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 1px solid #ff0000;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+.custom-checkbox input:checked+.checkbox-toggle::after {
+    content: '✔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff0000;
+    font-size: 14px;
+}
+
+.terminos label {
+    color: #fff;
+    font-size: 14px;
+}
+
+.terminos a {
+    color: #ff0000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.terminos a:hover {
+    color: #cc0000;
+    text-decoration: underline;
+}
+
+.registro {
+    margin-bottom: 20px;
+}
+
+.boton {
+    width: 100%;
+    padding: 10px;
+    background: #ff0000;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.boton:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
+.boton:not(:disabled):hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+
+.intermedio {
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    margin: 20px 0;
+}
+
+.login {
+    text-align: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid #ff0000;
+    border-radius: 25px;
+    color: #ff0000;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+    background: #ff0000;
+    color: #fff;
+}
+
+.mensaje {
+    display: none;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.mensaje.success {
+    background: #28a745;
+    color: #fff;
+}
+
+.mensaje.error {
+    background: #dc3545;
+    color: #fff;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.modal_contenido {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #ff0000;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.cerrar {
+    color: #ff0000;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar:hover,
+.cerrar:focus {
+    color: #cc0000;
+}
+
+.modal_contenido h3 {
+    color: #ff0000;
+    margin-bottom: 15px;
+}
+
+.modal_contenido p {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.modal_contenido ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    color: #333;
+}
+
+.modal_contenido li {
+    margin-bottom: 10px;
+}

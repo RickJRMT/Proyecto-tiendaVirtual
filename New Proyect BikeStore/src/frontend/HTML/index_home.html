@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/styles_home.css">
+    <link rel="icon" href="../img/ciclista.png">
+    <title>Bike Store</title>
+</head>
+
+<body>
+    <header id="header">
+        <div class="menu_container">
+            <a href="#">
+                <img src="../img/ciclista.png" alt="" class="logo_img">
+            </a>
+            <div class="cont_hyper">
+                <ul>
+                    <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
+                    <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
+                    <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
+                </ul>
+            </div>
+            <div class="buscar">
+                <div class="buscar_container">
+                    <select name="barra_buscadora" id="barra_buscadora" class="buscador_select">
+                        <option value="">Precio</option>
+                        <option value="">Ofertas</option>
+                    </select>
+                    <input type="search" class="buscar_input" placeholder="Buscar productos">
+                    <input type="button" class="buscador_boton" value="­">
+                </div>
+            </div>
+            <div class="container_users_carrito">
+                <!-- Contenedor dinámico para el perfil de usuario -->
+                <div id="userProfile" class="user-profile">
+                    <ul class="users">
+                        <li><img src="../img/img_home/avatar.png" alt="" class="avatar_img"></li>
+                        <li class="iniciar_session"><a href="../HTML/index_login.html">Iniciar sesión</a></li>
+                    </ul>
+                </div>
+                <ul class="carrito">
+                    <li><a href="../HTML/index_carrito.html"><img src="../img/img_home/iconos/carrito-de-compras.png"
+                                alt="" class="carrito_img"></a></li>
+                    <li class="carrito_texto"><a href="../HTML/index_carrito.html">Carrito</a></li>
+                    <span class="cart-count">0</span>
+                </ul>
+            </div>
+        </div>
+        <div class="btn_menu">
+            <label for="btn_menu">
+                <img src="../img/img_home/menu_hamburger.png" alt="" class="menu_icono">
+            </label>
+            <input type="checkbox" id="btn_menu">
+            <div class="container_menu_desple">
+                <div class="cont_menu">
+                    <nav>
+                        <ul id="menuDesplegable">
+                            <!-- Contenido dinámico para el menú hamburguesa -->
+                            <li><a href="../HTML/index_login.html">Iniciar sesión</a></li>
+                            <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
+                            <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
+                            <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
+                            <li><a href="#">Contáctanos</a></li>
+                        </ul>
+                    </nav>
+                    <label for="btn_menu" class="icon_equis">X</label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Resto del HTML sin cambios -->
+    <div class="cap">
+        <h2>¡Vive la aventura sobre ruedas!</h2>
+    </div>
+    <div class="slider_frame">
+        <ul>
+            <li><img src="../img/img_home/slider/carru1.jpg" alt=""></li>
+            <li><img src="../img/img_home/slider/carru3.jpg" alt=""></li>
+            <li><img src="../img/img_home/slider/carru2.jpg" alt=""></li>
+            <li><img src="../img/img_home/slider/carru4.jpg" alt=""></li>
+        </ul>
+    </div>
+
+    <div class="botonera">
+        <div class="botonera_container">
+            <a href="../HTML/index_catalogo.html"><button class="boton0">MOUNTAIN</button></a>
+            <a href="../HTML/index_catalogo.html"><button class="boton2">CROSS COUNTRY</button></a>
+            <a href="../HTML/index_catalogo.html"><button class="boton3">ENDURO</button></a>
+            <a href="../HTML/index_catalogo.html"><button class="boton4">DOWNHILL</button></a>
+            <a href="../HTML/index_catalogo.html"><button class="boton5">DIRT JUMP</button></a>
+            <a href="../HTML/index_catalogo.html"><button class="boton6">TRIAL</button></a>
+        </div>
+    </div>
+
+    <div class="destacados_container">
+        <div class="product_boton">
+            <button type="button" class="bt2" data-filter="precio">Precio</button>
+            <input type="search" class="barra_buscadora" placeholder="Buscar producto...">
+        </div>
+        <div id="contenedorProductos" class="destacados"></div>
+    </div>
+
+    <template id="templateProducto">
+        <div class="product1_dest">
+            <div class="item_img">
+                <img class="product-img" src="https://via.placeholder.com/120x80?text=Sin+imagen" alt="Producto">
+            </div>
+            <h3 class="product-precio"></h3>
+            <p class="product-nombre"></p>
+            <div class="quantity_selector">
+                <button class="quantity_btn minus">-</button>
+                <span class="quantity">1</span>
+                <button class="quantity_btn plus">+</button>
+            </div>
+            <button type="button" class="boton1 agregar-carrito">Agregar</button>
+        </div>
+    </template>
+
+    <div class="info_container">
+        <div class="info_pago" onclick="openModal('modal-pago')">
+            <img src="../img/img_home/iconos/marcador.png" alt="info1" class="img_metodo_pago">
+            <h4 class="info_adicional">Métodos de pago</h4>
+        </div>
+        <div class="info_calidad" onclick="openModal('modal-calidad')">
+            <img src="../img/img_home/iconos/medalla.png" alt="info2" class="img_calidad">
+            <h4 class="info_adicional">Calidad</h4>
+        </div>
+        <div class="info_entrega" onclick="openModal('modal-entrega')">
+            <img src="../img/img_home/iconos/logistica.png" alt="info3" class="img_metodo_entrega">
+            <h4 class="info_adicional">Métodos de entrega</h4>
+        </div>
+    </div>
+
+    <div id="modal-pago" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal-pago')">×</span>
+            <h3>Métodos de Pago</h3>
+            <p>Aceptamos pagos mediante <strong>transferencia bancaria</strong>. ¡Rápido, seguro y confiable!</p>
+        </div>
+    </div>
+    <div id="modal-calidad" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal-calidad')">×</span>
+            <h3>Calidad Garantizada</h3>
+            <p>En nuestra tienda de bicicletas, ofrecemos productos de la más alta calidad, diseñados para resistir
+                cualquier terreno y acompañarte en cada aventura. ¡Tu pasión por el ciclismo merece lo mejor!</p>
+        </div>
+    </div>
+    <div id="modal-entrega" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal-entrega')">×</span>
+            <h3>Métodos de Entrega</h3>
+            <p>Ofrecemos <strong>pago contra entrega</strong>. Recibe tu pedido y paga al momento de la entrega, ¡sin
+                complicaciones!</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="row">
+            <div class="col1">
+                <h4>Datos de contacto</h4>
+                <ul>
+                    <li><a href="#">323 2902755</a></li>
+                    <li><a href="#">Juandavid6870@gmail.com</a></li>
+                    <li><a href="#">San pedro</a></li>
+                    <li><a href="#">Dato 4</a></li>
+                </ul>
+            </div>
+            <div class="col2">
+                <h4><a href="#">PQRS</a></h4>
+                <p><a href="#">Peticiones</a></p>
+                <p><a href="#">Quejas</a></p>
+                <p><a href="#">Reclamos</a></p>
+                <p><a href="#">Sugerencias</a></p>
+            </div>
+            <div class="col3">
+                <h4>Contáctanos</h4>
+                <img src="../img/img_home/iconos/facebook.png" alt="img1">
+                <img src="../img/img_home/iconos/instagram.png" alt="img2">
+                <img src="../img/img_home/iconos/whatsapp.png" alt="img3">
+            </div>
+        </div>
+    </footer>
+    <script src="../JS/scritp_home.js"></script>
+    <script src="../JS/carrito_manager.js"></script>
+</body>
+
+</html>

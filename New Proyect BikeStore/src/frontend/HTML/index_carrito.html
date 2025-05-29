@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/ciclista.png">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="../CSS/styles_carrito.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <header id="header">
+        <div class="menu_container">
+            <a href="../HTML/index_home.html">
+                <img src="../img/ciclista.png" alt="" class="logo_img">
+            </a>
+            <div class="cont_hyper">
+                <ul>
+                    <li> <a href="../HTML/index_catalogo.html"> Bicicletas</a></li>
+                    <li> <a href="../HTML/index_catalogo.html"> Accesorios</a></li>
+                    <li> <a href="../HTML/index_catalogo.html"> Repuestos </a></li>
+                </ul>
+            </div>
+            <div class="buscar">
+                <div class="buscar_container">
+                    <input type="search" class="buscar_input" placeholder="Buscar productos">
+                    <input type="button" class="buscador_boton" value="­">
+                </div>
+            </div>
+            <div class="container_users_carrito">
+                <ul class="users">
+                    <li> <img src="../img/img_catalogo/avatar.png" alt="" class="avatar_img"></li>
+                    <li class="iniciar_session"> <a href="../HTML/index_login.html"> Iniciar sesión </a>
+                    </li>
+                </ul>
+                <ul class="carrito">
+                    <li class="carrito_contenedor">
+                        <img src="../img/img_home/iconos/carrito-de-compras.png" alt="" class="carrito_img">
+                        <span class="carrito_notificacion" id="contador_carrito">0</span>
+                    </li>
+                    <li class="carrito_texto"><a href="#"> Carrito </a> </li>
+                </ul>
+            </div>
+        </div>
+        <div class="btn_menu">
+            <label for="btn_menu">
+                <img src="../img/img_home/menu_hamburger.png" alt="" class="menu_icono">
+            </label>
+            <input type="checkbox" id="btn_menu">/src/img/
+            <div class="container_menu_desple">
+                <div class="cont_menu">
+                    <nav>
+                        <ul>
+                            <li> <a href="../HTML/index_login.html"> Iniciar sessión </a></li>
+                            <li> <a href="../HTML/index_catalogo.html"> Bicicletas</a></li>
+                            <li> <a href="../HTML/index_catalogo.html"> Accesorios</a></li>
+                            <li> <a href="../HTML/index_catalogo.html"> Repuestos </a></li>
+                            <li> <a href="#"> Contactanos </a></li>
+                        </ul>
+                    </nav>
+                    <label for="btn_menu" class="icon_equis"> X </label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h1>¡Compra tus productos al mejor precio!</h1>
+
+        <div class="cart-container">
+            <!-- Lista de productos -->
+            <div class="cart-items">
+                <div class="titulos">
+                    <h4><label>Producto</label></h4>
+                    <h4><label>Precio</label></h4>
+                    <h4><label>Cantidad</label></h4>
+                    <h4><label>Total</label></h4>
+                </div>
+
+                <div class="productos">
+
+                    <!-- <div class="product-1" data-id="1">
+                        <div class="item-image">
+                            <img src="/src/img/img_catalogo/Biciletas/1.jpg" alt="Bicicleta 1" class="img-tabla">
+                            <p class="nomProduct">Bicicleta 1</p>
+                        </div>
+                        <p class="item-price" data-price="1520000">$1.520.000</p>
+                        <div class="cantidad-control-btn">
+                            <button class="cantidad-btn disminuir-btn">-</button>
+                            <input type="text" class="mostrar-cantidad" value="1" readonly>
+                            <button class="cantidad-btn aumentar-btn">+</button>
+                        </div>
+                        <p class="item-total">$1.400.000</p>
+                        <button class="remove-item"><i class="bi bi-trash3"></i></button>
+                    </div>
+
+                    <div class="product-1" data-id="2">
+                        <div class="item-image">
+                            <img src="/src/img/img_catalogo/Biciletas/2.jpg" alt="Bicicleta 2" class="img-tabla">
+                            <p class="nomProduct">Bicicleta 2</p>
+                        </div>
+                        <p class="item-price" data-price="1264850">$1.264.850</p>
+                        <div class="cantidad-control-btn">
+                            <button class="cantidad-btn disminuir-btn">-</button>
+                            <input type="text" class="mostrar-cantidad" value="1" readonly>
+                            <button class="cantidad-btn aumentar-btn">+</button>
+                        </div>
+                        <p class="item-total">$1.400.000</p>
+                        <button class="remove-item"><i class="bi bi-trash3"></i></button>
+                    </div>
+
+                    <div class="product-1" data-id="3">
+                        <div class="item-image">
+                            <img src="/src/img/img_catalogo/Biciletas/3.jpg" alt="Bicicleta 3" class="img-tabla">
+                            <p class="nomProduct">Bicicleta 3</p>
+                        </div>
+                        <p class="item-price" data-price="1234567">$1.234.567</p>
+                        <div class="cantidad-control-btn">
+                            <button class="cantidad-btn disminuir-btn">-</button>
+                            <input type="text" class="mostrar-cantidad" value="1" readonly>
+                            <button class="cantidad-btn aumentar-btn">+</button>
+                        </div>
+                        <p class="item-total">$1.400.000</p>
+                        <button class="remove-item"><i class="bi bi-trash3"></i></button>
+                    </div>
+
+                    <div class="product-1" data-id="4">
+                        <div class="item-image">
+                            <img src="/src/img/img_catalogo/Biciletas/4.jpg" alt="Bicicleta 3" class="img-tabla">
+                            <p class="nomProduct">Bicicleta 4</p>
+                        </div>
+                        <p class="item-price" data-price="1234567">$1.234.567</p>
+                        <div class="cantidad-control-btn">
+                            <button class="cantidad-btn disminuir-btn">-</button>
+                            <input type="text" class="mostrar-cantidad" value="1" readonly>
+                            <button class="cantidad-btn aumentar-btn">+</button>
+                        </div>
+                        <p class="item-total">$1.400.000</p>
+                        <button class="remove-item"><i class="bi bi-trash3"></i></button>
+                    </div>
+
+                    <div class="product-1" data-id="5">
+                        <div class="item-image">
+                            <img src="/src/img/img_catalogo/Biciletas/5.jpeg" alt="Bicicleta 3" class="img-tabla">
+                            <p class="nomProduct">Bicicleta 5</p>
+                        </div>
+                        <p class="item-price" data-price="1234567">$1.234.567</p>
+                        <div class="cantidad-control-btn">
+                            <button class="cantidad-btn disminuir-btn">-</button>
+                            <input type="text" class="mostrar-cantidad" value="1" readonly>
+                            <button class="cantidad-btn aumentar-btn">+</button>
+                        </div>
+                        <p class="item-total">$1.400.000</p>
+                        <button class="remove-item"><i class="bi bi-trash3"></i></button>
+                    </div>
+
+                    <div class="product-1" data-id="6">
+                        <div class="item-image">
+                            <img src="/src/img/img_catalogo/Biciletas/7.jpeg" alt="Bicicleta 3" class="img-tabla">
+                            <p class="nomProduct">Bicicleta 6</p>
+                        </div>
+                        <p class="item-price" data-price="1234567">$1.234.567</p>
+                        <div class="cantidad-control-btn">
+                            <button class="cantidad-btn disminuir-btn">-</button>
+                            <input type="text" class="mostrar-cantidad" value="1" readonly>
+                            <button class="cantidad-btn aumentar-btn">+</button>
+                        </div>
+                        <p class="item-total">$1.400.000</p>
+                        <button class="remove-item"><i class="bi bi-trash3"></i></button>
+                    </div> -->
+
+                </div>
+
+            </div>
+
+            <!-- Tabla de la orden y total de los productos -->
+            <div class="suma-productos">
+                <h4>Resumen de la Orden</h4>
+                <div class="suma-detalles">
+                    <p>Subtotal <span id="subtotal">$0</span></p>
+                    <p>Envío <span>Contra Entrega</span></p>
+                    <hr>
+                    <p class="total">Total <span id="total">$0</span></p>
+                </div>
+                <button class="comprar-btn" id="iniciar-compra">Finalizar Compra</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Contenedor para la factura -->
+    <div class="notificacion" id="notificacion"></div>
+    <div class="confirmacion-modal" id="confirmacion-modal">
+        <div class="confirmacion-contenido">
+            <p>¿Estás seguro de comprar estos artículos?</p>
+            <div class="botones-confirmacion">
+                <button class="confirmar-btn">Confirmar Compra</button>
+                <button class="cancelar-btn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="detalle-venta-modal" id="detalle-venta-modal">
+        <div class="detalle-venta-contenido">
+            <h3>Detalle de tu compra</h3>
+            <div id="detalle-venta-lista"></div>
+            <button class="cerrar-detalle-btn">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="../JS/script_carrito.js"></script>
+    <script src="../JS/carrito_manager.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/styles_registro.css">
+    <link rel="icon" href="../img/ciclista.png">
+    <title>Registro</title>
+</head>
+
+<body>
+    <div class="form_registro">
+        <form method="POST" id="formularioCliente">
+            <div class="texto">
+                <h1>Registra tu cuenta</h1>
+            </div>
+            <div class="nombre">
+                <input type="text" name="nombre" placeholder="Nombre" id="nombre" required>
+            </div>
+            <div class="apellido">
+                <input type="text" name="apellido" placeholder="Apellido" id="apellido" required>
+            </div>
+            <div class="telefono">
+                <input type="tel" name="telefono" placeholder="Teléfono" id="telefono" required>
+            </div>
+            <div class="direccion">
+                <input type="text" placeholder="Dirección" id="direccion" required>
+            </div>
+            <div class="correo">
+                <input type="email" placeholder="Correo electrónico" id="correo" required>
+            </div>
+            <div class="contrasena">
+                <input type="password" placeholder="Contraseña" id="contraseña" required>
+            </div>
+            <div class="confirmar_contra">
+                <input type="password" placeholder="Confirmar contraseña" id="confirmar_contraseña" required>
+            </div>
+            <div class="terminos">
+                <div class="custom-checkbox">
+                    <input type="checkbox" id="terminos">
+                    <span class="checkbox-toggle"></span>
+                </div>
+                <label for="terminos">Acepto los <a href="#" id="abrir_modal">términos y condiciones</a></label>
+            </div>
+            <div class="registro">
+                <input type="submit" class="boton" id="btn_registrar" value="Registrarse">
+            </div>
+            <div class="intermedio"></div>
+            <div class="login">
+                <input type="button" class="btn" value="Iniciar sesión"
+                    onclick="window.location.href='../HTML/index_login.html'">
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal para términos y condiciones -->
+    <div id="modal_terminos" class="modal">
+        <div class="modal_contenido">
+            <span class="cerrar" id="cerrar_modal">×</span>
+            <h3>Términos y Condiciones</h3>
+            <p>A continuación, se presentan los términos y condiciones de uso para nuestra tienda de bicicletas:</p>
+            <ul>
+                <li>Los datos proporcionados deben ser veraces y correctos.</li>
+                <li>El usuario es responsable de mantener la confidencialidad de su cuenta y contraseña.</li>
+                <li>Nos reservamos el derecho de cancelar o modificar pedidos en caso de errores de precio o
+                    disponibilidad.</li>
+                <li>Los productos adquiridos cuentan con garantía limitada según las políticas de devolución.</li>
+                <li>El uso de este sitio implica la aceptación de nuestras políticas de privacidad.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="../JS/registro.js"></script>
+</body>
+
+</html>

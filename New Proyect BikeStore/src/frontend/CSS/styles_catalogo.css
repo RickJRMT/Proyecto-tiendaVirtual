@@ -1,0 +1,612 @@
+* {
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+    padding: 0;
+    margin: 0;
+}
+
+#header {
+    width: 100%;
+    padding: 40px;
+    /* Reajustar el padding */
+    position: fixed;
+    background-color: #202020;
+    opacity: 90%;
+    border-bottom: 1px solid black;
+    z-index: 3;
+    /* El código del home no tendrá este transition, hay que implementarlo. Aquí lo hice para que el cambio de opacidad del header no sea tan fructifero */
+    transition: all 0.5s ease;
+}
+
+.menu_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 15px;
+    width: auto;
+    height: 80%;
+}
+
+.logo_img {
+    position: relative;
+    right: 30px;
+    /* "9" Margin arriba, "20" derecha, "0" inferior" "70" izquierda  */
+    margin: 9px 20px 0 70px;
+    height: 3rem;
+    width: auto;
+
+    /* Si activo el eliminador de fondo, el logo no aparecerá */
+    /* filter: brightness(1.1);
+    mix-blend-mode: multiply; */
+}
+
+/* con esta, los li se pondrán en el centro */
+.cont_hyper {
+    display: flex;
+    align-items: center;
+}
+
+/* Con esta clase se rompera la disposicion vertical de los li y se creará un distanciamiento entre ellos  */
+.cont_hyper ul {
+    display: flex;
+    gap: 60px;
+}
+
+.cont_hyper a,
+.container_users_carrito a,
+.col1 a:hover,
+.col1 h4:hover,
+.col2 a:hover,
+.col3 h4:hover {
+    color: white;
+    transition: all 0.5s ease;
+}
+
+.container_users_carrito {
+    /* 4px arriba, 35px derecha, 0px abajo, 0px izquierda */
+    margin: 4px 35px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar_img,
+.carrito_img {
+    height: 2rem;
+    width: auto;
+}
+
+.users,
+.carrito {
+    justify-items: center;
+    cursor: pointer;
+}
+
+.buscar {
+    display: flex;
+    height: 60%;
+    width: 40%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background-color: white;
+    margin-top: 12px;
+
+}
+
+.buscar_container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.buscar_input {
+    height: 38px;
+    width: 90%;
+    font-size: 13px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+
+}
+
+.buscador_boton {
+    width: 2.5rem;
+    height: 1.875rem;
+    border-radius: 50%;
+    margin-left: 5px;
+    border: none;
+    background-image: url(../img/img_home/lupa.png);
+    /* define el tamaño de la lupa, pues por defecto no se mostrará la imagen */
+    background-size: 25px;
+    /* Como la imagen se repite, se usa el no repeact y lo posicionamos al centro */
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    /* para que el color de fondo por defecto no se muestre */
+    background-color: transparent;
+
+}
+
+/* carrito notificación */
+
+.notificacion {
+    position: fixed;
+    top: 100px; /* Justo debajo del header */
+    right: 20px;
+    background-color: #c11000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 1rem;
+}
+
+.notificacion.visible {
+    opacity: 1;
+}
+
+.notificacion.hidden {
+    opacity: 0;
+    pointer-events: none; /* Evita interacciones cuando está oculta */
+}
+
+.carrito_contenedor {
+    position: relative;
+    display: inline-block;
+}
+
+.carrito_notificacion {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #c11000;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.carrito_notificacion.hidden {
+    display: none;
+}
+
+/* --------------------------------------------------------- */
+
+/* Estetica de elementos */
+.buscar_input:focus {
+    border-radius: 20px 50px 0 20px;
+    border: 1px solid purple;
+}
+
+.buscador_boton:hover {
+    transform: scale(1.1);
+}
+
+.cont_hyper a:hover,
+.container_users_carrito a:hover,
+.col1 a:hover,
+.col1 h4:hover,
+.col2 a:hover,
+.col3 h4:hover {
+    color: #c11000;
+}
+
+/* Menú hamburguesa */
+/* Curiosamente, si no se cita el checbox, pues no lo oculta */
+.btn_menu,
+#btn_menu {
+    display: none;
+}
+
+/* Slider/carrusel de imagenes */
+
+.slider_frame {
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+}
+
+.cap {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+    width: 100%;
+    height: 70vh;
+    position: absolute !important;
+    z-index: 1;
+}
+
+h2 {
+    color: white;
+    margin-top: 60vh;
+    margin-left: 30px;
+}
+
+.slider_frame ul {
+    display: flex;
+    padding: 0;
+    width: 400%;
+    animation: slide 20s infinite alternate ease-in-out;
+}
+
+.slider_frame li {
+    /* Se asegura que los <li> ocupen toda la altura del slider */
+    width: 100%;
+    height: 100%;
+}
+
+.slider_frame img {
+    width: 100%;
+    /* Se asegura que las imagenes ocupen toda la altura del <li> */
+    height: 100%;
+    /* Escala las imagenes para cubrir el contenedor y evita dejar huecos */
+    object-fit: cover;
+}
+
+/* Ajustes para móviles (pantallas menores a 768px) */
+@media screen and (max-width: 768px) {
+    .slider_frame {
+        /* Reduce la altura para móviles */
+        height: 40vh; 
+    }
+
+    .cap {
+        /* Ajusta la altura del contenedor de superposición para que coincida */
+        height: 40vh; 
+    }
+
+    h2 {
+        /* Ajusta la posición del texto "IMAGEN" para que se vea bien */
+        margin-top: 30vh; 
+    }
+}
+
+/* Ajustes para tabletas (pantallas entre 768px y 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .slider_frame {
+        /* Altura intermedia para tabletas */
+        height: 60vh; 
+    }
+
+    .cap {
+        /* Ajusta la altura del contenedor de superposición */
+        height: 60vh; 
+    }
+
+    h2 {
+        /* Ajusta la posición del texto "IMAGEN" */
+        margin-top: 50vh; 
+    }
+}
+
+/* Catálogo de productos */
+.filtraje {
+    display: flex;
+    /* para mover el elemento al lado derecho de la página */
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 45px;
+}
+
+.filtraje select {
+    margin-top: 2px;
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    color: black
+}
+
+.product_content {
+    display: grid;
+    /* aqui, por medio del "auto.fit", se crearán columnas en función del espacio del contenedor*/
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* centra todo elemento que está dentro de su respectiva celda */
+    /* este funciona unicamente si está activo el grid */
+    place-items: center;
+    margin-top: 15px;
+    gap: 20px;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* border: 1px solid black; */
+    border-radius: 20px;
+}
+
+/* botonoes de cantidad */
+
+.cantidad-control-btn {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.cantidad-btn {
+    width: 25px;
+    height: 25px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cantidad-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.mostrar-cantidad {
+    width: 50px;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.product img {
+    width: 8rem;
+    height: 8rem;
+    filter: brightness(1.1);
+    mix-blend-mode: multiply;
+}
+
+.agregar_carrito {
+    margin-bottom: 10px;
+}
+
+.product .agregar_carrito {
+    border-radius: 15px;
+    background-color: #dc1f13;
+    color: white;
+    height: auto;
+    width: auto;
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.agregar_carrito:active {
+    transform: scale(0.95);
+    background-color: #b81a10;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
+    /* este sirve para crear el efecto de undido*/
+}
+
+/* Apartado para el footer */
+footer {
+    background-color: black;
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 80px;
+    text-align: center;
+    justify-content: center;
+
+}
+
+.row a {
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.col3 img {
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-bottom: 40px;
+    width: 20px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.col2 p,
+.col1 li,
+.col3 img {
+    margin-top: 5px;
+}
+
+.col3 img:hover {
+    transform: scale(1.1);
+}
+
+@keyframes slide {
+    0% {
+        margin-left: 0%;
+    }
+
+    20% {
+        margin-left: 0%;
+    }
+
+    25% {
+        margin-left: -100%;
+    }
+
+    45% {
+        margin-left: -100%;
+    }
+
+    50% {
+        margin-left: -200%;
+    }
+
+    70% {
+        margin-left: -200%;
+    }
+
+    75% {
+        margin-left: -300%;
+    }
+
+    100% {
+        margin-left: -300%;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .logo_img {
+        display: none;
+    }
+
+    /* Código del menú desplegable */
+    .btn_menu {
+        display: flex;
+
+    }
+
+    .menu_icono {
+        position: absolute;
+        left: 45px;
+        top: 30px;
+        display: block;
+        width: 35px;
+        height: 30px;
+        cursor: pointer;
+        transition: all 0.5s ease;
+    }
+
+    .container_menu_desple {
+        /* Está es la capa opaca que cubrirá toda la pantalla */
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.5);
+        height: 100vh;
+        width: 100%;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        /*ocultará el elemento, pero seguira manteniendo su espacio en la pagina */
+        opacity: 0;
+        transition: all 500ms ease;
+        z-index: 2;
+    }
+
+    .cont_menu {
+        display: block;
+        background: #1c1c1c;
+        max-width: 250px;
+        height: 100vh;
+        position: relative;
+        transition: all 500ms ease;
+        transform: translateX(-100%);
+    }
+
+    .cont_menu li {
+        position: relative;
+        display: block;
+        top: 20px;
+        cursor: pointer;
+        padding: 20px;
+        border-left: 5px solid transparent;
+        transition: all 400ms ease;
+    }
+
+    .cont_menu a {
+        color: #c7c7c7;
+    }
+
+    .icon_equis {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        cursor: pointer;
+        color: #fff;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+
+    #btn_menu:checked~.container_menu_desple {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #btn_menu:checked~.container_menu_desple .cont_menu {
+        transform: translateX(0%);
+    }
+
+    .container_menu_desple nav {
+        transform: translateY(15%);
+    }
+
+    .cont_menu label:hover {
+        background-color: rgba(0, 0, 0, 0.10);
+        border-radius: 50%;
+    }
+
+    .cont_menu nav li:hover {
+        border-left: 5px solid #c7c7c7;
+        background-color: #1f1f1f;
+    }
+
+    body.menu_active {
+        overflow: hidden;
+    }
+
+    /* Personalizando los demás elementos del header */
+    .users,
+    .carrito_texto {
+        display: none;
+    }
+
+    .carrito_img {
+        width: auto;
+        margin-left: 1rem;
+    }
+
+    .header {
+        padding: 50px;
+    }
+
+    .cont_hyper {
+        display: none;
+    }
+
+    .buscar {
+        width: 420px;
+        margin-left: 80px;
+    }
+}

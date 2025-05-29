@@ -1,0 +1,916 @@
+* {
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+    padding: 0;
+    margin: 0;
+}
+
+/* Aseguramos que el html y el body ocupen toda la altura de la pagina */
+html{
+    height: 100%;
+}
+
+body {
+    /* background-color: #dcdcdc; */
+    background-image: url(../img/img_catalogo/fondos/fondo_main2.jpg);
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Se hara que el main ocupe el espacio del pie de pagina fantasma "footer invisble"  */
+main {
+    flex: 1 0 auto; /* Permite que el main ocupe el espacio restante entre el header y el footer */
+    /* padding-top: 50px; Espacio ajustado para dejar el header fijo */
+    /* Quite el padding ya que hacia que la tabla permanezca totalmente abajo en pantalla de escritorio */
+}
+
+#header {
+    width: 100%;
+    padding: 40px;
+    /* Reajustar el padding */
+    position: fixed;
+    background-color: #000000;
+    opacity: 90%;
+    border-bottom: 1px solid black;
+    z-index: 3;
+    /* El código del home no tendrá este transition, hay que implementarlo. Aquí lo hice para que el cambio de opacidad del header no sea tan fructifero */
+    transition: all 0.5s ease;
+}
+
+.menu_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 15px;
+    width: auto;
+    height: 80%;
+}
+
+.logo_img {
+    position: relative;
+    right: 30px;
+    /* "9" Margin arriba, "20" derecha, "0" inferior" "70" izquierda  */
+    margin: 9px 20px 0 70px;
+    height: 3rem;
+    width: auto;
+
+    /* Si activo el eliminador de fondo, el logo no aparecerá */
+    /* filter: brightness(1.1);
+    mix-blend-mode: multiply; */
+}
+
+/* con esta, los li se pondrán en el centro */
+.cont_hyper {
+    display: flex;
+    align-items: center;
+}
+
+/* Con esta clase se rompera la disposicion vertical de los li y se creará un distanciamiento entre ellos  */
+.cont_hyper ul {
+    display: flex;
+    gap: 60px;
+}
+
+.cont_hyper a,
+.container_users_carrito a,
+.col1 a:hover,
+.col1 h4:hover,
+.col2 a:hover,
+.col3 h4:hover {
+    color: white;
+    transition: all 0.5s ease;
+}
+
+.container_users_carrito {
+    /* 4px arriba, 35px derecha, 0px abajo, 0px izquierda */
+    margin: 4px 35px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar_img,
+.carrito_img {
+    height: 2rem;
+    width: auto;
+}
+
+.users,
+.carrito {
+    justify-items: center;
+    cursor: pointer;
+}
+
+.buscar {
+    display: flex;
+    height: 60%;
+    width: 40%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background-color: white;
+    margin-top: 12px;
+
+}
+
+.buscar_container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.buscar_input {
+    height: 38px;
+    width: 90%;
+    font-size: 13px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+
+}
+
+.buscador_boton {
+    width: 2.5rem;
+    height: 1.875rem;
+    border-radius: 50%;
+    margin-left: 5px;
+    border: none;
+    background-image: url(../img/img_home/lupa.png);
+    /* define el tamaño de la lupa, pues por defecto no se mostrará la imagen */
+    background-size: 25px;
+    /* Como la imagen se repite, se usa el no repeact y lo posicionamos al centro */
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    /* para que el color de fondo por defecto no se muestre */
+    background-color: transparent;
+
+}
+
+/* Estetica de elementos */
+.buscar_input:focus {
+    border-radius: 20px 50px 0 20px;
+    border: 1px solid purple;
+}
+
+.buscador_boton:hover {
+    transform: scale(1.1);
+}
+
+.cont_hyper a:hover,
+.container_users_carrito a:hover,
+.col1 a:hover,
+.col1 h4:hover,
+.col2 a:hover,
+.col3 h4:hover {
+    color: #c11000;
+}
+
+/* Menú hamburguesa */
+/* Curiosamente, si no se cita el checbox, pues no lo oculta */
+.btn_menu,
+#btn_menu {
+    display: none;
+}
+
+
+h1 {
+    text-align: center;
+    padding: 100px 0 20px 0;
+    margin: 0;
+    color: #fff;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 1.5px 1.5px 3px rgba(0, 0, 0, 5);
+}
+
+.cart-container {
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    margin: 40px auto 0;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.34);
+    padding: 20px;
+    position: relative; /* Necesario para posicionar el suma-productos */
+}
+
+.cart-items {
+    width: 65%;
+    max-height: 60vh; /* Altura máxima para que no crezca indefinidamente */
+    overflow-y: auto; /* Agrega un scroll vertical */
+    padding-right: 10px; /* Espacio para el scrollbar */
+}
+
+/* Estilizar el scrollbar para que sea más atractivo (opcional) */
+.cart-items::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cart-items::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.cart-items::-webkit-scrollbar-thumb:hover {
+    background: #a00d00;
+}
+
+.titulos {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+    text-align: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    position: sticky; /* Fija los encabezados en la parte superior */
+    top: 0;
+    background-color: #f9f9f9; /* Fondo para que no se vea transparente */
+    z-index: 1; /* Asegura que los encabezados estén por encima de los productos */
+}
+
+.titulos h4 {
+    color: #666;
+    font-weight: normal;
+}
+
+.product-1 {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr; /* Ajustado para incluir el botón de eliminar */
+    align-items: center;
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.item-image {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-image img {
+    height: 80px; /* Tamaño más pequeño para las imágenes */
+    width: 120px;
+    filter: none; /* Eliminado el filtro para que las imágenes se vean más naturales */
+    mix-blend-mode: multiply;
+}
+
+.item-image p {
+    font-size: 1rem;
+    color: #333;
+}
+
+.product-1 .item-price,
+.product-1 .item-total {
+    font-size: 1rem;
+    color: #333;
+}
+
+.cantidad-control-btn {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.cantidad-btn {
+    width: 25px;
+    height: 25px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cantidad-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.mostrar-cantidad {
+    width: 50px;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.remove-item{
+    width: 30px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.bi-trash3{
+    color: #000000;
+}
+
+.remove-item:hover, .bi-trash3:hover {
+    background-color: red;
+    color: white;
+}
+
+/* Resumen de la orden */
+.suma-productos {
+    width: 30%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Fija el resumen del detalle de compra */
+    top: 140px; /* Ajustado para dejar espacio para el header fijo */
+    align-self: flex-start; /* Evita que se estire */
+}
+
+.suma-productos h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.suma-detalles p {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 1rem;
+}
+
+.suma-detalles .total {
+    font-weight: bold;
+    color: #333;
+}
+
+.suma-detalles hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 10px 0;
+}
+
+
+.comprar-btn {
+    width: 100%;
+    background-color: #dc0e0e;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.comprar-btn:hover {
+    background-color: #f80f0f;
+}
+
+/* Estilos para la burbujita de notificación en el ícono del carrito */
+.carrito_contenedor {
+    position: relative;
+    display: inline-block;
+}
+
+.carrito_notificacion {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #c11000; /* Color rojo, acorde con tu diseño */
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.carrito_notificacion.hidden {
+    display: none;
+}
+
+/* Estilos para el contenedor de la factura */
+.factura-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo gris semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.factura-container.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.factura-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.factura {
+    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.factura h2 {
+    color: #c11000; /* Rojo */
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+#factura-detalles {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #333;
+}
+
+#factura-detalles p {
+    margin: 5px 0;
+}
+
+#factura-detalles .total-factura {
+    font-weight: bold;
+    color: #000;
+    margin-top: 10px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px;
+}
+
+.cerrar-factura {
+    background-color: #c11000; /* Rojo */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cerrar-factura:hover {
+    background-color: #a00d00; /* Rojo más oscuro */
+}
+
+/* Ajuste en el media query para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .suma-productos {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+/* Media queries para pantallas más pequeñas (móviles y tabletas) */
+@media screen and (max-width: 768px) {
+    /* Ajustar el contenedor principal */
+    .cart-container {
+        flex-direction: column;
+        width: 90%;
+    }
+    
+    .cart-items {
+        width: 100%;
+        max-height: 50vh; /* Reduce la altura maxima en dispositivos mobiles */
+    }
+
+    /* Ocultar los encabezados de la tabla en móviles */
+    .titulos {
+        display: none;
+    }
+    
+    /* Cambiar el diseño de los productos a un formato apilado (vertical) */
+    .product-1 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        background-color: #fff;
+    }
+    
+    .item-image {
+        flex-direction: row; /* Mantener imagen y nombre en una fila */
+        align-items: center;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .item-image img {
+        height: 60px;
+        width: 90px;
+    }
+
+    .item-image p {
+        margin-left: 10px;
+        font-size: 1rem;
+    }
+    
+    .product-1 .item-price,
+    .product-1 .item-total {
+        font-size: 1rem;
+        margin: 5px 0;
+        text-align: left;
+    }
+    
+    .cantidad-control-btn {
+        margin: 5px 0;
+    }
+
+    .remove-item {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+    
+    .suma-productos {
+        width: 100%;
+        position: static; /* Hace que en moviles desactive el sticky para que fluta con el contenido */
+        margin-top: 20px;
+    }
+}
+
+
+/* Estilos para notificación y modal de confirmación */
+.notificacion {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: whitesmoke;
+    color: #333;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.notificacion.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirmacion-modal {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.confirmacion-modal.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirmacion-contenido {
+    text-align: center;
+}
+
+.confirmacion-contenido p {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.botones-confirmacion {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.confirmar-btn, .cancelar-btn {
+    width: 120px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.confirmar-btn {
+    background-color: #dc0e0e;
+    color: white;
+}
+
+.confirmar-btn:hover {
+    background-color: #f80f0f;
+}
+
+.cancelar-btn {
+    background-color: #666;
+    color: white;
+}
+
+.cancelar-btn:hover {
+    background-color: #888;
+}
+
+/* Estilos para el modal de detalle de venta */
+.detalle-venta-modal {
+    position: fixed;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1002; /* Más alto que el modal de confirmación */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    max-width: 500px;
+    width: 90%;
+}
+
+.detalle-venta-modal.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+.detalle-venta-contenido {
+    text-align: center;
+}
+
+.detalle-venta-contenido h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#detalle-venta-lista {
+    margin-bottom: 20px;
+    text-align: left;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#detalle-venta-lista p {
+    font-size: 1rem;
+    color: #333;
+    margin: 5px 0;
+    padding: 5px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.cerrar-detalle-btn {
+    width: 120px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #666;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.cerrar-detalle-btn:hover {
+    background-color: #888;
+}
+
+@media screen and (max-width: 480px) {
+    .item-image img {
+        height: 50px;
+        width: 75px;
+    }
+    
+    .item-image p {
+        font-size: 0.9rem;
+    }
+    
+    .product-1 .item-price,
+    .product-1 .item-total {
+        font-size: 0.9rem;
+    }
+
+    .cantidad-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 1rem;
+    }
+
+    .mostrar-cantidad {
+        width: 40px;
+        height: 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* --------------------------------------------------------------- */
+
+@keyframes slide {
+    0% {
+        margin-left: 0%;
+    }
+
+    20% {
+        margin-left: 0%;
+    }
+    
+    25% {
+        margin-left: -100%;
+    }
+    
+    45% {
+        margin-left: -100%;
+    }
+    
+    50% {
+        margin-left: -200%;
+    }
+    
+    70% {
+        margin-left: -200%;
+    }
+    
+    75% {
+        margin-left: -300%;
+    }
+
+    100% {
+        margin-left: -300%;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .logo_img {
+        display: none;
+    }
+
+    /* Código del menú desplegable */
+    .btn_menu {
+        display: flex;
+
+    }
+
+    .menu_icono {
+        position: absolute;
+        left: 45px;
+        top: 30px;
+        display: block;
+        width: 35px;
+        height: 30px;
+        cursor: pointer;
+        transition: all 0.5s ease;
+    }
+
+    .container_menu_desple {
+        /* Está es la capa opaca que cubrirá toda la pantalla */
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.5);
+        height: 100vh;
+        width: 100%;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        /*ocultará el elemento, pero seguira manteniendo su espacio en la pagina */
+        opacity: 0;
+        transition: all 500ms ease;
+        z-index: 2;
+    }
+
+    .cont_menu {
+        display: block;
+        background: #1c1c1c;
+        max-width: 250px;
+        height: 100vh;
+        position: relative;
+        transition: all 500ms ease;
+        transform: translateX(-100%);
+    }
+
+    .cont_menu li {
+        position: relative;
+        display: block;
+        top: 20px;
+        cursor: pointer;
+        padding: 20px;
+        border-left: 5px solid transparent;
+        transition: all 400ms ease;
+    }
+
+    .cont_menu a {
+        color: #c7c7c7;
+    }
+
+    .icon_equis {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        cursor: pointer;
+        color: #fff;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+
+    #btn_menu:checked~.container_menu_desple {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #btn_menu:checked~.container_menu_desple .cont_menu {
+        transform: translateX(0%);
+    }
+
+    .container_menu_desple nav {
+        transform: translateY(15%);
+    }
+
+    .cont_menu label:hover {
+        background-color: rgba(0, 0, 0, 0.10);
+        border-radius: 50%;
+    }
+
+    .cont_menu nav li:hover {
+        border-left: 5px solid #c7c7c7;
+        background-color: #1f1f1f;
+    }
+
+    body.menu_active {
+        overflow: hidden;
+    }
+
+    /* Personalizando los demás elementos del header */
+    .users,
+    .carrito_texto {
+        display: none;
+    }
+
+    .carrito_img {
+        width: auto;
+        margin-left: 1rem;
+    }
+
+    .header {
+        padding: 50px;
+    }
+
+    .cont_hyper {
+        display: none;
+    }
+
+    .buscar {
+        width: 420px;
+        margin-left: 80px;
+    }
+}
