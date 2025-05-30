@@ -41,10 +41,11 @@
                     </ul>
                 </div>
                 <ul class="carrito">
-                    <li><a href="../HTML/index_carrito.html"><img src="../img/img_home/iconos/carrito-de-compras.png"
-                                alt="" class="carrito_img"></a></li>
+                    <li class="carrito_contenedor">
+                        <img src="../img/img_home/iconos/carrito-de-compras.png" alt="" class="carrito_img">
+                        <span class="cart-count">0</span>
+                    </li>
                     <li class="carrito_texto"><a href="../HTML/index_carrito.html">Carrito</a></li>
-                    <span class="cart-count">0</span>
                 </ul>
             </div>
         </div>
@@ -71,17 +72,25 @@
         </div>
     </header>
 
-    <!-- Resto del HTML sin cambios -->
-    <div class="cap">
-        <h2>¡Vive la aventura sobre ruedas!</h2>
-    </div>
-    <div class="slider_frame">
-        <ul>
-            <li><img src="../img/img_home/slider/carru1.jpg" alt=""></li>
-            <li><img src="../img/img_home/slider/carru3.jpg" alt=""></li>
-            <li><img src="../img/img_home/slider/carru2.jpg" alt=""></li>
-            <li><img src="../img/img_home/slider/carru4.jpg" alt=""></li>
-        </ul>
+    <div class="slider_container">
+        <div class="slider_frame">
+            <ul>
+                <li><img src="../img/img_home/slider/carru1.jpg" alt="Imagen 1">
+                    <p class="caption">Descubre la emoción de las montañas</p>
+                </li>
+                <li><img src="../img/img_home/slider/carru2.jpg" alt="Imagen 2">
+                    <p class="caption">Domina cualquier terreno con estilo</p>
+                </li>
+                <li><img src="../img/img_home/slider/carru3.jpg" alt="Imagen 3">
+                    <p class="caption">Aventúrate con la mejor calidad</p>
+                </li>
+                <li><img src="../img/img_home/slider/carru4.jpg" alt="Imagen 4">
+                    <p class="caption">Vive la adrenalina sobre dos ruedas</p>
+                </li>
+            </ul>
+        </div>
+        <button class="slider-prev">←</button>
+        <button class="slider-next">→</button>
     </div>
 
     <div class="botonera">
@@ -105,17 +114,15 @@
 
     <template id="templateProducto">
         <div class="product1_dest">
-            <div class="item_img">
-                <img class="product-img" src="https://via.placeholder.com/120x80?text=Sin+imagen" alt="Producto">
-            </div>
-            <h3 class="product-precio"></h3>
-            <p class="product-nombre"></p>
-            <div class="quantity_selector">
+            <img src="" alt="" class="product-img">
+            <h3 class="product-nombre"></h3>
+            <p class="product-precio"></p>
+            <div class="quantity-control">
                 <button class="quantity_btn minus">-</button>
                 <span class="quantity">1</span>
                 <button class="quantity_btn plus">+</button>
             </div>
-            <button type="button" class="boton1 agregar-carrito">Agregar</button>
+            <button class="agregar-carrito">Añadir al carrito</button>
         </div>
     </template>
 

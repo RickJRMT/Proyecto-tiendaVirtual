@@ -1,3 +1,4 @@
+/* Estilos Generales */
 * {
     text-decoration: none;
     list-style: none;
@@ -13,6 +14,7 @@ body {
     background-size: cover;
 }
 
+/* Estilos Header */
 #header {
     width: 100%;
     display: flex;
@@ -311,36 +313,34 @@ body {
     color: #c11000;
 }
 
-.slider_frame {
+/* Estilos Carrusel */
+.slider_container {
+    position: relative;
     width: 100%;
-    height: 70vh;
+    max-width: 1200px;
+    margin: 0 auto;
     overflow: hidden;
 }
 
-.cap {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+.slider_frame {
     width: 100%;
-    height: 70vh;
-    position: absolute !important;
-    z-index: 1;
-}
-
-h2 {
-    color: white;
-    margin-top: 60vh;
-    margin-left: 30px;
+    height: 70vh; /* Ajustado para mantener proporción con tu diseño */
+    overflow: hidden;
 }
 
 .slider_frame ul {
     display: flex;
+    width: 400%; /* 4 imágenes */
+    height: 100%;
+    margin: 0;
     padding: 0;
-    width: 400%;
-    animation: slide 20s infinite alternate ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
 .slider_frame li {
-    width: 100%;
-    height: 100%;
+    width: 25%;
+    list-style: none;
+    position: relative;
 }
 
 .slider_frame img {
@@ -349,30 +349,64 @@ h2 {
     object-fit: cover;
 }
 
-@keyframes slide {
-    0% { margin-left: 0%; }
-    20% { margin-left: 0%; }
-    25% { margin-left: -100%; }
-    45% { margin-left: -100%; }
-    50% { margin-left: -200%; }
-    70% { margin-left: -200%; }
-    75% { margin-left: -300%; }
-    100% { margin-left: -300%; }
-}
-
-.cart-count {
+.caption {
     position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 12px;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo negro semitransparente */
+    color: #ffffff; /* Texto blanco */
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
     font-weight: bold;
-    display: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    border-left: 4px solid #c11000; /* Borde rojo */
 }
 
+.slider-prev, .slider-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #c11000; /* Botones rojos */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.slider-prev {
+    left: 10px;
+}
+
+.slider-next {
+    right: 10px;
+}
+
+.slider-prev:hover, .slider-next:hover {
+    background-color: #a00d00; /* Rojo más oscuro al pasar el ratón */
+}
+
+@keyframes slide {
+    0% { transform: translateX(0%); }
+    20% { transform: translateX(0%); }
+    25% { transform: translateX(-25%); }
+    45% { transform: translateX(-25%); }
+    50% { transform: translateX(-50%); }
+    70% { transform: translateX(-50%); }
+    75% { transform: translateX(-75%); }
+    95% { transform: translateX(-75%); }
+    100% { transform: translateX(0%); }
+}
+
+.slider_frame ul {
+    animation: slide 20s infinite alternate ease-in-out;
+}
+
+/* Estilos Botonera */
 .botonera {
     justify-self: center;
     display: flex;
@@ -415,6 +449,22 @@ h2 {
 
 .botonera_container button:hover {
     background: #c11000;
+}
+
+/* Estilos Productos Destacados */
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #c11000;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    min-width: 20px;
+    text-align: center;
+    display: none;
 }
 
 .item_img {
@@ -519,6 +569,71 @@ h2 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Ajustes para los botones de cantidad y añadir al carrito */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    background-color: #f0f0f0; /* Fondo gris claro para destacar el contenedor */
+    border-radius: 20px;
+    padding: 5px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.quantity_btn {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: #c11000; /* Fondo rojo */
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.quantity_btn:hover {
+    background: #a00d00; /* Rojo más oscuro al pasar el ratón */
+    transform: scale(1.1);
+}
+
+.quantity {
+    font-size: 16px;
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #000000; /* Texto negro */
+}
+
+.agregar-carrito {
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #c11000; /* Fondo rojo */
+    color: white;
+    width: 100%;
+    max-width: 150px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.agregar-carrito:hover {
+    background-color: #a00d00; /* Rojo más oscuro al pasar el ratón */
+    transform: scale(1.05);
+}
+
+/* Eliminamos .boton1 ya que no se usa en el template */
 .quantity_selector {
     display: flex;
     align-items: center;
@@ -526,45 +641,7 @@ h2 {
     margin: 10px 0;
 }
 
-.quantity_btn {
-    width: 30px;
-    height: 30px;
-    border: none;
-    background: #c11000;
-    color: white;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.quantity_btn:hover {
-    background: #a00d00;
-}
-
-.quantity {
-    font-size: 16px;
-    min-width: 20px;
-    text-align: center;
-}
-
-.boton1 {
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    background-color: #c11000;
-    color: white;
-    width: 6rem;
-    padding: 10px;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-.boton1:hover {
-    transform: scale(1.05);
-    background-color: #a00d00;
-}
-
+/* Estilos Info Container */
 .info_container {
     width: 75%;
     height: auto;
@@ -601,7 +678,7 @@ h4 {
     margin-bottom: 5px;
 }
 
-/* Estilos del modal - AÑADIDOS NUEVAMENTE */
+/* Estilos Modal */
 .modal {
     display: none;
     position: fixed;
@@ -666,6 +743,7 @@ h4 {
     transform: scale(1.05);
 }
 
+/* Estilos Footer */
 footer {
     background-color: black;
     color: white;
@@ -709,6 +787,7 @@ footer {
     transform: scale(1.1);
 }
 
+/* Estilos Responsive */
 @media screen and (max-width: 1024px) {
     .user-profile {
         margin-right: 15px;
@@ -757,12 +836,8 @@ footer {
     .slider_frame {
         height: 60vh;
     }
-    .cap {
-        height: 60vh;
-    }
-    h2 {
-        margin-top: 50vh;
-    }
+    /* .cap { height: 60vh; } */ /* Comentado si decides quitar .cap */
+    /* h2 { margin-top: 50vh; } */ /* Comentado si decides quitar .cap */
 
     /* Ajuste para el modal en tabletas */
     .modal-content {
@@ -866,12 +941,8 @@ footer {
     .slider_frame {
         height: 40vh;
     }
-    .cap {
-        height: 40vh;
-    }
-    .h2 {
-        margin-top: 30vh;
-    }
+    /* .cap { height: 40vh; } */ /* Comentado si decides quitar .cap */
+    /* .h2 { margin-top: 30vh; } */ /* Comentado si decides quitar .cap */
 
     /* Ajuste para el modal en móviles */
     .modal-content {
@@ -901,4 +972,33 @@ body.menu_active {
 
 #btn_menu:checked ~ .container_menu_desple {
     right: 0;
+}
+
+/* Estilos Modal Stock */
+.stock-modal {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #000000; /* Fondo negro */
+    color: #ffffff; /* Texto blanco */
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    border-left: 4px solid #c11000; /* Borde rojo */
+    max-width: 300px;
+}
+
+.stock-modal.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+.stock-modal p {
+    margin: 0;
+    font-weight: bold;
 }

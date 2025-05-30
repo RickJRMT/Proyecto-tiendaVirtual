@@ -1,3 +1,6 @@
+/* ==========================================================================
+   Estilos Generales
+   ========================================================================== */
 * {
     text-decoration: none;
     list-style: none;
@@ -7,16 +10,17 @@
     margin: 0;
 }
 
+/* ==========================================================================
+   Estilos del Header
+   ========================================================================== */
 #header {
     width: 100%;
     padding: 40px;
-    /* Reajustar el padding */
     position: fixed;
     background-color: #202020;
     opacity: 90%;
     border-bottom: 1px solid black;
     z-index: 3;
-    /* El código del home no tendrá este transition, hay que implementarlo. Aquí lo hice para que el cambio de opacidad del header no sea tan fructifero */
     transition: all 0.5s ease;
 }
 
@@ -35,40 +39,28 @@
 .logo_img {
     position: relative;
     right: 30px;
-    /* "9" Margin arriba, "20" derecha, "0" inferior" "70" izquierda  */
     margin: 9px 20px 0 70px;
     height: 3rem;
     width: auto;
-
-    /* Si activo el eliminador de fondo, el logo no aparecerá */
-    /* filter: brightness(1.1);
-    mix-blend-mode: multiply; */
 }
 
-/* con esta, los li se pondrán en el centro */
 .cont_hyper {
     display: flex;
     align-items: center;
 }
 
-/* Con esta clase se rompera la disposicion vertical de los li y se creará un distanciamiento entre ellos  */
 .cont_hyper ul {
     display: flex;
     gap: 60px;
 }
 
 .cont_hyper a,
-.container_users_carrito a,
-.col1 a:hover,
-.col1 h4:hover,
-.col2 a:hover,
-.col3 h4:hover {
+.container_users_carrito a {
     color: white;
     transition: all 0.5s ease;
 }
 
 .container_users_carrito {
-    /* 4px arriba, 35px derecha, 0px abajo, 0px izquierda */
     margin: 4px 35px 0 0;
     display: flex;
     justify-content: center;
@@ -97,7 +89,6 @@
     border-radius: 30px;
     background-color: white;
     margin-top: 12px;
-
 }
 
 .buscar_container {
@@ -107,7 +98,6 @@
     height: 100%;
     border-radius: 30px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-
 }
 
 .buscar_input {
@@ -119,7 +109,6 @@
     border-radius: 20px;
     padding: 10px 15px;
     transition: all 0.3s ease;
-
 }
 
 .buscador_boton {
@@ -129,22 +118,19 @@
     margin-left: 5px;
     border: none;
     background-image: url(../img/img_home/lupa.png);
-    /* define el tamaño de la lupa, pues por defecto no se mostrará la imagen */
     background-size: 25px;
-    /* Como la imagen se repite, se usa el no repeact y lo posicionamos al centro */
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-    /* para que el color de fondo por defecto no se muestre */
     background-color: transparent;
-
 }
 
-/* carrito notificación */
-
+/* ==========================================================================
+   Estilos de Notificaciones y Carrito
+   ========================================================================== */
 .notificacion {
     position: fixed;
-    top: 100px; /* Justo debajo del header */
+    top: 100px;
     right: 20px;
     background-color: #c11000;
     color: white;
@@ -163,7 +149,7 @@
 
 .notificacion.hidden {
     opacity: 0;
-    pointer-events: none; /* Evita interacciones cuando está oculta */
+    pointer-events: none;
 }
 
 .carrito_contenedor {
@@ -189,9 +175,9 @@
     display: none;
 }
 
-/* --------------------------------------------------------- */
-
-/* Estetica de elementos */
+/* ==========================================================================
+   Estilos de Interacción
+   ========================================================================== */
 .buscar_input:focus {
     border-radius: 20px 50px 0 20px;
     border: 1px solid purple;
@@ -210,15 +196,102 @@
     color: #c11000;
 }
 
-/* Menú hamburguesa */
-/* Curiosamente, si no se cita el checbox, pues no lo oculta */
+/* ==========================================================================
+   Estilos del Menú Hamburguesa
+   ========================================================================== */
 .btn_menu,
 #btn_menu {
     display: none;
 }
 
-/* Slider/carrusel de imagenes */
+.menu_icono {
+    position: absolute;
+    left: 45px;
+    top: 30px;
+    display: block;
+    width: 35px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
 
+.container_menu_desple {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 500ms ease;
+    z-index: 2;
+}
+
+.cont_menu {
+    display: block;
+    background: #1c1c1c;
+    max-width: 250px;
+    height: 100vh;
+    position: relative;
+    transition: all 500ms ease;
+    transform: translateX(-100%);
+}
+
+.cont_menu li {
+    position: relative;
+    display: block;
+    top: 20px;
+    cursor: pointer;
+    padding: 20px;
+    border-left: 5px solid transparent;
+    transition: all 400ms ease;
+}
+
+.cont_menu a {
+    color: #c7c7c7;
+}
+
+.icon_equis {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+#btn_menu:checked ~ .container_menu_desple {
+    opacity: 1;
+    visibility: visible;
+}
+
+#btn_menu:checked ~ .container_menu_desple .cont_menu {
+    transform: translateX(0%);
+}
+
+.container_menu_desple nav {
+    transform: translateY(15%);
+}
+
+.cont_menu label:hover {
+    background-color: rgba(0, 0, 0, 0.10);
+    border-radius: 50%;
+}
+
+.cont_menu nav li:hover {
+    border-left: 5px solid #c7c7c7;
+    background-color: #1f1f1f;
+}
+
+body.menu_active {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Estilos del Carrusel/Slider
+   ========================================================================== */
 .slider_frame {
     width: 100%;
     height: 70vh;
@@ -247,59 +320,32 @@ h2 {
 }
 
 .slider_frame li {
-    /* Se asegura que los <li> ocupen toda la altura del slider */
     width: 100%;
     height: 100%;
 }
 
 .slider_frame img {
     width: 100%;
-    /* Se asegura que las imagenes ocupen toda la altura del <li> */
     height: 100%;
-    /* Escala las imagenes para cubrir el contenedor y evita dejar huecos */
     object-fit: cover;
 }
 
-/* Ajustes para móviles (pantallas menores a 768px) */
-@media screen and (max-width: 768px) {
-    .slider_frame {
-        /* Reduce la altura para móviles */
-        height: 40vh; 
-    }
-
-    .cap {
-        /* Ajusta la altura del contenedor de superposición para que coincida */
-        height: 40vh; 
-    }
-
-    h2 {
-        /* Ajusta la posición del texto "IMAGEN" para que se vea bien */
-        margin-top: 30vh; 
-    }
+@keyframes slide {
+    0% { margin-left: 0%; }
+    20% { margin-left: 0%; }
+    25% { margin-left: -100%; }
+    45% { margin-left: -100%; }
+    50% { margin-left: -200%; }
+    70% { margin-left: -200%; }
+    75% { margin-left: -300%; }
+    100% { margin-left: -300%; }
 }
 
-/* Ajustes para tabletas (pantallas entre 768px y 1024px) */
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-    .slider_frame {
-        /* Altura intermedia para tabletas */
-        height: 60vh; 
-    }
-
-    .cap {
-        /* Ajusta la altura del contenedor de superposición */
-        height: 60vh; 
-    }
-
-    h2 {
-        /* Ajusta la posición del texto "IMAGEN" */
-        margin-top: 50vh; 
-    }
-}
-
-/* Catálogo de productos */
+/* ==========================================================================
+   Estilos del Catálogo de Productos
+   ========================================================================== */
 .filtraje {
     display: flex;
-    /* para mover el elemento al lado derecho de la página */
     justify-content: flex-end;
     margin-top: 15px;
     margin-right: 45px;
@@ -310,15 +356,12 @@ h2 {
     margin-left: 5px;
     border: none;
     outline: none;
-    color: black
+    color: black;
 }
 
 .product_content {
     display: grid;
-    /* aqui, por medio del "auto.fit", se crearán columnas en función del espacio del contenedor*/
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    /* centra todo elemento que está dentro de su respectiva celda */
-    /* este funciona unicamente si está activo el grid */
     place-items: center;
     margin-top: 15px;
     gap: 20px;
@@ -330,69 +373,11 @@ h2 {
     justify-content: center;
     align-items: center;
     text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background: white;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* border: 1px solid black; */
-    border-radius: 20px;
-}
-
-/* botonoes de cantidad */
-
-.cantidad-control-btn {
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-}
-
-.cantidad-btn {
-    width: 25px;
-    height: 25px;
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.cantidad-btn:hover {
-    background-color: #e0e0e0;
-}
-
-.mostrar-cantidad {
-    width: 50px;
-    height: 25px;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 1rem;
-}
-
-.product img {
-    width: 8rem;
-    height: 8rem;
-    filter: brightness(1.1);
-    mix-blend-mode: multiply;
-}
-
-.agregar_carrito {
-    margin-bottom: 10px;
-}
-
-.product .agregar_carrito {
-    border-radius: 15px;
-    background-color: #dc1f13;
-    color: white;
-    height: auto;
-    width: auto;
-    padding: 8px;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    transition: background-color 0.3s, transform 0.2s;
 }
 
 .product:hover {
@@ -400,14 +385,99 @@ h2 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+.product img {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.product_txt h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.product_txt .precio {
+    font-size: 1rem;
+    color: #000;
+}
+
+/* Estilos para los botones de cantidad */
+.cantidad-control-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    padding: 5px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cantidad-btn {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: #c11000;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cantidad-btn:hover {
+    background: #a00d00;
+    transform: scale(1.1);
+}
+
+.mostrar-cantidad {
+    font-size: 16px;
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #000000;
+    border: none;
+    background: transparent;
+}
+
+/* Estilo del botón "Añadir al carrito" */
+.agregar_carrito {
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #c11000;
+    color: white;
+    width: 100%;
+    max-width: 150px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.agregar_carrito:hover {
+    background-color: #a00d00;
+    transform: scale(1.05);
+}
+
 .agregar_carrito:active {
     transform: scale(0.95);
     background-color: #b81a10;
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
-    /* este sirve para crear el efecto de undido*/
 }
 
-/* Apartado para el footer */
+/* ==========================================================================
+   Estilos del Footer
+   ========================================================================== */
 footer {
     background-color: black;
     color: white;
@@ -417,7 +487,6 @@ footer {
     display: flex;
     justify-content: center;
     cursor: pointer;
-
 }
 
 .row {
@@ -426,7 +495,6 @@ footer {
     gap: 80px;
     text-align: center;
     justify-content: center;
-
 }
 
 .row a {
@@ -453,50 +521,55 @@ footer {
     transform: scale(1.1);
 }
 
-@keyframes slide {
-    0% {
-        margin-left: 0%;
-    }
-
-    20% {
-        margin-left: 0%;
-    }
-
-    25% {
-        margin-left: -100%;
-    }
-
-    45% {
-        margin-left: -100%;
-    }
-
-    50% {
-        margin-left: -200%;
-    }
-
-    70% {
-        margin-left: -200%;
-    }
-
-    75% {
-        margin-left: -300%;
-    }
-
-    100% {
-        margin-left: -300%;
-    }
+/* ==========================================================================
+   Estilos del Perfil de Usuario
+   ========================================================================== */
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-@media screen and (max-width:768px) {
+.profile-image-placeholder {
+    width: 2rem;
+    height: 2rem;
+    background: url('../img/img_home/avatar.png') no-repeat center;
+    background-size: cover;
+    border-radius: 50%;
+}
 
+.user-name {
+    color: white;
+    font-size: 1rem;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #c11000;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.cont_menu .logout-btn {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}
+
+/* ==========================================================================
+   Media Queries para Responsividad
+   ========================================================================== */
+
+/* Ajustes para móviles (pantallas menores a 768px) */
+@media screen and (max-width: 768px) {
     .logo_img {
         display: none;
     }
 
-    /* Código del menú desplegable */
+    /* Menú hamburguesa */
     .btn_menu {
         display: flex;
-
     }
 
     .menu_icono {
@@ -511,7 +584,6 @@ footer {
     }
 
     .container_menu_desple {
-        /* Está es la capa opaca que cubrirá toda la pantalla */
         position: absolute;
         background-color: rgba(0, 0, 0, 0.5);
         height: 100vh;
@@ -519,7 +591,6 @@ footer {
         top: 0;
         left: 0;
         visibility: hidden;
-        /*ocultará el elemento, pero seguira manteniendo su espacio en la pagina */
         opacity: 0;
         transition: all 500ms ease;
         z-index: 2;
@@ -559,12 +630,12 @@ footer {
         transition: all 0.3s ease;
     }
 
-    #btn_menu:checked~.container_menu_desple {
+    #btn_menu:checked ~ .container_menu_desple {
         opacity: 1;
         visibility: visible;
     }
 
-    #btn_menu:checked~.container_menu_desple .cont_menu {
+    #btn_menu:checked ~ .container_menu_desple .cont_menu {
         transform: translateX(0%);
     }
 
@@ -586,7 +657,7 @@ footer {
         overflow: hidden;
     }
 
-    /* Personalizando los demás elementos del header */
+    /* Ajustes del header */
     .users,
     .carrito_texto {
         display: none;
@@ -608,5 +679,33 @@ footer {
     .buscar {
         width: 420px;
         margin-left: 80px;
+    }
+
+    /* Ajustes del carrusel */
+    .slider_frame {
+        height: 40vh;
+    }
+
+    .cap {
+        height: 40vh;
+    }
+
+    h2 {
+        margin-top: 30vh;
+    }
+}
+
+/* Ajustes para tabletas (pantallas entre 768px y 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .slider_frame {
+        height: 60vh;
+    }
+
+    .cap {
+        height: 60vh;
+    }
+
+    h2 {
+        margin-top: 50vh;
     }
 }

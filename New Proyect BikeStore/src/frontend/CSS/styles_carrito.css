@@ -914,3 +914,104 @@ h1 {
         margin-left: 80px;
     }
 }
+
+.login-required-modal {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.login-required-modal.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+.login-required-content {
+    text-align: center;
+}
+
+.login-required-content p {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.login-required-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.login-required-buttons .login-btn,
+.login-required-buttons .cancel-btn {
+    width: 120px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.login-required-buttons .login-btn {
+    background-color: #dc0e0e;
+    color: white;
+    text-decoration: none;
+}
+
+.login-required-buttons .login-btn:hover {
+    background-color: #f80f0f;
+}
+
+.login-required-buttons .cancel-btn {
+    background-color: #666;
+    color: white;
+}
+
+.login-required-buttons .cancel-btn:hover {
+    background-color: #888;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-image-placeholder {
+    width: 2rem;
+    height: 2rem;
+    background: url('../img/img_catalogo/avatar.png') no-repeat center;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+.user-name {
+    color: white;
+    font-size: 1rem;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #c11000;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.cont_menu .logout-btn {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}

@@ -18,14 +18,9 @@ if (loginForm) {
 document.addEventListener('DOMContentLoaded', () => {
     // Verificar si el usuario ya está autenticado
     const usuarioId = localStorage.getItem('usuarioId');
-    const usuarioRol = localStorage.getItem('usuarioRol');
     if (usuarioId) {
-        if (usuarioRol === 'admin') {
-            window.location.href = '../HTML/index_admin.html';
-        } else {
-            window.location.href = '../HTML/index_home.html';
-
-        }
+        const redirect = new URLSearchParams(window.location.search).get('redirect');
+        window.location.href = redirect === 'catalogo' ? '../HTML/index_catalogo.html' : '../HTML/index_home.html';
         return;
     }
 
@@ -69,16 +64,17 @@ async function manejarLogin(e) {
             localStorage.setItem('usuarioApellido', resultado.apellido);
             localStorage.setItem('usuarioRol', resultado.rol);
 
-
             if (recordar.checked) {
                 localStorage.setItem('recordarSesion', 'true');
             }
 
             mostrarMensaje('Inicio de sesión exitoso. Redirigiendo...', true);
             setTimeout(() => {
-                // Redirigir según el rol del usuario
+                const redirect = new URLSearchParams(window.location.search).get('redirect');
                 if (resultado.rol === 'admin') {
                     window.location.href = '../HTML/index_admin.html';
+                } else if (redirect === 'catalogo') {
+                    window.location.href = '../HTML/index_catalogo.html';
                 } else {
                     window.location.href = '../HTML/index_home.html';
                 }
