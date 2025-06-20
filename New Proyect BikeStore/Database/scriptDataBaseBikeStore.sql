@@ -1,13 +1,6 @@
 CREATE DATABASE bike_store;
 USE bike_store;
 
--- Tabla: marcas
-CREATE TABLE categorias (
-    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) UNIQUE,
-    logo VARCHAR(255)
-);
-
 -- Tabla: productos
 CREATE TABLE productos (
     id_producto INT AUTO_INCREMENT PRIMARY KEY,
@@ -15,9 +8,7 @@ CREATE TABLE productos (
     precio_venta DECIMAL(10,2) NOT NULL CHECK (precio_venta >= 0),
     descripcion VARCHAR(500),
     destacado BOOLEAN DEFAULT FALSE,
-    imagen VARCHAR(255),
-    id_categoria INT,
-    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
+    imagen VARCHAR(255)
 );
 
 -- Tabla: stocks (1:1 con productos)
@@ -65,17 +56,6 @@ CREATE TABLE detalles_venta (
     id_venta INT,
     FOREIGN KEY (id_producto) REFERENCES productos(id_producto),
     FOREIGN KEY (id_venta) REFERENCES ventas(id_venta)
-);
-
--- Tabla: pqrs (1:1 con usuario)
-CREATE TABLE pqrs (
-    id_pqrs INT AUTO_INCREMENT PRIMARY KEY,
-    tipo ENUM('peticion', 'queja', 'reclamo', 'sugerencia') NOT NULL,
-    detalle TEXT NOT NULL,
-    estado ENUM('pendiente','resuelto') DEFAULT 'pendiente',
-    fecha_pqrs DATETIME DEFAULT CURRENT_TIMESTAMP,
-    id_usuario INT,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
 /*Consultas*/
