@@ -120,9 +120,9 @@ CREATE TABLE ventas (
 det_venta ya que un producto esta asociado a muchas ventas, pero una venta va a contener muchos productos   */
 CREATE TABLE detalles_venta (
 	id_producto INT,
-    id_detalle_venta INT,
+    id_venta INT,
     FOREIGN KEY (id_producto) REFERENCES productos(id_producto),
-    FOREIGN KEY (id_detalle_venta) REFERENCES detalles_venta(id_detalle_venta)
+    FOREIGN KEY (id_venta) REFERENCES ventaS(id_venta)
 );
 
 /*Consultas*/
