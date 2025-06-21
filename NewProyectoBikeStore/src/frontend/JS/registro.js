@@ -19,6 +19,23 @@ if (registroForm) {
     registroForm.insertBefore(mensajeDiv, registroForm.firstChild);
 }
 
+// Restringir entrada en los campos
+if (nombre) {
+    nombre.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+    });
+}
+if (apellido) {
+    apellido.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+    });
+}
+if (telefono) {
+    telefono.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    });
+}
+
 // Events Listeners
 document.addEventListener('DOMContentLoaded', () => {
     // Verificar si el usuario ya está autenticado
@@ -71,6 +88,26 @@ async function manejarRegistro(e) {
     const clave = claveInput.value;
     const confirmarClave = confirmarClaveInput.value;
     const terminosChecked = terminos.checked;
+
+    // Validar que el nombre contenga solo letras
+    const regexLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+    if (!regexLetras.test(nombreValue)) {
+        mostrarMensaje('El nombre solo puede contener letras', false);
+        return;
+    }
+
+    // Validar que el apellido contenga solo letras
+    if (!regexLetras.test(apellidoValue)) {
+        mostrarMensaje('El apellido solo puede contener letras', false);
+        return;
+    }
+
+    // Validar que el teléfono contenga solo números
+    const regexTelefono = /^[0-9]+$/;
+    if (!regexTelefono.test(telefonoValue)) {
+        mostrarMensaje('El teléfono solo puede contener números', false);
+        return;
+    }
 
     // Validar que las contraseñas coincidan
     if (clave !== confirmarClave) {

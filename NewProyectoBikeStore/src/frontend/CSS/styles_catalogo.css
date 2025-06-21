@@ -15,7 +15,7 @@
    ========================================================================== */
 #header {
     width: 100%;
-    padding: 40px;
+    padding: 47px;
     position: fixed;
     background-color: #202020;
     opacity: 90%;
@@ -65,7 +65,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 150px;
 }
 
 .avatar_img,
@@ -526,29 +526,37 @@ footer {
    ========================================================================== */
 .profile-info {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-}
-
-.profile-image-placeholder {
-    width: 2rem;
-    height: 2rem;
-    background: url('../img/img_home/avatar.png') no-repeat center;
-    background-size: cover;
-    border-radius: 50%;
 }
 
 .user-name {
-    color: white;
-    font-size: 1rem;
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .logout-btn {
-    background: none;
+    background-color: #c11000;
+    color: white;
     border: none;
-    color: #c11000;
+    padding: 5px 10px;
+    width: 6rem;
+    height: 1.7rem;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+}
+
+.logout-btn:hover {
+    background-color: #a00d00;
 }
 
 .cont_menu .logout-btn {

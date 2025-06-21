@@ -29,8 +29,9 @@
             <!-- Barra de búsqueda -->
             <div class="buscar">
                 <div class="buscar_container">
-                    <input type="search" class="buscar_input" placeholder="Buscar productos">
-                    <input type="button" class="buscador_boton" value="­">
+                    <input type="search" class="buscar_input" placeholder="Buscar productos"
+                        aria-label="Buscar productos">
+                    <input type="button" class="buscador_boton" value="­" aria-label="Botón de búsqueda">
                 </div>
             </div>
             <!-- Contenedor de usuario y carrito -->
@@ -75,10 +76,14 @@
     </div>
     <div class="slider_frame">
         <ul>
-            <li><img src="../img/img_home/slider/carru4.jpg" alt="Imagen 1"></li>
-            <li><img src="../img/img_home/slider/carru2.jpg" alt="Imagen 2"></li>
-            <li><img src="../img/img_home/slider/carru1.jpg" alt="Imagen 3"></li>
-            <li><img src="../img/img_home/slider/carru3.jpg" alt="Imagen 4"></li>
+            <li><img src="../img/img_home/slider/carru4.jpg" alt="Imagen 1"
+                    sizes="(max-width: 480px) 100vw, (max-width: 768px) 80vw, 50vw"></li>
+            <li><img src="../img/img_home/slider/carru2.jpg" alt="Imagen 2"
+                    sizes="(max-width: 480px) 100vw, (max-width: 768px) 80vw, 50vw"></li>
+            <li><img src="../img/img_home/slider/carru1.jpg" alt="Imagen 3"
+                    sizes="(max-width: 480px) 100vw, (max-width: 768px) 80vw, 50vw"></li>
+            <li><img src="../img/img_home/slider/carru3.jpg" alt="Imagen 4"
+                    sizes="(max-width: 480px) 100vw, (max-width: 768px) 80vw, 50vw"></li>
         </ul>
     </div>
 
@@ -109,13 +114,6 @@
                     <li><a href="#">Dato 4</a></li>
                 </ul>
             </div>
-            <!-- <div class="col2">
-                <h4><a href="#">PQRS</a></h4>
-                <p><a href="#">Peticiones</a></p>
-                <p><a href="#">Quejas</a></p>
-                <p><a href="#">Reclamos</a></p>
-                <p><a href="#">Sugerencias</a></p>
-            </div> -->
             <div class="col3">
                 <h4>Contactanos</h4>
                 <img src="../img/img_catalogo/iconos/instagram.png" alt="Instagram">
@@ -127,7 +125,7 @@
 
     <!-- Scripts -->
     <script src="../JS/script_catalogo.js"></script>
-    <!-- <script src="../JS/carrito_manager.js"></script> --> <!-- Comentado temporalmente para evitar conflictos -->
+    <!-- <script src="../JS/carrito_manager.js"></script> -->
 </body>
 
 </html>

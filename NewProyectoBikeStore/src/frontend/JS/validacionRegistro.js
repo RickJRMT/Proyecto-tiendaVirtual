@@ -1,34 +1,29 @@
-const email = document.querySelector('#email');
+const correo = document.querySelector('#correo');
 const contra = document.querySelector('#contraseña');
 
+correo.addEventListener('blur', validar);
+contra.addEventListener('blur', validarc);
 
-email.addEventListener('blur', validar)
-contra.addEventListener('blur', validarc)
-
-function validar(e){
-
-    if(e.target.id === 'email'){
-        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/i
+function validar(e) {
+    if (e.target.id === 'correo') {
+        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/i;
         const result = regex.test(e.target.value);
 
-        if(result != true){
-            alert ('email no valido')
+        if (!result) {
+            alert('Correo no válido');
             return;
         }
     }
-
 }
 
-function validarc (e){
-
-    if(e.target.id === 'contraseña'){
-        const regex = /^.{8,}$/
+function validarc(e) {
+    if (e.target.id === 'contraseña') {
+        const regex = /^.{8,}$/;
         const result = regex.test(e.target.value);
 
-        if(result != true){
-            alert ('la contraseña debe tener mas de 8 caracterez')
+        if (!result) {
+            alert('La contraseña debe tener más de 8 caracteres');
             return;
         }
     }
-
 }

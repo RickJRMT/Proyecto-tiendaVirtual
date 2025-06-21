@@ -107,7 +107,6 @@ function verificarAutenticacion() {
                 console.log('Usuario autenticado, actualizando DOM con nombre:', usuarioNombre, usuarioApellido);
                 userProfileContainer.innerHTML = `
                     <div class="profile-info">
-                        <div class="profile-image-placeholder"></div>
                         <span class="user-name">${usuarioNombre} ${usuarioApellido}</span>
                         <button id="btnCerrarSesion" class="logout-btn">Cerrar sesión</button>
                     </div>
