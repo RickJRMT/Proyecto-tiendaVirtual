@@ -1,90 +1,12 @@
-// Importar el módulo express
 const express = require('express');
-
-// Crear un nuevo router de Express para manejar rutas de manera modular
 const router = express.Router();
+const productoController = require('../controllers/productos.controller'); // Corregido a 'productos.controller'
 
-// Importar el controlador genérico para operaciones CRUD
-const CrudController = require('../controllers/crud.controller');
+// Rutas para la gestión de productos
+router.post('/', productoController.crearProducto); // Crear un nuevo producto
+router.get('/', productoController.obtenerProductos); // Obtener todos los productos
+router.get('/:id', productoController.obtenerProductoPorId); // Obtener un producto por ID
+router.put('/:id', productoController.actualizarProducto); // Actualizar un producto
+router.delete('/:id', productoController.eliminarProducto); // Eliminar un producto
 
-// Instanciar una nueva instancia del controlador para usar sus métodos
-const crud = new CrudController();
-
-// Definir el nombre de la tabla en la base de datos sobre la cual se operará
-const tabla = 'productos';
-
-// Definir el nombre del campo identificador único de la tabla
-const idCampo = 'id_producto';
-
-// Ruta para obtener todos los registros de productos
-router.get('/', async (req, res) => {
-    try {
-        // Utilizar el método obtenerTodos del controlador para traer todos los registros
-        const productos = await crud.obtenerTodo(tabla);
-
-        // Respuesta con el arreglo de productos en formato JSON
-        res.json(productos);
-    } catch (error) {
-        // Si hay un error, se responde con código 500 y el mensaje del error
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Ruta para obtener una producto específica por su ID
-router.get('/:id', async (req, res) => {
-    try {
-        // Utilizar el método obtenerUno con el ID recibido en la URL
-        const producto = await crud.obtenerUno(tabla, idCampo, req.params.id);
-
-        // Respuesta con datos de la producto en formato JSON
-        res.json(producto);
-    } catch (error) {
-        // Manejar errores de servidor
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Ruta para crear una nueva producto (registro nuevo en la base de datos)
-router.post('/', async (req, res) => {
-    try {
-        // Utilizar el método crear con los datos enviados en el cuerpo del resquest
-        const nuevaproducto = await crud.crear(tabla, req.body);
-
-        // Respuesta con el nuevo registro creado y código 201 (creado)
-        res.status(201).json(nuevaproducto);
-    } catch (error) {
-        // Manejar errores de servidor
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Ruta para actualizar una producto existente (por ID)
-router.put('/:id', async (req, res) => {
-    try {
-        // Utilizar el método actualizar con el ID y los nuevos datos del cuerpo
-        const productoActualizada = await crud.actualizar(tabla, idCampo, req.params.id, req.body);
-
-        // Respuesta con el registro actualizado
-        res.json(productoActualizada);
-    } catch (error) {
-        // Manejar errores de servidor
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Ruta para eliminar una producto de la base de datos (por ID)}
-router.delete('/:id', async (req, res) => {
-    try {
-        // Utilizar el método eliminar con el ID recibido
-        const resultado = await crud.eliminar(tabla, idCampo, req.params.id);
-
-        // Respuesta con un mensaje o confirmacion de eliminación
-        res.json(resultado);
-    } catch (error) {
-        // Manejar errores de servidor
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Exportar el router para que pueda ser usado en la aplicacion principal
 module.exports = router;

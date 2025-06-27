@@ -30,9 +30,6 @@ app.use('/api/usuarios', require('./backend/routes/usuarios.routes'));
 app.use('/api/productos', require('./backend/routes/productos.routes'));
 // Asocia todas las rutas de productos bajo el prefijo /api/productos
 
-app.use('/api/stock', require('./backend/routes/stock.routes'));
-// Asocia todas las rutas de stock bajo el prefijo /api/stock
-
 app.use('/api/auth', require('./backend/routes/auth.routes'));
 // Asocia todas las rutas de auth bajo el prefijo /api/auth esto es para el login y registro
 
