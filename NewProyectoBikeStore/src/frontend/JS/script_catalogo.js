@@ -1,27 +1,20 @@
-// ==============================================================
 // Constantes y Variables Globales
-// ==============================================================
-
-// URL base de la API
 const API_URL = 'http://localhost:3000/api';
 
 // Elementos del DOM
 const userProfileContainer = document.querySelector('.users');
-const menuDesplegable = document.querySelector('.cont_menu ul');
+const menuDesplegable = document.querySelector('#menuDesplegable');
 const contenedorProductos = document.querySelector('.product_content');
 const searchInput = document.querySelector('.buscar_input');
 const filterSelect = document.querySelector('#filtrado');
 const cartCountElement = document.getElementById('contador_carrito');
 const notificationContainer = document.getElementById('notificacion');
+const profileModal = document.querySelector('#profileModal');
 
 let productos = [];
-let totalCartCount = 0;
+let totalCartCount = parseInt(localStorage.getItem('totalCartCount')) || 0;
 
-// ==============================================================
 // Funciones de Utilidad
-// ==============================================================
-
-// Mostrar notificaciones en pantalla
 function showNotification(message) {
     notificationContainer.textContent = message;
     notificationContainer.classList.remove('hidden');
@@ -33,27 +26,27 @@ function showNotification(message) {
     }, 3000);
 }
 
-// Actualizar el contador del carrito
 function updateCartCount(count) {
     totalCartCount = count;
-    cartCountElement.textContent = totalCartCount;
-    cartCountElement.classList.toggle('hidden', totalCartCount === 0);
+    if (cartCountElement) {
+        cartCountElement.textContent = totalCartCount;
+        cartCountElement.classList.toggle('hidden', totalCartCount === 0);
+    }
+    localStorage.setItem('totalCartCount', totalCartCount);
 }
 
-// Verificar disponibilidad de stock
 async function verificarStock(idProducto, cantidad) {
     try {
-        const response = await fetch(`${API_URL}/stocks/${idProducto}`);
+        const response = await fetch(`${API_URL}/productos/${idProducto}`);
         if (!response.ok) throw new Error('Error al verificar stock');
-        const stock = await response.json();
-        return stock.stock >= cantidad;
+        const producto = await response.json();
+        return producto.saldo >= cantidad;
     } catch (error) {
         console.error('Error al verificar stock:', error);
         return false;
     }
 }
 
-// Guardar producto en el carrito
 function guardarProductoEnCarrito(producto) {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const productoExistente = carrito.find(item => item.id_producto === producto.id_producto);
@@ -66,11 +59,11 @@ function guardarProductoEnCarrito(producto) {
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
     updateCartCount(totalCartCount + producto.cantidad);
+    showNotification(`Se añadieron ${producto.cantidad} ${producto.nombre}(s) al carrito`);
 }
 
-// Mostrar productos creando elementos del DOM
 function mostrarProductos(productosMostrar) {
-    contenedorProductos.innerHTML = ''; // Limpiamos el contenedor
+    contenedorProductos.innerHTML = '';
 
     if (!productosMostrar || productosMostrar.length === 0) {
         contenedorProductos.innerHTML = '<p>No se encontraron productos disponibles.</p>';
@@ -78,17 +71,14 @@ function mostrarProductos(productosMostrar) {
     }
 
     productosMostrar.forEach(producto => {
-        // Crear el contenedor del producto
         const productDiv = document.createElement('div');
         productDiv.classList.add('product');
 
-        // Imagen del producto
         const img = document.createElement('img');
         img.src = producto.imagen ? `data:image/jpeg;base64,${producto.imagen}` : 'https://via.placeholder.com/120x80?text=Sin+imagen';
         img.alt = producto.nombre;
         img.classList.add('product-img');
 
-        // Contenedor de texto
         const productTxt = document.createElement('div');
         productTxt.classList.add('product_txt');
 
@@ -103,7 +93,6 @@ function mostrarProductos(productosMostrar) {
         productTxt.appendChild(nombre);
         productTxt.appendChild(precio);
 
-        // Contenedor de botones de cantidad
         const cantidadControl = document.createElement('div');
         cantidadControl.classList.add('cantidad-control-btn');
 
@@ -125,7 +114,6 @@ function mostrarProductos(productosMostrar) {
         cantidadControl.appendChild(quantityInput);
         cantidadControl.appendChild(plusButton);
 
-        // Botón de añadir al carrito
         const addButton = document.createElement('button');
         addButton.classList.add('agregar_carrito');
         addButton.textContent = 'Añadir al carrito';
@@ -133,20 +121,16 @@ function mostrarProductos(productosMostrar) {
         addButton.setAttribute('data-name', producto.nombre);
         addButton.setAttribute('data-price', producto.precio_venta);
 
-        // Añadir todos los elementos al contenedor del producto
         productDiv.appendChild(img);
         productDiv.appendChild(productTxt);
         productDiv.appendChild(cantidadControl);
         productDiv.appendChild(addButton);
 
-        // Añadir el producto al contenedor principal
         contenedorProductos.appendChild(productDiv);
 
-        // Gestionar la cantidad
         let currentQuantity = 1;
 
         minusButton.addEventListener('click', () => {
-            console.log(`Disminuyendo cantidad para ${producto.nombre}`); // Depuración
             if (currentQuantity > 1) {
                 currentQuantity--;
                 quantityInput.value = currentQuantity;
@@ -154,30 +138,26 @@ function mostrarProductos(productosMostrar) {
         });
 
         plusButton.addEventListener('click', () => {
-            console.log(`Aumentando cantidad para ${producto.nombre}`); // Depuración
             currentQuantity++;
             quantityInput.value = currentQuantity;
         });
 
-        // Añadir al carrito
         addButton.addEventListener('click', async () => {
-            console.log(`Añadiendo ${producto.nombre} al carrito con cantidad ${currentQuantity}`); // Depuración
             const quantityToAdd = parseInt(quantityInput.value);
             const stockDisponible = await verificarStock(producto.id_producto, quantityToAdd);
             if (!stockDisponible) {
                 showNotification('No hay suficiente stock disponible');
                 return;
             }
-            totalCartCount += quantityToAdd;
-            updateCartCount(totalCartCount);
-            showNotification(`Se añadieron ${quantityToAdd} ${producto.nombre}(s) al carrito`);
 
-            guardarProductoEnCarrito({
+            const productoCarrito = {
                 id_producto: producto.id_producto,
                 nombre: producto.nombre,
                 precio_venta: producto.precio_venta,
-                cantidad: quantityToAdd
-            });
+                cantidad: quantityToAdd,
+                imagen: img.src
+            };
+            guardarProductoEnCarrito(productoCarrito);
 
             currentQuantity = 1;
             quantityInput.value = currentQuantity;
@@ -185,7 +165,6 @@ function mostrarProductos(productosMostrar) {
     });
 }
 
-// Filtrar productos según búsqueda y selección
 function filtrarProductos() {
     let productosFiltrados = [...productos];
     const searchTerm = searchInput.value.toLowerCase();
@@ -207,7 +186,6 @@ function filtrarProductos() {
     mostrarProductos(productosFiltrados);
 }
 
-// Verificar autenticación del usuario
 function verificarAutenticacion() {
     const usuarioId = localStorage.getItem('usuarioId');
     const usuarioNombre = localStorage.getItem('usuarioNombre');
@@ -237,8 +215,8 @@ function verificarAutenticacion() {
             if (data.success) {
                 userProfileContainer.innerHTML = `
                     <div class="profile-info">
+                        <img src="../img/img_home/avatar.png" alt="Avatar" class="avatar_img">
                         <span class="user-name">${usuarioNombre} ${usuarioApellido}</span>
-                        <button id="btnCerrarSesion" class="logout-btn">Cerrar sesión</button>
                     </div>
                 `;
                 menuDesplegable.innerHTML = `
@@ -249,8 +227,22 @@ function verificarAutenticacion() {
                     <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
                     <li><a href="#">Contáctanos</a></li>
                 `;
-                document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
+                document.querySelector('.profile-user-name').textContent = `${usuarioNombre} ${usuarioApellido}`;
+                const profileInfo = document.querySelector('.profile-info');
+                const logoutBtnModal = document.querySelector('.profile-modal .logout-btn');
+                profileInfo.addEventListener('click', () => {
+                    profileModal.style.display = 'block';
+                });
+                document.querySelector('.profile-close').addEventListener('click', () => {
+                    profileModal.style.display = 'none';
+                });
+                profileModal.addEventListener('click', (e) => {
+                    if (e.target === profileModal) {
+                        profileModal.style.display = 'none';
+                    }
+                });
                 document.getElementById('btnCerrarSesionMenu').addEventListener('click', cerrarSesion);
+                logoutBtnModal.addEventListener('click', cerrarSesion);
             } else {
                 localStorage.clear();
                 userProfileContainer.innerHTML = `
@@ -276,6 +268,7 @@ function verificarAutenticacion() {
             `;
             menuDesplegable.innerHTML = `
                 <li><a href="../HTML/index_login.html?redirect=catalogo">Iniciar sesión</a></li>
+                <li><a href="../HTML/index_home.html">Home</a></li>
                 <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
                 <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
                 <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
@@ -285,14 +278,12 @@ function verificarAutenticacion() {
         });
 }
 
-// Cerrar sesión del usuario
 function cerrarSesion(e) {
     e.preventDefault();
     localStorage.clear();
     window.location.href = '../HTML/index_login.html?redirect=catalogo';
 }
 
-// Cargar productos desde la API
 async function cargarProductos() {
     try {
         const response = await fetch(`${API_URL}/productos`);
@@ -309,27 +300,18 @@ async function cargarProductos() {
     }
 }
 
-// ==============================================================
 // Gestión de Eventos
-// ==============================================================
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Verificar autenticación del usuario
     verificarAutenticacion();
-
-    // Cargar productos
     cargarProductos();
 
-    // Eventos de filtrado
     searchInput.addEventListener('input', filtrarProductos);
     filterSelect.addEventListener('change', filtrarProductos);
 
-    // Control del menú hamburguesa
     document.querySelector('#btn_menu').addEventListener('change', function () {
         document.body.classList.toggle('menu_active', this.checked);
     });
 
-    // Efecto de opacidad en el header al hacer scroll
     const header = document.querySelector('header');
     const alturaHeader = parseFloat(getComputedStyle(header).height);
     window.addEventListener('scroll', () => {

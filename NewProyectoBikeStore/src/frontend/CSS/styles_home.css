@@ -172,6 +172,13 @@ body {
     padding: 10px;
     margin-right: 20px;
     width: 150px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-profile:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
 }
 
 .profile-info {
@@ -191,13 +198,13 @@ body {
     text-overflow: ellipsis;
 }
 
-.logout-btn {
+.logout-btn, .update-btn {
     background-color: #c11000;
     color: white;
     border: none;
     padding: 5px 10px;
     width: 6rem;
-    height: 1.7rem;
+    height: 2.4rem;
     border-radius: 5px;
     cursor: pointer;
     font-size: 13px;
@@ -205,7 +212,7 @@ body {
     margin-top: 5px;
 }
 
-.logout-btn:hover {
+.logout-btn:hover, .update-btn:hover {
     background-color: #a00d00;
 }
 
@@ -259,7 +266,8 @@ body {
     font-size: 14px;
 }
 
-.cont_menu nav ul li .logout-btn {
+.cont_menu nav ul li .logout-btn,
+.cont_menu nav ul li .update-btn {
     background-color: #c11000;
     color: white;
     border: none;
@@ -270,7 +278,8 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.cont_menu nav ul li .logout-btn:hover {
+.cont_menu nav ul li .logout-btn:hover,
+.cont_menu nav ul li .update-btn:hover {
     background-color: #a00d00;
 }
 
@@ -288,11 +297,72 @@ body {
     color: #c11000;
 }
 
+/* Estilos Modal Perfil */
+.profile-modal {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 60px; /* Desplazado más a la izquierda */
+    background-color: #1c1c1c;
+    border: 1px solid #c11000;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,介绍
+0, 0, 0.3);
+    z-index: 1000;
+    min-width: 250px; /* Aumentado de 200px a 250px */
+}
+
+.profile-modal-content {
+    padding: 30px; /* Más espacio interno */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-close {
+    color: #c11000;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-close:hover {
+    color: #fff;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Aumentado para más espacio entre elementos */
+}
+
+.profile-avatar {
+    width: 60px; /* Ligeramente más grande */
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 15px; /* Más espacio debajo del avatar */
+}
+
+.profile-user-name {
+    color: #fff;
+    font-size: 18px; /* Ligeramente más grande */
+    font-weight: bold;
+    text-align: center;
+    max-width: 180px; /* Ajustado para el modal más grande */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Estilos Carrusel */
 .slider_container {
     position: relative;
     width: 100%;
-    /* max-width: 1200px; */
     margin: 0 auto;
     overflow: hidden;
 }
@@ -337,7 +407,8 @@ body {
     border-left: 4px solid #c11000; /* Borde rojo */
 }
 
-.slider-prev, .slider-next {
+.slider-prev,
+.slider-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -360,20 +431,39 @@ body {
     right: 10px;
 }
 
-.slider-prev:hover, .slider-next:hover {
+.slider-prev:hover,
+.slider-next:hover {
     background-color: gray; /* gris más oscuro al pasar el ratón */
 }
 
 @keyframes slide {
-    0% { transform: translateX(0%); }
-    20% { transform: translateX(0%); }
-    25% { transform: translateX(-25%); }
-    45% { transform: translateX(-25%); }
-    50% { transform: translateX(-50%); }
-    70% { transform: translateX(-50%); }
-    75% { transform: translateX(-75%); }
-    95% { transform: translateX(-75%); }
-    100% { transform: translateX(0%); }
+    0% {
+        transform: translateX(0%);
+    }
+    20% {
+        transform: translateX(0%);
+    }
+    25% {
+        transform: translateX(-25%);
+    }
+    45% {
+        transform: translateX(-25%);
+    }
+    50% {
+        transform: translateX(-50%);
+    }
+    70% {
+        transform: translateX(-50%);
+    }
+    75% {
+        transform: translateX(-75%);
+    }
+    95% {
+        transform: translateX(-75%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
 }
 
 .slider_frame ul {
@@ -536,11 +626,53 @@ body {
     padding: 20px;
     background: white;
     transition: transform 0.3s ease;
+    max-width: 250px; /* Límite máximo de ancho para consistencia */
+    width: 100%; /* Ajuste responsivo */
+    height: auto; /* Altura automática para adaptarse al contenido */
+    margin: 0 auto; /* Centrado */
 }
 
 .product1_dest:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-img {
+    width: 100%; /* Imagen ocupa todo el ancho del contenedor */
+    height: 150px; /* Altura fija para mantener proporción */
+    object-fit: cover; /* Recorta la imagen para ajustarse sin distorsión */
+    border-radius: 5px;
+    margin-bottom: 10px; /* Espacio debajo de la imagen */
+}
+
+.product-nombre {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.product-precio {
+    font-size: 1rem;
+    color: #c11000;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Ajustes responsivos para las cards */
+@media screen and (max-width: 768px) {
+    .product-img {
+        height: 120px; /* Altura menor en móviles */
+    }
+    .product1_dest {
+        max-width: 200px;
+    }
+    .destacados {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Menor tamaño en móvil */
+    }
 }
 
 /* Ajustes para los botones de cantidad y añadir al carrito */
@@ -708,12 +840,16 @@ h4 {
     transform: scale(1.05);
 }
 
-.info_pago, .info_calidad, .info_entrega {
+.info_pago,
+.info_calidad,
+.info_entrega {
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.info_pago:hover, .info_calidad:hover, .info_entrega:hover {
+.info_pago:hover,
+.info_calidad:hover,
+.info_entrega:hover {
     transform: scale(1.05);
 }
 
@@ -774,7 +910,7 @@ footer {
         font-size: 11px;
         max-width: 90px;
     }
-    .logout-btn {
+    .logout-btn, .update-btn {
         padding: 4px 8px;
         font-size: 10px;
     }
@@ -810,13 +946,14 @@ footer {
     .slider_frame {
         height: 60vh;
     }
-    /* .cap { height: 60vh; } */ /* Comentado si decides quitar .cap */
-    /* h2 { margin-top: 50vh; } */ /* Comentado si decides quitar .cap */
 
     /* Ajuste para el modal en tabletas */
     .modal-content {
         margin: 20% auto;
         width: 90%;
+    }
+    .profile-modal {
+        right: 40px; /* Ajustado para tabletas */
     }
 }
 
@@ -867,7 +1004,7 @@ footer {
         font-size: 10px;
         max-width: 80px;
     }
-    .logout-btn {
+    .logout-btn, .update-btn {
         padding: 3px 6px;
         font-size: 9px;
     }
@@ -893,7 +1030,7 @@ footer {
     }
 
     .container_users_carrito .user-profile {
-        display: none;
+        display: flex;
     }
 
     .botonera_container {
@@ -915,13 +1052,23 @@ footer {
     .slider_frame {
         height: 40vh;
     }
-    /* .cap { height: 40vh; } */ /* Comentado si decides quitar .cap */
-    /* .h2 { margin-top: 30vh; } */ /* Comentado si decides quitar .cap */
 
     /* Ajuste para el modal en móviles */
     .modal-content {
         margin: 20% auto;
         width: 90%;
+    }
+    .profile-modal {
+        right: 20px; /* Ajustado para móviles */
+        top: 70px;
+        min-width: 220px; /* Ajustado para móviles */
+    }
+    .profile-avatar {
+        width: 50px; /* Ajustado para móviles */
+        height: 50px;
+    }
+    .profile-user-name {
+        font-size: 16px; /* Ajustado para móviles */
     }
 }
 
@@ -975,4 +1122,26 @@ body.menu_active {
 .stock-modal p {
     margin: 0;
     font-weight: bold;
+}
+
+/* Estilos Notificación */
+.notification-container {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.notification {
+    background-color: #c11000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
 }

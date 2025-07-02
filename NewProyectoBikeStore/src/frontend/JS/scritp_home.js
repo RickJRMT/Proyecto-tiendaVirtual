@@ -10,6 +10,9 @@ const contenedorProductos = document.querySelector('#contenedorProductos');
 const templateProducto = document.querySelector('#templateProducto');
 const cartCountElement = document.querySelector('.cart-count');
 const menuDesplegable = document.querySelector('#menuDesplegable');
+const profileModal = document.querySelector('#profileModal');
+const profileUserName = document.querySelector('#profileUserName');
+const profileAvatar = document.querySelector('.profile-avatar');
 
 // Contador total inicial (sincronizado con localStorage)
 let totalCartCount = parseInt(localStorage.getItem('totalCartCount')) || 0;
@@ -31,6 +34,7 @@ const stockMessage = document.getElementById('stock-message');
 // EVENTOS PRINCIPALES
 // =========================
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM cargado, iniciando verificarAutenticacion y cargarProductos');
     verificarAutenticacion();
     cargarProductos();
 
@@ -45,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('menu_active', this.checked);
         const containerMenu = document.querySelector('.container_menu_desple');
         containerMenu.classList.toggle('active', this.checked);
+        closeProfileModal(); // Cerrar modal de perfil al abrir/cerrar menú hamburguesa
     });
 
     const filterButtons = document.querySelectorAll('.bt2');
@@ -63,7 +68,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const filter = document.querySelector('.bt2.active')?.getAttribute('data-filter') || 'precio';
         filtrarProductos(filter, searchInput.value);
     });
+
+    // Actualizar contador del carrito desde localStorage al cargar
+    if (cartCountElement) {
+        cartCountElement.textContent = totalCartCount;
+        cartCountElement.classList.toggle('hidden', totalCartCount === 0);
+    }
 });
+
+// Funciones para manejar el modal de perfil
+function toggleProfileModal() {
+    profileModal.style.display = profileModal.style.display === 'block' ? 'none' : 'block';
+}
+
+function closeProfileModal() {
+    profileModal.style.display = 'none';
+}
 
 // Verificar autenticación del usuario
 function verificarAutenticacion() {
@@ -72,16 +92,19 @@ function verificarAutenticacion() {
     const usuarioApellido = localStorage.getItem('usuarioApellido');
     const usuarioRol = localStorage.getItem('usuarioRol');
 
-    console.log('Valores en localStorage:', { usuarioId, usuarioNombre, usuarioApellido, usuarioRol });
+    console.log('Verificando autenticación - usuarioId:', usuarioId, 'usuarioNombre:', usuarioNombre);
 
     if (!usuarioId) {
-        console.log('No hay usuarioId en localStorage, mostrando "Iniciar sesión"');
+        console.log('No hay usuarioId, mostrando "Iniciar sesión"');
         userProfileContainer.innerHTML = `
             <ul class="users">
                 <li><img src="../img/img_home/avatar.png" alt="" class="avatar_img"></li>
                 <li class="iniciar_session"><a href="../HTML/index_login.html">Iniciar sesión</a></li>
             </ul>
         `;
+        profileUserName.textContent = 'Iniciar sesión';
+        document.getElementById('btnCerrarSesionModal').style.display = 'none';
+        document.getElementById('btnActualizarDatos').style.display = 'none';
         menuDesplegable.innerHTML = `
             <li><a href="../HTML/index_login.html">Iniciar sesión</a></li>
             <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
@@ -98,6 +121,7 @@ function verificarAutenticacion() {
             return response.json();
         })
         .then(data => {
+            console.log('Respuesta de verificación:', data);
             if (data.success) {
                 if (data.rol === 'admin') {
                     console.log('Usuario es admin, redirigiendo a index_admin.html');
@@ -107,21 +131,33 @@ function verificarAutenticacion() {
                 console.log('Usuario autenticado, actualizando DOM con nombre:', usuarioNombre, usuarioApellido);
                 userProfileContainer.innerHTML = `
                     <div class="profile-info">
+                        <img src="../img/img_home/avatar.png" alt="" class="avatar_img">
                         <span class="user-name">${usuarioNombre} ${usuarioApellido}</span>
-                        <button id="btnCerrarSesion" class="logout-btn">Cerrar sesión</button>
                     </div>
                 `;
-                document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
+                profileUserName.textContent = `${usuarioNombre} ${usuarioApellido}`;
+                document.getElementById('btnCerrarSesionModal').style.display = 'block';
+                document.getElementById('btnActualizarDatos').style.display = 'block';
+                document.getElementById('btnCerrarSesionModal').addEventListener('click', cerrarSesion);
+                document.getElementById('btnActualizarDatos').addEventListener('click', () => {
+                    console.log('Funcionalidad de actualizar datos no implementada aún');
+                    showNotification('Funcionalidad de actualizar datos no disponible');
+                });
 
                 menuDesplegable.innerHTML = `
                     <li><span class="user-name">Bienvenido, ${usuarioNombre} ${usuarioApellido}</span></li>
                     <li><button id="btnCerrarSesionMenu" class="logout-btn">Cerrar sesión</button></li>
+                    <li><button id="btnActualizarDatosMenu" class="update-btn">Actualizar datos</button></li>
                     <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
                     <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
                     <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
                     <li><a href="#">Contáctanos</a></li>
                 `;
                 document.getElementById('btnCerrarSesionMenu').addEventListener('click', cerrarSesion);
+                document.getElementById('btnActualizarDatosMenu').addEventListener('click', () => {
+                    console.log('Funcionalidad de actualizar datos no implementada aún');
+                    showNotification('Funcionalidad de actualizar datos no disponible');
+                });
             } else {
                 console.log('Usuario no válido según el servidor, mostrando "Iniciar sesión"');
                 localStorage.clear();
@@ -130,8 +166,22 @@ function verificarAutenticacion() {
         })
         .catch(error => {
             console.error('Error al verificar sesión:', error);
-            localStorage.clear();
-            window.location.href = '../HTML/index_login.html';
+            userProfileContainer.innerHTML = `
+                <ul class="users">
+                    <li><img src="../img/img_home/avatar.png" alt="" class="avatar_img"></li>
+                    <li class="iniciar_session"><a href="../HTML/index_login.html">Iniciar sesión</a></li>
+                </ul>
+            `;
+            profileUserName.textContent = 'Iniciar sesión';
+            document.getElementById('btnCerrarSesionModal').style.display = 'none';
+            document.getElementById('btnActualizarDatos').style.display = 'none';
+            menuDesplegable.innerHTML = `
+                <li><a href="../HTML/index_login.html">Iniciar sesión</a></li>
+                <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
+                <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
+                <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
+                <li><a href="#">Contáctanos</a></li>
+            `;
         });
 }
 
@@ -145,12 +195,20 @@ function cerrarSesion(e) {
 // Cargar productos desde la API
 async function cargarProductos() {
     try {
+        console.log('Intentando cargar productos desde:', `${API_URL}/productos?destacado=true`);
         const response = await fetch(`${API_URL}/productos?destacado=true`);
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
         productos = await response.json();
-        mostrarProductos(productos);
+        console.log('Productos cargados:', productos);
+        if (productos.length === 0) {
+            console.log('No hay productos destacados');
+            contenedorProductos.innerHTML = '<p>No hay productos destacados disponibles.</p>';
+        } else {
+            mostrarProductos(productos);
+        }
     } catch (error) {
         console.error('Error al cargar productos:', error);
+        contenedorProductos.innerHTML = '<p>Error al cargar los productos. Verifica la conexión con la API.</p>';
         showNotification('Error al cargar los productos');
     }
 }
@@ -182,9 +240,13 @@ async function mostrarProductos(productosMostrar) {
             const response = await fetch(`${API_URL}/imagenes/obtener/productos/id_producto/${producto.id_producto}`);
             if (!response.ok) throw new Error('Error al obtener la imagen');
             const data = await response.json();
-            if (data.imagen) img.src = `data:image/jpeg;base64,${data.imagen}`;
+            if (data.imagen) {
+                img.src = `data:image/jpeg;base64,${data.imagen}`;
+            } else {
+                img.src = 'https://via.placeholder.com/120x80?text=Sin+imagen';
+            }
         } catch (error) {
-            console.error('Error al cargar imagen:', error);
+            console.error('Error al cargar imagen para producto ID:', producto.id_producto, error);
             img.src = 'https://via.placeholder.com/120x80?text=Sin+imagen';
         }
 
@@ -215,7 +277,18 @@ async function mostrarProductos(productosMostrar) {
                 cantidad: quantityToAdd,
                 imagen: img.src
             };
-            carritoManager.agregarProducto(productoCarrito);
+            if (typeof carritoManager !== 'undefined' && carritoManager.agregarProducto) {
+                carritoManager.agregarProducto(productoCarrito);
+                totalCartCount += quantityToAdd;
+                if (cartCountElement) {
+                    cartCountElement.textContent = totalCartCount;
+                    cartCountElement.classList.remove('hidden');
+                }
+                localStorage.setItem('totalCartCount', totalCartCount);
+                showNotification(`Se añadieron ${quantityToAdd} ${producto.nombre}(s) al carrito`);
+            } else {
+                console.error('carritoManager no está definido o no tiene agregarProducto');
+            }
 
             currentQuantity = 1;
             quantitySpan.textContent = currentQuantity;
@@ -246,10 +319,10 @@ function filtrarProductos(filter, searchTerm) {
 // Verificar stock disponible
 async function verificarStock(idProducto, cantidad) {
     try {
-        const response = await fetch(`${API_URL}/stocks/${idProducto}`);
+        const response = await fetch(`${API_URL}/productos/${idProducto}`);
         if (!response.ok) throw new Error('Error al verificar stock');
-        const stock = await response.json();
-        return stock.stock >= cantidad;
+        const producto = await response.json();
+        return producto.saldo >= cantidad;
     } catch (error) {
         console.error('Error al verificar stock:', error);
         return false;
@@ -303,6 +376,9 @@ window.onclick = function (event) {
         if (event.target === modals[i]) {
             closeModal(modals[i].id);
         }
+    }
+    if (event.target === profileModal) {
+        closeProfileModal();
     }
 };
 

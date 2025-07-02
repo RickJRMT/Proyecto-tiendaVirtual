@@ -1,6 +1,4 @@
-/* ==========================================================================
-   Estilos Generales
-   ========================================================================== */
+/* Estilos Generales */
 * {
     text-decoration: none;
     list-style: none;
@@ -10,9 +8,7 @@
     margin: 0;
 }
 
-/* ==========================================================================
-   Estilos del Header
-   ========================================================================== */
+/* Estilos del Header */
 #header {
     width: 100%;
     padding: 47px;
@@ -125,9 +121,7 @@
     background-color: transparent;
 }
 
-/* ==========================================================================
-   Estilos de Notificaciones y Carrito
-   ========================================================================== */
+/* Estilos de Notificaciones y Carrito */
 .notificacion {
     position: fixed;
     top: 100px;
@@ -175,9 +169,7 @@
     display: none;
 }
 
-/* ==========================================================================
-   Estilos de Interacción
-   ========================================================================== */
+/* Estilos de Interacción */
 .buscar_input:focus {
     border-radius: 20px 50px 0 20px;
     border: 1px solid purple;
@@ -196,9 +188,7 @@
     color: #c11000;
 }
 
-/* ==========================================================================
-   Estilos del Menú Hamburguesa
-   ========================================================================== */
+/* Estilos del Menú Hamburguesa */
 .btn_menu,
 #btn_menu {
     display: none;
@@ -289,9 +279,7 @@ body.menu_active {
     overflow: hidden;
 }
 
-/* ==========================================================================
-   Estilos del Carrusel/Slider
-   ========================================================================== */
+/* Estilos del Carrusel/Slider */
 .slider_frame {
     width: 100%;
     height: 70vh;
@@ -341,9 +329,7 @@ h2 {
     100% { margin-left: -300%; }
 }
 
-/* ==========================================================================
-   Estilos del Catálogo de Productos
-   ========================================================================== */
+/* Estilos del Catálogo de Productos */
 .filtraje {
     display: flex;
     justify-content: flex-end;
@@ -475,9 +461,7 @@ h2 {
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* ==========================================================================
-   Estilos del Footer
-   ========================================================================== */
+/* Estilos del Footer */
 footer {
     background-color: black;
     color: white;
@@ -521,9 +505,7 @@ footer {
     transform: scale(1.1);
 }
 
-/* ==========================================================================
-   Estilos del Perfil de Usuario
-   ========================================================================== */
+/* Estilos del Perfil de Usuario */
 .profile-info {
     display: flex;
     flex-direction: column;
@@ -547,7 +529,7 @@ footer {
     border: none;
     padding: 5px 10px;
     width: 6rem;
-    height: 1.7rem;
+    height: 2.4rem; /* Cambio incorporado */
     border-radius: 5px;
     cursor: pointer;
     font-size: 13px;
@@ -565,9 +547,68 @@ footer {
     padding: 10px;
 }
 
-/* ==========================================================================
-   Media Queries para Responsividad
-   ========================================================================== */
+/* Estilos Modal Perfil */
+.profile-modal {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 60px; /* Desplazado más a la izquierda */
+    background-color: #1c1c1c;
+    border: 1px solid #c11000;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 250px; /* Aumentado para hacerlo más grande */
+}
+
+.profile-modal-content {
+    padding: 30px; /* Más espacio interno */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-close {
+    color: #c11000;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-close:hover {
+    color: #fff;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Más espacio entre elementos */
+}
+
+.profile-avatar {
+    width: 60px; /* Aumentado */
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 15px; /* Más espacio debajo del avatar */
+}
+
+.profile-user-name {
+    color: #fff;
+    font-size: 18px; /* Aumentado */
+    font-weight: bold;
+    text-align: center;
+    max-width: 180px; /* Ajustado para el modal más grande */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Media Queries para Responsividad */
 
 /* Ajustes para móviles (pantallas menores a 768px) */
 @media screen and (max-width: 768px) {
@@ -701,6 +742,22 @@ footer {
     h2 {
         margin-top: 30vh;
     }
+
+    /* Ajuste para el modal en móviles */
+    .profile-modal {
+        right: 20px; /* Ajustado para móviles */
+        top: 70px;
+        min-width: 220px; /* Ajustado para móviles */
+    }
+
+    .profile-avatar {
+        width: 50px; /* Ajustado para móviles */
+        height: 50px;
+    }
+
+    .profile-user-name {
+        font-size: 16px; /* Ajustado para móviles */
+    }
 }
 
 /* Ajustes para tabletas (pantallas entre 768px y 1024px) */
@@ -715,5 +772,10 @@ footer {
 
     h2 {
         margin-top: 50vh;
+    }
+
+    /* Ajuste para el modal en tabletas */
+    .profile-modal {
+        right: 40px; /* Ajustado para tabletas */
     }
 }

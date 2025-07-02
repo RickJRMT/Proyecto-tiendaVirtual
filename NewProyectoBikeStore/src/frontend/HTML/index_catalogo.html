@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-    <!-- Metadatos y enlaces -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../img/ciclista.png">
@@ -11,14 +10,11 @@
 </head>
 
 <body>
-    <!-- Encabezado de la página -->
     <header id="header">
         <div class="menu_container">
-            <!-- Logo de la página -->
             <a href="../HTML/index_home.html">
                 <img src="../img/ciclista.png" alt="Logo Bike Store" class="logo_img">
             </a>
-            <!-- Menú principal -->
             <div class="cont_hyper">
                 <ul>
                     <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
@@ -26,7 +22,6 @@
                     <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
                 </ul>
             </div>
-            <!-- Barra de búsqueda -->
             <div class="buscar">
                 <div class="buscar_container">
                     <input type="search" class="buscar_input" placeholder="Buscar productos"
@@ -34,11 +29,21 @@
                     <input type="button" class="buscador_boton" value="­" aria-label="Botón de búsqueda">
                 </div>
             </div>
-            <!-- Contenedor de usuario y carrito -->
             <div class="container_users_carrito">
                 <ul class="users">
                     <!-- Contenido dinámico para usuario (se rellena con JS) -->
                 </ul>
+                <div class="profile-modal" id="profileModal">
+                    <div class="profile-modal-content">
+                        <span class="profile-close">×</span>
+                        <div class="profile-details">
+                            <img src="../img/img_home/avatar.png" alt="Avatar" class="profile-avatar">
+                            <span class="profile-user-name"></span>
+                            <button class="logout-btn">Cerrar sesión</button>
+                            <button class="logout-btn" id="btnActualizarDatos">Actualizar datos</button>
+                        </div>
+                    </div>
+                </div>
                 <ul class="carrito_contenedor">
                     <li><a href="../HTML/index_carrito.html"><img src="../img/img_home/iconos/carrito-de-compras.png"
                                 alt="Carrito" class="carrito_img">
@@ -48,7 +53,6 @@
                 </ul>
             </div>
         </div>
-        <!-- Menú hamburguesa -->
         <div class="btn_menu">
             <label for="btn_menu">
                 <img src="../img/img_catalogo/menu_hamburger.png" alt="Menú" class="menu_icono">
@@ -57,7 +61,7 @@
             <div class="container_menu_desple">
                 <div class="cont_menu">
                     <nav>
-                        <ul>
+                        <ul id="menuDesplegable">
                             <!-- Contenido dinámico para menú hamburguesa (se rellena con JS) -->
                         </ul>
                     </nav>
@@ -67,10 +71,8 @@
         </div>
     </header>
 
-    <!-- Contenedor para notificaciones -->
     <div id="notificacion" class="notificacion hidden"></div>
 
-    <!-- Carrusel de imágenes -->
     <div class="cap">
         <h2>¡Encuentra el equipo perfecto!</h2>
     </div>
@@ -87,7 +89,6 @@
         </ul>
     </div>
 
-    <!-- Sección principal con catálogo de productos -->
     <main class="products_container_todos">
         <div class="filtraje">
             <label for="filtrado">Filtrar por:</label>
@@ -102,7 +103,6 @@
         </div>
     </main>
 
-    <!-- Pie de página -->
     <footer>
         <div class="row">
             <div class="col1">
@@ -123,9 +123,7 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="../JS/script_catalogo.js"></script>
-    <!-- <script src="../JS/carrito_manager.js"></script> -->
 </body>
 
 </html>

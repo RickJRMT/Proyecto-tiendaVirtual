@@ -7,13 +7,12 @@
     margin: 0;
 }
 
-/* Aseguramos que el html y el body ocupen toda la altura de la pagina */
-html{
+/* Aseguramos que el html y el body ocupen toda la altura de la página */
+html {
     height: 100%;
 }
 
 body {
-    /* background-color: #dcdcdc; */
     background-image: url(../img/img_catalogo/fondos/fondo_main2.jpg);
     background-size: cover;
     background-position: center;
@@ -25,23 +24,20 @@ body {
     flex-direction: column;
 }
 
-/* Se hara que el main ocupe el espacio del pie de pagina fantasma "footer invisble"  */
+/* Se hará que el main ocupe el espacio del pie de página fantasma "footer invisible" */
 main {
-    flex: 1 0 auto; /* Permite que el main ocupe el espacio restante entre el header y el footer */
-    /* padding-top: 50px; Espacio ajustado para dejar el header fijo */
-    /* Quite el padding ya que hacia que la tabla permanezca totalmente abajo en pantalla de escritorio */
+    flex: 1 0 auto;
 }
 
+/* Estilos del Header */
 #header {
     width: 100%;
     padding: 40px;
-    /* Reajustar el padding */
     position: fixed;
     background-color: #000000;
     opacity: 90%;
     border-bottom: 1px solid black;
     z-index: 3;
-    /* El código del home no tendrá este transition, hay que implementarlo. Aquí lo hice para que el cambio de opacidad del header no sea tan fructifero */
     transition: all 0.5s ease;
 }
 
@@ -60,40 +56,28 @@ main {
 .logo_img {
     position: relative;
     right: 30px;
-    /* "9" Margin arriba, "20" derecha, "0" inferior" "70" izquierda  */
     margin: 9px 20px 0 70px;
     height: 3rem;
     width: auto;
-
-    /* Si activo el eliminador de fondo, el logo no aparecerá */
-    /* filter: brightness(1.1);
-    mix-blend-mode: multiply; */
 }
 
-/* con esta, los li se pondrán en el centro */
 .cont_hyper {
     display: flex;
     align-items: center;
 }
 
-/* Con esta clase se rompera la disposicion vertical de los li y se creará un distanciamiento entre ellos  */
 .cont_hyper ul {
     display: flex;
     gap: 60px;
 }
 
 .cont_hyper a,
-.container_users_carrito a,
-.col1 a:hover,
-.col1 h4:hover,
-.col2 a:hover,
-.col3 h4:hover {
+.container_users_carrito a {
     color: white;
     transition: all 0.5s ease;
 }
 
 .container_users_carrito {
-    /* 4px arriba, 35px derecha, 0px abajo, 0px izquierda */
     margin: 4px 35px 0 0;
     display: flex;
     justify-content: center;
@@ -122,7 +106,6 @@ main {
     border-radius: 30px;
     background-color: white;
     margin-top: 12px;
-
 }
 
 .buscar_container {
@@ -132,7 +115,6 @@ main {
     height: 100%;
     border-radius: 30px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-
 }
 
 .buscar_input {
@@ -144,7 +126,6 @@ main {
     border-radius: 20px;
     padding: 10px 15px;
     transition: all 0.3s ease;
-
 }
 
 .buscador_boton {
@@ -154,18 +135,14 @@ main {
     margin-left: 5px;
     border: none;
     background-image: url(../img/img_home/lupa.png);
-    /* define el tamaño de la lupa, pues por defecto no se mostrará la imagen */
     background-size: 25px;
-    /* Como la imagen se repite, se usa el no repeact y lo posicionamos al centro */
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-    /* para que el color de fondo por defecto no se muestre */
     background-color: transparent;
-
 }
 
-/* Estetica de elementos */
+/* Estética de elementos */
 .buscar_input:focus {
     border-radius: 20px 50px 0 20px;
     border: 1px solid purple;
@@ -176,21 +153,15 @@ main {
 }
 
 .cont_hyper a:hover,
-.container_users_carrito a:hover,
-.col1 a:hover,
-.col1 h4:hover,
-.col2 a:hover,
-.col3 h4:hover {
+.container_users_carrito a:hover {
     color: #c11000;
 }
 
 /* Menú hamburguesa */
-/* Curiosamente, si no se cita el checbox, pues no lo oculta */
 .btn_menu,
 #btn_menu {
     display: none;
 }
-
 
 h1 {
     text-align: center;
@@ -211,17 +182,19 @@ h1 {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.34);
     padding: 20px;
-    position: relative; /* Necesario para posicionar el suma-productos */
+    position: relative;
 }
 
 .cart-items {
     width: 65%;
-    max-height: 60vh; /* Altura máxima para que no crezca indefinidamente */
-    overflow-y: auto; /* Agrega un scroll vertical */
-    padding-right: 10px; /* Espacio para el scrollbar */
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* Estilizar el scrollbar para que sea más atractivo (opcional) */
 .cart-items::-webkit-scrollbar {
     width: 8px;
 }
@@ -242,20 +215,101 @@ h1 {
     margin-bottom: 10px;
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 10px;
-    position: sticky; /* Fija los encabezados en la parte superior */
+    position: sticky;
     top: 0;
-    background-color: #f9f9f9; /* Fondo para que no se vea transparente */
-    z-index: 1; /* Asegura que los encabezados estén por encima de los productos */
+    background-color: #f9f9f9;
+    z-index: 1;
+    align-items: center;
 }
 
 .titulos h4 {
     color: #666;
     font-weight: normal;
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
+#contenedorCarrito .producto_carrito {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    min-height: 80px;
+    max-height: 80px; /* Restringir altura máxima */
+}
+
+#contenedorCarrito .producto_carrito .imagen_carrito {
+    height: 60px;
+    width: 90px;
+    object-fit: cover;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    max-width: 90px;
+    max-height: 60px;
+}
+
+#contenedorCarrito .producto_carrito .imagen_carrito img {
+    height: 100%; /* Forzar a llenar el contenedor */
+    width: 100%;  /* Forzar a llenar el contenedor */
+    object-fit: cover; /* Mantener proporción y recortar si es necesario */
+    max-width: 90px; /* Restricción estricta */
+    max-height: 60px; /* Restricción estricta */
+}
+
+#contenedorCarrito .producto_carrito span {
+    font-size: 1rem;
+    color: #333;
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#contenedorCarrito .producto_carrito .cantidad_input {
+    width: 50px;
+    height: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contenedorCarrito .producto_carrito .eliminar_btn {
+    width: 30px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contenedorCarrito .producto_carrito .eliminar_btn:hover {
+    background-color: red;
+    color: white;
+}
+
+/* Estilos existentes para mantener compatibilidad */
 .product-1 {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr; /* Ajustado para incluir el botón de eliminar */
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
     align-items: center;
     text-align: center;
     margin-bottom: 15px;
@@ -270,21 +324,30 @@ h1 {
 }
 
 .item-image img {
-    height: 80px; /* Tamaño más pequeño para las imágenes */
-    width: 120px;
-    filter: none; /* Eliminado el filtro para que las imágenes se vean más naturales */
+    height: 60px;
+    width: 90px;
+    filter: none;
     mix-blend-mode: multiply;
+    object-fit: cover;
+    max-width: 90px;
+    max-height: 60px;
 }
 
 .item-image p {
     font-size: 1rem;
     color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .product-1 .item-price,
 .product-1 .item-total {
     font-size: 1rem;
     color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .cantidad-control-btn {
@@ -319,7 +382,7 @@ h1 {
     font-size: 1rem;
 }
 
-.remove-item{
+.remove-item {
     width: 30px;
     height: 30px;
     background-color: #f0f0f0;
@@ -330,11 +393,12 @@ h1 {
     transition: background-color 0.3s;
 }
 
-.bi-trash3{
+.bi-trash3 {
     color: #000000;
 }
 
-.remove-item:hover, .bi-trash3:hover {
+.remove-item:hover,
+.bi-trash3:hover {
     background-color: red;
     color: white;
 }
@@ -346,9 +410,9 @@ h1 {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    position: sticky; /* Fija el resumen del detalle de compra */
-    top: 140px; /* Ajustado para dejar espacio para el header fijo */
-    align-self: flex-start; /* Evita que se estire */
+    position: sticky;
+    top: 140px;
+    align-self: flex-start;
 }
 
 .suma-productos h4 {
@@ -375,7 +439,6 @@ h1 {
     border-top: 1px solid #e0e0e0;
     margin: 10px 0;
 }
-
 
 .comprar-btn {
     width: 100%;
@@ -404,7 +467,7 @@ h1 {
     position: absolute;
     top: -10px;
     right: -10px;
-    background-color: #c11000; /* Color rojo, acorde con tu diseño */
+    background-color: #c11000;
     color: white;
     font-size: 0.8rem;
     font-weight: bold;
@@ -425,7 +488,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo gris semitransparente */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -456,7 +519,7 @@ h1 {
 }
 
 .factura h2 {
-    color: #c11000; /* Rojo */
+    color: #c11000;
     font-size: 1.5rem;
     margin-bottom: 20px;
 }
@@ -481,7 +544,7 @@ h1 {
 }
 
 .cerrar-factura {
-    background-color: #c11000; /* Rojo */
+    background-color: #c11000;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -492,87 +555,115 @@ h1 {
 }
 
 .cerrar-factura:hover {
-    background-color: #a00d00; /* Rojo más oscuro */
+    background-color: #a00d00;
 }
 
-/* Ajuste en el media query para pantallas pequeñas */
-@media screen and (max-width: 768px) {
-    .suma-productos {
-        width: 100%;
-        margin-top: 20px;
-    }
+/* Estilos del Perfil de Usuario */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
 }
 
-/* Media queries para pantallas más pequeñas (móviles y tabletas) */
-@media screen and (max-width: 768px) {
-    /* Ajustar el contenedor principal */
-    .cart-container {
-        flex-direction: column;
-        width: 90%;
-    }
-    
-    .cart-items {
-        width: 100%;
-        max-height: 50vh; /* Reduce la altura maxima en dispositivos mobiles */
-    }
-
-    /* Ocultar los encabezados de la tabla en móviles */
-    .titulos {
-        display: none;
-    }
-    
-    /* Cambiar el diseño de los productos a un formato apilado (vertical) */
-    .product-1 {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        background-color: #fff;
-    }
-    
-    .item-image {
-        flex-direction: row; /* Mantener imagen y nombre en una fila */
-        align-items: center;
-        margin-bottom: 10px;
-        width: 100%;
-    }
-
-    .item-image img {
-        height: 60px;
-        width: 90px;
-    }
-
-    .item-image p {
-        margin-left: 10px;
-        font-size: 1rem;
-    }
-    
-    .product-1 .item-price,
-    .product-1 .item-total {
-        font-size: 1rem;
-        margin: 5px 0;
-        text-align: left;
-    }
-    
-    .cantidad-control-btn {
-        margin: 5px 0;
-    }
-
-    .remove-item {
-        align-self: flex-end;
-        margin-top: 10px;
-    }
-    
-    .suma-productos {
-        width: 100%;
-        position: static; /* Hace que en moviles desactive el sticky para que fluta con el contenido */
-        margin-top: 20px;
-    }
+.user-name {
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+.logout-btn,
+.update-btn {
+    background-color: #c11000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    width: 6rem;
+    height: 2.4rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+}
+
+.logout-btn:hover,
+.update-btn:hover {
+    background-color: #a00d00;
+}
+
+.cont_menu .logout-btn,
+.cont_menu .update-btn {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}
+
+/* Estilos Modal Perfil */
+.profile-modal {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 60px;
+    background-color: #1c1c1c;
+    border: 1px solid #c11000;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 250px;
+}
+
+.profile-modal-content {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-close {
+    color: #c11000;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-close:hover {
+    color: #fff;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.profile-user-name {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* Estilos para notificación y modal de confirmación */
 .notificacion {
@@ -592,7 +683,7 @@ h1 {
     z-index: 1000;
 }
 
-.notificacion.mostrar {
+.notificacion.visible {
     opacity: 1;
     visibility: visible;
 }
@@ -612,7 +703,7 @@ h1 {
     transition: opacity 0.3s ease;
 }
 
-.confirmacion-modal.mostrar {
+.confirmacion-modal.visible {
     opacity: 1;
     visibility: visible;
 }
@@ -633,7 +724,8 @@ h1 {
     gap: 15px;
 }
 
-.confirmar-btn, .cancelar-btn {
+.confirmar-btn,
+.cancelar-btn {
     width: 120px;
     padding: 10px;
     font-size: 1rem;
@@ -672,7 +764,7 @@ h1 {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1002; /* Más alto que el modal de confirmación */
+    z-index: 1002;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease;
@@ -680,7 +772,7 @@ h1 {
     width: 90%;
 }
 
-.detalle-venta-modal.mostrar {
+.detalle-venta-modal.visible {
     opacity: 1;
     visibility: visible;
 }
@@ -727,80 +819,14 @@ h1 {
     background-color: #888;
 }
 
-@media screen and (max-width: 480px) {
-    .item-image img {
-        height: 50px;
-        width: 75px;
-    }
-    
-    .item-image p {
-        font-size: 0.9rem;
-    }
-    
-    .product-1 .item-price,
-    .product-1 .item-total {
-        font-size: 0.9rem;
-    }
-
-    .cantidad-btn {
-        width: 20px;
-        height: 20px;
-        font-size: 1rem;
-    }
-
-    .mostrar-cantidad {
-        width: 40px;
-        height: 20px;
-        font-size: 0.9rem;
-    }
-}
-
-/* --------------------------------------------------------------- */
-
-@keyframes slide {
-    0% {
-        margin-left: 0%;
-    }
-
-    20% {
-        margin-left: 0%;
-    }
-    
-    25% {
-        margin-left: -100%;
-    }
-    
-    45% {
-        margin-left: -100%;
-    }
-    
-    50% {
-        margin-left: -200%;
-    }
-    
-    70% {
-        margin-left: -200%;
-    }
-    
-    75% {
-        margin-left: -300%;
-    }
-
-    100% {
-        margin-left: -300%;
-    }
-}
-
-@media screen and (max-width:768px) {
-
+/* Media queries para pantallas más pequeñas (móviles y tabletas) */
+@media screen and (max-width: 768px) {
     .logo_img {
         display: none;
     }
 
-    /* Código del menú desplegable */
     .btn_menu {
         display: flex;
-
     }
 
     .menu_icono {
@@ -815,7 +841,6 @@ h1 {
     }
 
     .container_menu_desple {
-        /* Está es la capa opaca que cubrirá toda la pantalla */
         position: absolute;
         background-color: rgba(0, 0, 0, 0.5);
         height: 100vh;
@@ -823,7 +848,6 @@ h1 {
         top: 0;
         left: 0;
         visibility: hidden;
-        /*ocultará el elemento, pero seguira manteniendo su espacio en la pagina */
         opacity: 0;
         transition: all 500ms ease;
         z-index: 2;
@@ -863,12 +887,12 @@ h1 {
         transition: all 0.3s ease;
     }
 
-    #btn_menu:checked~.container_menu_desple {
+    #btn_menu:checked ~ .container_menu_desple {
         opacity: 1;
         visibility: visible;
     }
 
-    #btn_menu:checked~.container_menu_desple .cont_menu {
+    #btn_menu:checked ~ .container_menu_desple .cont_menu {
         transform: translateX(0%);
     }
 
@@ -890,7 +914,6 @@ h1 {
         overflow: hidden;
     }
 
-    /* Personalizando los demás elementos del header */
     .users,
     .carrito_texto {
         display: none;
@@ -913,6 +936,116 @@ h1 {
         width: 420px;
         margin-left: 80px;
     }
+
+    .cart-container {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .cart-items {
+        width: 100%;
+        max-height: 50vh;
+    }
+
+    .titulos {
+        display: none;
+    }
+
+    #contenedorCarrito .producto_carrito {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        background-color: #fff;
+        gap: 10px;
+    }
+
+    #contenedorCarrito .producto_carrito .imagen_carrito {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: 150px;
+    }
+
+    #contenedorCarrito .producto_carrito .imagen_carrito img {
+        height: 100%; /* Forzar a llenar el contenedor */
+        width: 100%;  /* Forzar a llenar el contenedor */
+        object-fit: cover; /* Mantener proporción y recortar */
+        max-width: 150px; /* Ajuste para móviles */
+        max-height: 100px; /* Ajuste para móviles */
+    }
+
+    #contenedorCarrito .producto_carrito span {
+        margin: 5px 0;
+        text-align: left;
+        max-width: 100%;
+    }
+
+    #contenedorCarrito .producto_carrito .cantidad_input {
+        margin: 5px 0;
+    }
+
+    #contenedorCarrito .producto_carrito .eliminar_btn {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+
+    .suma-productos {
+        width: 100%;
+        position: static;
+        margin-top: 20px;
+    }
+
+    .profile-modal {
+        right: 20px;
+        top: 70px;
+        min-width: 220px;
+    }
+
+    .profile-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .profile-user-name {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #contenedorCarrito .producto_carrito .imagen_carrito img {
+        height: 100%; /* Forzar a llenar el contenedor */
+        width: 100%;  /* Forzar a llenar el contenedor */
+        object-fit: cover; /* Mantener proporción y recortar */
+        max-width: 120px; /* Ajuste para pantallas muy pequeñas */
+        max-height: 80px; /* Ajuste para pantallas muy pequeñas */
+    }
+
+    #contenedorCarrito .producto_carrito span {
+        font-size: 0.9rem;
+    }
+
+    #contenedorCarrito .producto_carrito .cantidad_input {
+        width: 40px;
+        height: 20px;
+        font-size: 0.9rem;
+    }
+
+    #contenedorCarrito .producto_carrito .eliminar_btn {
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .profile-modal {
+        right: 40px;
+    }
 }
 
 .login-required-modal {
@@ -930,7 +1063,7 @@ h1 {
     transition: opacity 0.3s ease;
 }
 
-.login-required-modal.mostrar {
+.login-required-modal.visible {
     opacity: 1;
     visibility: visible;
 }
@@ -981,37 +1114,4 @@ h1 {
 
 .login-required-buttons .cancel-btn:hover {
     background-color: #888;
-}
-
-.profile-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.profile-image-placeholder {
-    width: 2rem;
-    height: 2rem;
-    background: url('../img/img_catalogo/avatar.png') no-repeat center;
-    background-size: cover;
-    border-radius: 50%;
-}
-
-.user-name {
-    color: white;
-    font-size: 1rem;
-}
-
-.logout-btn {
-    background: none;
-    border: none;
-    color: #c11000;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.cont_menu .logout-btn {
-    width: 100%;
-    text-align: left;
-    padding: 10px;
 }

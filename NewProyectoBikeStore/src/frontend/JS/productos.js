@@ -1,265 +1,174 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const productoModal = document.getElementById('productoModal');
-    const productoForm = document.getElementById('productoForm');
-    const addProductBtn = document.getElementById('addProductBtn');
-    const tableBody = document.getElementById('productosTableBody');
-    const modalTitle = document.getElementById('modalTitle');
-    const searchInput = document.getElementById('searchProduct');
-    const productoIdInput = document.getElementById('productoId');
+// URL base de la API
+const API_URL = 'http://localhost:3000/api';
 
-    // Función para cargar productos
-    async function cargarProductos() {
-        try {
-            // Mostrar indicador de carga
-            const tableBody = document.getElementById('productosTableBody');
-            tableBody.innerHTML = '<tr><td colspan="8" class="loading">Cargando productos...</td></tr>';
+// Elementos del DOM
+const productForm = document.getElementById('productForm');
+const formTitle = document.getElementById('formTitle');
+const submitBtn = document.getElementById('submitBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const imageInput = document.getElementById('imagen');
+const imagePreview = document.getElementById('imagePreview');
+const productsTable = document.getElementById('productsBody');
+let editingProductId = null;
 
-            const response = await fetch('http://localhost:3000/api/producto');
-            if (!response.ok) {
-                throw new Error('Error al cargar los productos');
-            }
-            
-            const productos = await response.json();
-            mostrarProductos(productos);
-        } catch (error) {
-            console.error('Error al cargar productos:', error);
-            mostrarNotificacion('Error al cargar los productos', 'error');
-            const tableBody = document.getElementById('productosTableBody');
-            tableBody.innerHTML = '<tr><td colspan="8" class="error">Error al cargar los productos</td></tr>';
-        }
+// Cargar productos al iniciar
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+});
+
+// Vista previa de la imagen
+imageInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            imagePreview.src = event.target.result;
+            imagePreview.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
     }
+});
 
-    // Función para mostrar productos en la tabla
-    function mostrarProductos(productos) {
-        tableBody.innerHTML = '';
-        productos.forEach(producto => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${producto.id_producto}</td>
-                <td>${producto.nombre_producto}</td>
-                <td>${producto.detalle_producto}</td>
-                <td>$${producto.precio_compra.toLocaleString()}</td>
-                <td>$${producto.precio_venta.toLocaleString()}</td>
-                <td>${obtenerNombreCategoria(producto.categoria_id)}</td>
-                <td>${producto.stock}</td>
-                <td>${producto.impuesto}%</td>
-                <td>
-                    <button class="edit_btn" data-id="${producto.id_producto}">Editar</button>
-                    <button class="delete_btn" data-id="${producto.id_producto}">Eliminar</button>
-                </td>
-            `;
-            tableBody.appendChild(row);
+// Enviar formulario (Crear o Actualizar)
+productForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById('nombre').value;
+    const precio_venta = document.getElementById('precio_venta').value;
+    const descripcion = document.getElementById('descripcion').value;
+    const entrada = document.getElementById('entrada').value || 0;
+    const salida = document.getElementById('salida').value || 0;
+    let imagenBase64 = null;
+
+    // Convertir imagen a base64 si se seleccionó una
+    if (imageInput.files[0]) {
+        const reader = new FileReader();
+        imagenBase64 = await new Promise((resolve) => {
+            reader.onload = (e) => resolve(e.target.result.split(',')[1]); // Obtener solo la parte base64
+            reader.readAsDataURL(imageInput.files[0]);
         });
     }
 
-    // Función para obtener el nombre de la categoría
-    function obtenerNombreCategoria(categoriaId) {
-        const categorias = {
-            1: 'Bicicletas de Montaña',
-            2: 'Bicicletas de Ruta',
-            3: 'Accesorios',
-            4: 'Repuestos',
-            5: 'Ropa Ciclista'
-        };
-        return categorias[categoriaId] || 'Desconocida';
-    }
+    const productData = {
+        nombre,
+        precio_venta,
+        descripcion,
+        entrada,
+        salida,
+        imagenBase64
+    };
+    console.log('Datos enviados al actualizar:', productData); // se agrega log
 
-    // Función para abrir el modal
-    async function abrirModal(productoId = null) {
-        if (productoId) {
-            modalTitle.textContent = 'Editar Producto';
-            try {
-                const response = await fetch(`http://localhost:3000/api/producto/${productoId}`);
-                const producto = await response.json();
-                
-                productoIdInput.value = producto.id_producto;
-                document.getElementById('nombre_producto').value = producto.nombre_producto;
-                document.getElementById('detalle_producto').value = producto.detalle_producto;
-                document.getElementById('precio_compra').value = producto.precio_compra;
-                document.getElementById('precio_venta').value = producto.precio_venta;
-                document.getElementById('categoria').value = producto.categoria_id;
-                document.getElementById('impuesto').value = producto.impuesto;
-            } catch (error) {
-                console.error('Error al cargar producto:', error);
-                alert('Error al cargar el producto');
-            }
+    try {
+        if (editingProductId) {
+            await updateProduct(editingProductId, productData);
+            alert('Producto actualizado correctamente');
         } else {
-            modalTitle.textContent = 'Agregar Nuevo Producto';
-            productoIdInput.value = '';
-            productoForm.reset();
+            await createProduct(productData);
+            alert('Producto creado correctamente');
         }
-        productoModal.classList.add('active');
+        resetForm();
+        loadProducts();
+    } catch (error) {
+        console.error('Error detallado:', error);
+        alert(error.message); // Mostrar el mensaje de error específico
     }
+});
 
-    // Función para cerrar el modal
-    function cerrarModal() {
-        productoModal.classList.remove('active');
-        productoForm.reset();
+// Cancelar edición
+cancelBtn.addEventListener('click', () => {
+    resetForm();
+});
+
+// Crear producto
+async function createProduct(productData) {
+    const response = await fetch(`${API_URL}/productos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(productData)
+    });
+    if (!response.ok) throw new Error('Error al crear');
+    return await response.json();
+}
+
+// Obtener todos los productos
+async function loadProducts() {
+    const response = await fetch(`${API_URL}/productos`);
+    const products = await response.json();
+    renderProducts(products);
+}
+
+// Actualizar producto
+async function updateProduct(id, productData) {
+    const response = await fetch(`${API_URL}/productos/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(productData)
+    });
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Error al actualizar: ${errorData.error || response.statusText}`);
     }
+    return await response.json();
+}
 
-    // Event listeners
-    addProductBtn.addEventListener('click', () => abrirModal());
-
-    document.querySelector('.close_modal').addEventListener('click', cerrarModal);
-    document.querySelector('.btn_cancelar').addEventListener('click', cerrarModal);
-
-    // Manejar el envío del formulario
-    productoForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(productoForm);
-        const data = {
-            nombre_producto: formData.get('nombre_producto'),
-            detalle_producto: formData.get('detalle_producto'),
-            precio_compra: parseFloat(formData.get('precio_compra')),
-            precio_venta: parseFloat(formData.get('precio_venta')),
-            categoria_id: parseInt(formData.get('categoria_id')),
-            impuesto: parseFloat(formData.get('impuesto'))
-        };
-        const productoId = productoIdInput.value;
-
-        try {
-            const url = productoId ? `http://localhost:3000/api/producto/${productoId}` : 'http://localhost:3000/api/producto';
-            const method = productoId ? 'PUT' : 'POST';
-
-            // Mostrar indicador de carga
-            const submitBtn = productoForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Guardando...';
-
-            const response = await fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (response.ok) {
-                // Cerrar el modal primero
-                cerrarModal();
-                
-                // Mostrar notificación de éxito
-                mostrarNotificacion(
-                    productoId ? 'Producto actualizado exitosamente' : 'Producto agregado exitosamente',
-                    'success'
-                );
-                
-                // Recargar la tabla de productos
-                await cargarProductos();
-            } else {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Error en la operación');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            mostrarNotificacion(error.message || 'Error al guardar el producto', 'error');
-        } finally {
-            // Restaurar el botón de submit
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
-            }
-        }
+// Desactivar producto
+async function deactivateProduct(id) {
+    const response = await fetch(`${API_URL}/productos/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
     });
+    if (!response.ok) throw new Error('Error al desactivar');
+    loadProducts();
+    alert('Producto desactivado correctamente');
+}
 
-    // Manejar clic en botones de editar y eliminar
-    document.addEventListener('click', async (e) => {
-        if (e.target.classList.contains('edit_btn')) {
-            const id = e.target.dataset.id;
-            await abrirModal(id);
-        } else if (e.target.classList.contains('delete_btn')) {
-            const id = e.target.dataset.id;
-            const nombreProducto = e.target.closest('tr').querySelector('td:nth-child(2)').textContent;
-            
-            // Crear modal de confirmación
-            const confirmacion = document.createElement('div');
-            confirmacion.className = 'modal confirmacion_modal';
-            confirmacion.innerHTML = `
-                <div class="modal_content">
-                    <div class="modal_header">
-                        <h3>Confirmar Eliminación</h3>
-                        <span class="close_modal">&times;</span>
-                    </div>
-                    <div class="modal_body">
-                        <p>¿Estás seguro de que deseas eliminar el producto "${nombreProducto}"?</p>
-                        <p class="warning">Esta acción no se puede deshacer.</p>
-                    </div>
-                    <div class="modal_footer">
-                        <button class="btn_cancelar">Cancelar</button>
-                        <button class="btn_eliminar">Eliminar</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(confirmacion);
-            confirmacion.classList.add('active');
-            
-            // Eventos del modal de confirmación
-            const closeModal = () => {
-                confirmacion.classList.remove('active');
-                setTimeout(() => confirmacion.remove(), 300);
-            };
-            
-            confirmacion.querySelector('.close_modal').addEventListener('click', closeModal);
-            confirmacion.querySelector('.btn_cancelar').addEventListener('click', closeModal);
-            
-            confirmacion.querySelector('.btn_eliminar').addEventListener('click', async () => {
-                try {
-                    const response = await fetch(`http://localhost:3000/api/producto/${id}`, {
-                        method: 'DELETE'
-                    });
-                    
-                    if (response.ok) {
-                        cargarProductos();
-                        mostrarNotificacion('Producto eliminado exitosamente', 'success');
-                    } else {
-                        throw new Error('Error al eliminar el producto');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    mostrarNotificacion('Error al eliminar el producto', 'error');
-                } finally {
-                    closeModal();
-                }
-            });
-        }
+// Renderizar productos en la tabla
+function renderProducts(products) {
+    productsTable.innerHTML = '';
+    products.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td class="p-2 border">${product.id_producto}</td>
+            <td class="p-2 border">${product.nombre}</td>
+            <td class="p-2 border">${product.precio_venta}</td>
+            <td class="p-2 border">${product.saldo}</td>
+            <td class="p-2 border"><img src="data:image/jpeg;base64,${product.imagen || ''}" alt="${product.nombre}" class="w-16 h-16 object-cover"></td>
+            <td class="p-2 border">
+                <button onclick="editProduct(${product.id_producto})" class="bg-yellow-500 text-white p-1 rounded">Editar</button>
+                <button onclick="deactivateProduct(${product.id_producto})" class="bg-red-500 text-white p-1 rounded ml-2">Desactivar</button>
+            </td>
+        `;
+        productsTable.appendChild(row);
     });
+}
 
-    // Función para mostrar notificaciones
-    function mostrarNotificacion(mensaje, tipo = 'info') {
-        const notificacion = document.createElement('div');
-        notificacion.className = `notificacion ${tipo}`;
-        notificacion.textContent = mensaje;
-        
-        document.body.appendChild(notificacion);
-        
-        setTimeout(() => {
-            notificacion.classList.add('show');
-        }, 100);
-        
-        setTimeout(() => {
-            notificacion.classList.remove('show');
-            setTimeout(() => notificacion.remove(), 300);
-        }, 3000);
+// Editar producto
+async function editProduct(id) {
+    const response = await fetch(`${API_URL}/productos/${id}`);
+    const product = await response.json();
+    document.getElementById('nombre').value = product.nombre;
+    document.getElementById('precio_venta').value = product.precio_venta;
+    document.getElementById('descripcion').value = product.descripcion || '';
+    document.getElementById('entrada').value = product.entrada;
+    document.getElementById('salida').value = product.salida;
+    if (product.imagen) {
+        imagePreview.src = `data:image/jpeg;base64,${product.imagen}`;
+        imagePreview.classList.remove('hidden');
     }
+    formTitle.textContent = 'Editar Producto';
+    submitBtn.textContent = 'Actualizar';
+    cancelBtn.classList.remove('hidden');
+    editingProductId = id;
+}
 
-    // Búsqueda de productos
-    searchInput.addEventListener('input', async (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        try {
-            const response = await fetch('http://localhost:3000/api/producto');
-            const productos = await response.json();
-            const filteredProductos = productos.filter(producto => 
-                producto.nombre_producto.toLowerCase().includes(searchTerm) ||
-                producto.detalle_producto.toLowerCase().includes(searchTerm)
-            );
-            mostrarProductos(filteredProductos);
-        } catch (error) {
-            console.error('Error en la búsqueda:', error);
-        }
-    });
-
-    // Cargar productos al iniciar
-    cargarProductos();
-}); 
+// Resetear formulario
+function resetForm() {
+    productForm.reset();
+    imagePreview.classList.add('hidden');
+    imagePreview.src = '';
+    formTitle.textContent = 'Añadir Nuevo Producto';
+    submitBtn.textContent = 'Guardar';
+    cancelBtn.classList.add('hidden');
+    editingProductId = null;
+}

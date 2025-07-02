@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-center">Gestión de Productos</h1>
+
+        <!-- Formulario para Crear/Editar Producto -->
+        <div id="formContainer" class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 id="formTitle" class="text-xl font-semibold mb-4">Añadir Nuevo Producto</h2>
+            <form id="productForm" class="space-y-4">
+                <div>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required class="mt-1 p-2 w-full border rounded-md">
+                </div>
+                <div>
+                    <label for="precio_venta" class="block text-sm font-medium text-gray-700">Precio de Venta</label>
+                    <input type="number" id="precio_venta" name="precio_venta" step="0.01" required
+                        class="mt-1 p-2 w-full border rounded-md">
+                </div>
+                <div>
+                    <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" class="mt-1 p-2 w-full border rounded-md"></textarea>
+                </div>
+                <div>
+                    <label for="entrada" class="block text-sm font-medium text-gray-700">Entrada</label>
+                    <input type="number" id="entrada" name="entrada" min="0" class="mt-1 p-2 w-full border rounded-md">
+                </div>
+                <div>
+                    <label for="salida" class="block text-sm font-medium text-gray-700">Salida</label>
+                    <input type="number" id="salida" name="salida" min="0" class="mt-1 p-2 w-full border rounded-md">
+                </div>
+                <div>
+                    <label for="imagen" class="block text-sm font-medium text-gray-700">Imagen</label>
+                    <input type="file" id="imagen" name="imagen" accept="image/*"
+                        class="mt-1 p-2 w-full border rounded-md">
+                    <img id="imagePreview" class="preview-image hidden" alt="Vista previa de la imagen">
+                </div>
+                <button type="submit" id="submitBtn" class="bg-blue-500 text-white p-2 rounded-md">Guardar</button>
+                <button type="button" id="cancelBtn"
+                    class="bg-gray-500 text-white p-2 rounded-md ml-2 hidden">Cancelar</button>
+            </form>
+        </div>
+
+        <!-- Tabla de Productos -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Lista de Productos</h2>
+            <table id="productsTable" class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-2 border">ID</th>
+                        <th class="p-2 border">Nombre</th>
+                        <th class="p-2 border">Precio</th>
+                        <th class="p-2 border">Saldo</th>
+                        <th class="p-2 border">Imagen</th>
+                        <th class="p-2 border">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productsBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="../JS/productos.js"></script>
+</body>
+
+</html>

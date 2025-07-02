@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -33,17 +33,29 @@
                 </div>
             </div>
             <div class="container_users_carrito">
-                <!-- Contenedor dinámico para el perfil de usuario -->
-                <div id="userProfile" class="user-profile">
+                <div id="userProfile" class="user-profile" onclick="toggleProfileModal()">
                     <ul class="users">
                         <li><img src="../img/img_home/avatar.png" alt="" class="avatar_img"></li>
                         <li class="iniciar_session"><a href="../HTML/index_login.html">Iniciar sesión</a></li>
                     </ul>
                 </div>
+                <div id="profileModal" class="profile-modal">
+                    <div class="profile-modal-content">
+                        <span class="profile-close" onclick="closeProfileModal()">&times;</span>
+                        <div class="profile-details">
+                            <img src="../img/img_home/avatar.png" alt="Avatar" class="profile-avatar">
+                            <span id="profileUserName" class="profile-user-name">Iniciar sesión</span>
+                            <button id="btnCerrarSesionModal" class="logout-btn">Cerrar sesión</button>
+                            <button id="btnActualizarDatos" class="update-btn">Actualizar datos</button>
+                        </div>
+                    </div>
+                </div>
                 <ul class="carrito">
                     <li class="carrito_contenedor">
-                        <img src="../img/img_home/iconos/carrito-de-compras.png" alt="" class="carrito_img">
-                        <span class="cart-count">0</span>
+                    <li><a href="../HTML/index_carrito.html"><img src="../img/img_home/iconos/carrito-de-compras.png"
+                                alt="Carrito" class="carrito_img">
+                            <span class="carrito_notificacion" id="contador_carrito">0</span></a>
+                    </li>
                     </li>
                     <li class="carrito_texto"><a href="../HTML/index_carrito.html">Carrito</a></li>
                 </ul>
@@ -59,11 +71,6 @@
                     <nav>
                         <ul id="menuDesplegable">
                             <!-- Contenido dinámico para el menú hamburguesa -->
-                            <li><a href="../HTML/index_login.html">Iniciar sesión</a></li>
-                            <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
-                            <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
-                            <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
-                            <li><a href="#">Contáctanos</a></li>
                         </ul>
                     </nav>
                     <label for="btn_menu" class="icon_equis">X</label>
@@ -89,8 +96,8 @@
                 </li>
             </ul>
         </div>
-        <button class="slider-prev"><</button>
-        <button class="slider-next">></button>
+        <button class="slider-prev">◀</button>
+        <button class="slider-next">▶</button>
     </div>
 
     <div class="botonera">
@@ -176,13 +183,6 @@
                     <li><a href="#">Dato 4</a></li>
                 </ul>
             </div>
-            <!-- <div class="col2">
-                <h4><a href="#">PQRS</a></h4>
-                <p><a href="#">Peticiones</a></p>
-                <p><a href="#">Quejas</a></p>
-                <p><a href="#">Reclamos</a></p>
-                <p><a href="#">Sugerencias</a></p>
-            </div> -->
             <div class="col3">
                 <h4>Contáctanos</h4>
                 <img src="../img/img_home/iconos/facebook.png" alt="img1">
