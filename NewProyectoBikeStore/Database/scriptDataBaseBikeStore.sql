@@ -7,7 +7,7 @@ CREATE TABLE productos (
     nombre VARCHAR(255) NOT NULL,
     precio_venta DECIMAL(10,2) NOT NULL CHECK (precio_venta >= 0),
     descripcion VARCHAR(500),
-    imagen longblod, -- Recordar que el "longblod" solo se coloca para tranformar las imagenes y estas se almacenen en la DB, no se utiliza el "varchar"
+    imagen LONGBLOB, -- Recordar que el "longblod" solo se coloca para tranformar las imagenes y estas se almacenen en la DB, no se utiliza el "varchar"
     entrada INT,
     salida INT,
     saldo INT GENERATED ALWAYS AS (entrada - salida) STORED

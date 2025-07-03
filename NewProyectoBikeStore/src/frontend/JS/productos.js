@@ -9,11 +9,23 @@ const cancelBtn = document.getElementById('cancelBtn');
 const imageInput = document.getElementById('imagen');
 const imagePreview = document.getElementById('imagePreview');
 const productsTable = document.getElementById('productsBody');
+const showFormBtn = document.getElementById('showFormBtn');
+const formContainer = document.getElementById('formContainer');
+const modalFormBg = document.getElementById('modalFormBg');
+const closeFormModal = document.getElementById('closeFormModal');
 let editingProductId = null;
+
+// ================== HEADER USUARIO ==================
+const userProfileProductos = document.getElementById('userProfileProductos');
+const profileModalProductos = document.getElementById('profileModalProductos');
+const profileUserNameProductos = document.getElementById('profileUserNameProductos');
+const btnCerrarSesionModalProductos = document.getElementById('btnCerrarSesionModalProductos');
+let usuarioAutenticado = false; // <-- Variable para saber si hay sesión
 
 // Cargar productos al iniciar
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
+    verificarAutenticacionProductos();
 });
 
 // Vista previa de la imagen
@@ -23,7 +35,7 @@ imageInput.addEventListener('change', (e) => {
         const reader = new FileReader();
         reader.onload = (event) => {
             imagePreview.src = event.target.result;
-            imagePreview.classList.remove('hidden');
+            imagePreview.classList.remove('oculto');
         };
         reader.readAsDataURL(file);
     }
@@ -154,21 +166,100 @@ async function editProduct(id) {
     document.getElementById('salida').value = product.salida;
     if (product.imagen) {
         imagePreview.src = `data:image/jpeg;base64,${product.imagen}`;
-        imagePreview.classList.remove('hidden');
+        imagePreview.classList.remove('oculto');
     }
     formTitle.textContent = 'Editar Producto';
     submitBtn.textContent = 'Actualizar';
-    cancelBtn.classList.remove('hidden');
+    cancelBtn.classList.remove('oculto');
     editingProductId = id;
+    modalFormBg.classList.remove('oculto');
+    showFormBtn.classList.add('oculto');
 }
 
 // Resetear formulario
 function resetForm() {
     productForm.reset();
-    imagePreview.classList.add('hidden');
+    imagePreview.classList.add('oculto');
     imagePreview.src = '';
     formTitle.textContent = 'Añadir Nuevo Producto';
     submitBtn.textContent = 'Guardar';
-    cancelBtn.classList.add('hidden');
+    cancelBtn.classList.add('oculto');
     editingProductId = null;
+    modalFormBg.classList.add('oculto');
+    showFormBtn.classList.remove('oculto');
 }
+
+// Mostrar/ocultar modal de perfil SOLO si hay sesión
+userProfileProductos.onclick = function () {
+    if (usuarioAutenticado) {
+        profileModalProductos.style.display = profileModalProductos.style.display === 'block' ? 'none' : 'block';
+    }
+};
+
+// Verificar autenticación y mostrar nombre
+function verificarAutenticacionProductos() {
+    const usuarioNombre = localStorage.getItem('usuarioNombre');
+    const usuarioApellido = localStorage.getItem('usuarioApellido');
+    if (usuarioNombre && usuarioApellido) {
+        usuarioAutenticado = true;
+        userProfileProductos.innerHTML = `
+            <div class="profile-info">
+                <img src="../img/img_home/avatar.png" alt="" class="avatar_img">
+                <span class="user-name">${usuarioNombre} ${usuarioApellido}</span>
+            </div>
+        `;
+        profileUserNameProductos.textContent = `${usuarioNombre} ${usuarioApellido}`;
+        btnCerrarSesionModalProductos.style.display = 'block';
+        // Mostrar el modal en el DOM
+        profileModalProductos.style.display = 'none';
+    } else {
+        usuarioAutenticado = false;
+        userProfileProductos.innerHTML = `
+            <ul class="users">
+                <li><img src="../img/img_home/avatar.png" alt="" class="avatar_img"></li>
+                <li class="iniciar_session"><a href="../HTML/index_login.html">Iniciar sesión</a></li>
+            </ul>
+        `;
+        profileUserNameProductos.textContent = 'Iniciar sesión';
+        btnCerrarSesionModalProductos.style.display = 'none';
+        // Ocultar el modal si no hay sesión
+        profileModalProductos.style.display = 'none';
+    }
+}
+
+// Cerrar sesión
+btnCerrarSesionModalProductos.addEventListener('click', function () {
+    localStorage.clear();
+    usuarioAutenticado = false;
+    closeProfileModalProductos();
+    verificarAutenticacionProductos();
+    window.location.href = '../HTML/index_login.html';
+});
+
+// Cerrar modal al hacer click fuera
+window.onclick = function (event) {
+    if (event.target === profileModalProductos) {
+        closeProfileModalProductos();
+    }
+};
+
+// Mostrar el formulario al hacer clic en "Agregar producto"
+showFormBtn.addEventListener('click', () => {
+    resetForm();
+    modalFormBg.classList.remove('oculto');
+    showFormBtn.classList.add('oculto');
+});
+
+// Botón para cerrar el modal
+closeFormModal.addEventListener('click', () => {
+    modalFormBg.classList.add('oculto');
+    showFormBtn.classList.remove('oculto');
+});
+
+// Cerrar modal al hacer clic fuera del formulario
+modalFormBg.addEventListener('click', (event) => {
+    if (event.target === modalFormBg) {
+        modalFormBg.classList.add('oculto');
+        showFormBtn.classList.remove('oculto');
+    }
+});

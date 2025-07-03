@@ -7,58 +7,83 @@
     <title>Gestión de Productos</title>
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .hidden {
-            display: none;
-        }
-
-        .preview-image {
-            max-width: 200px;
-            max-height: 200px;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="../CSS/styles_productos.css">
 </head>
 
 <body class="bg-gray-100 p-6">
+    <!-- HEADER INICIO -->
+    <header id="header-productos">
+        <div class="menu_container">
+            <a href="index_home.html">
+                <img src="../img/ciclista.png" alt="Logo" class="logo_img">
+            </a>
+            <div class="container_users_carrito">
+                <div id="userProfileProductos" class="user-profile-productos" onclick="toggleProfileModalProductos()">
+                    <ul class="users">
+                        <li><img src="../img/img_home/avatar.png" alt="" class="avatar_img"></li>
+                        <li class="iniciar_session"><a href="../HTML/index_login.html">Iniciar sesión</a></li>
+                    </ul>
+                </div>
+                <div id="profileModalProductos" class="profile-modal-productos">
+                    <div class="profile-modal-content-productos">
+                        <span class="profile-close-productos" onclick="closeProfileModalProductos()">&times;</span>
+                        <div class="profile-details-productos">
+                            <img src="../img/img_home/avatar.png" alt="Avatar" class="profile-avatar-productos">
+                            <span id="profileUserNameProductos" class="profile-user-name-productos">Iniciar sesión</span>
+                            <button id="btnCerrarSesionModalProductos" class="logout-btn-productos">Cerrar sesión</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- HEADER FIN -->
     <div class="container mx-auto">
         <h1 class="text-3xl font-bold mb-6 text-center">Gestión de Productos</h1>
+        
+        <!-- Botón para mostrar el formulario -->
+        <div class="mb-4 text-right">
+            <button id="showFormBtn" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">Agregar producto</button>
+        </div>
 
         <!-- Formulario para Crear/Editar Producto -->
-        <div id="formContainer" class="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 id="formTitle" class="text-xl font-semibold mb-4">Añadir Nuevo Producto</h2>
-            <form id="productForm" class="space-y-4">
-                <div>
-                    <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" required class="mt-1 p-2 w-full border rounded-md">
-                </div>
-                <div>
-                    <label for="precio_venta" class="block text-sm font-medium text-gray-700">Precio de Venta</label>
-                    <input type="number" id="precio_venta" name="precio_venta" step="0.01" required
-                        class="mt-1 p-2 w-full border rounded-md">
-                </div>
-                <div>
-                    <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
-                    <textarea id="descripcion" name="descripcion" class="mt-1 p-2 w-full border rounded-md"></textarea>
-                </div>
-                <div>
-                    <label for="entrada" class="block text-sm font-medium text-gray-700">Entrada</label>
-                    <input type="number" id="entrada" name="entrada" min="0" class="mt-1 p-2 w-full border rounded-md">
-                </div>
-                <div>
-                    <label for="salida" class="block text-sm font-medium text-gray-700">Salida</label>
-                    <input type="number" id="salida" name="salida" min="0" class="mt-1 p-2 w-full border rounded-md">
-                </div>
-                <div>
-                    <label for="imagen" class="block text-sm font-medium text-gray-700">Imagen</label>
-                    <input type="file" id="imagen" name="imagen" accept="image/*"
-                        class="mt-1 p-2 w-full border rounded-md">
-                    <img id="imagePreview" class="preview-image hidden" alt="Vista previa de la imagen">
-                </div>
-                <button type="submit" id="submitBtn" class="bg-blue-500 text-white p-2 rounded-md">Guardar</button>
-                <button type="button" id="cancelBtn"
-                    class="bg-gray-500 text-white p-2 rounded-md ml-2 hidden">Cancelar</button>
-            </form>
+        <div id="modalFormBg" class="modal-bg oculto">
+            <div id="formContainer" class="bg-white p-6 rounded-lg shadow-md mb-6 modal-content">
+                <button type="button" id="closeFormModal" class="close-modal-btn">&times;</button>
+                <h2 id="formTitle" class="text-xl font-semibold mb-4">Añadir Nuevo Producto</h2>
+                <form id="productForm" class="space-y-4">
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                    <div>
+                        <label for="precio_venta" class="block text-sm font-medium text-gray-700">Precio de Venta</label>
+                        <input type="number" id="precio_venta" name="precio_venta" step="0.01" required
+                            class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                    <div>
+                        <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" class="mt-1 p-2 w-full border rounded-md"></textarea>
+                    </div>
+                    <div>
+                        <label for="entrada" class="block text-sm font-medium text-gray-700">Entrada</label>
+                        <input type="number" id="entrada" name="entrada" min="0" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                    <div>
+                        <label for="salida" class="block text-sm font-medium text-gray-700">Salida</label>
+                        <input type="number" id="salida" name="salida" min="0" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                    <div>
+                        <label for="imagen" class="block text-sm font-medium text-gray-700">Imagen</label>
+                        <input type="file" id="imagen" name="imagen" accept="image/*"
+                            class="mt-1 p-2 w-full border rounded-md">
+                        <img id="imagePreview" class="imagen-previa oculto" alt="Vista previa de la imagen">
+                    </div>
+                    <button type="submit" id="submitBtn" class="bg-blue-500 text-white p-2 rounded-md">Guardar</button>
+                    <button type="button" id="cancelBtn"
+                        class="bg-gray-500 text-white p-2 rounded-md ml-2 oculto">Cancelar</button>
+                </form>
+            </div>
         </div>
 
         <!-- Tabla de Productos -->

@@ -1,0 +1,223 @@
+#header-productos {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0 10px 0;
+    position: fixed;
+    background-color: #202020;
+    opacity: 1;
+    border-bottom: 1px solid black;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    height: 56px;
+}
+
+.menu_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 40px;
+    height: 100%;
+}
+
+.logo_img {
+    height: 2.2rem;
+    margin-left: 20px;
+}
+
+.container_users_carrito {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.user-profile-productos {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.user-profile-productos:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.avatar_img {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.iniciar_session a {
+    color: white;
+    font-size: 1rem;
+}
+
+.profile-modal-productos {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background-color: #1c1c1c;
+    border: 1px solid #c11000;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    min-width: 220px;
+}
+
+.profile-modal-content-productos {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-close-productos {
+    color: #c11000;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.profile-close-productos:hover {
+    color: #fff;
+}
+
+.profile-details-productos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-avatar-productos {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-user-name-productos {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logout-btn-productos {
+    background-color: #c11000;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.logout-btn-productos:hover {
+    background-color: #a00d00;
+}
+
+/* Ajuste para el contenedor principal debajo del header */
+body > .container,
+body > .container.mx-auto {
+    margin-top: 66px !important;
+}
+
+@media (max-width: 768px) {
+    #header-productos {
+        padding: 6px 0 6px 0;
+        height: 44px;
+    }
+    .logo_img {
+        height: 1.5rem;
+        margin-left: 10px;
+    }
+    body > .container,
+    body > .container.mx-auto {
+        margin-top: 50px !important;
+    }
+}
+
+.user-profile-productos ul.users {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.user-profile-productos ul.users li {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.iniciar_session {
+    margin-top: 2px;
+}
+
+/* Modal para formulario de producto */
+.modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+.modal-content {
+    position: relative;
+    min-width: 350px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #c11000;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s;
+}
+.close-modal-btn:hover {
+    color: #a00d00;
+}
+
+/* ====== CLASES EN ESPAÑOL MIGRADAS DE productos.html ====== */
+.oculto {
+    display: none;
+}
+
+.imagen-previa {
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 10px;
+}
