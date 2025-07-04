@@ -263,3 +263,6 @@ modalFormBg.addEventListener('click', (event) => {
         showFormBtn.classList.remove('oculto');
     }
 });
+function  closeProfileModalProductos(){
+    profileModalProductos.style.display = 'none';
+}

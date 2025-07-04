@@ -72,7 +72,7 @@ async function manejarLogin(e) {
             setTimeout(() => {
                 const redirect = new URLSearchParams(window.location.search).get('redirect');
                 if (resultado.rol === 'admin') {
-                    window.location.href = '../HTML/index_admin.html';
+                    window.location.href = '../HTML/productos.html';
                 } else if (redirect === 'catalogo') {
                     window.location.href = '../HTML/index_catalogo.html';
                 } else {

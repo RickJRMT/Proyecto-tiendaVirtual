@@ -45,3 +45,8 @@ CREATE TABLE detalles_venta (
     FOREIGN KEY (id_venta) REFERENCES ventas(id_venta),
     FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
 );
+
+/*Consultas*/
+/*UPDATE usuarios
+SET rol = 'admin'
+WHERE id_usuario = 1;*/
