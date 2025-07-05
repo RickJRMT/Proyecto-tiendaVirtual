@@ -33,5 +33,8 @@ app.use('/api/productos', require('./backend/routes/productos.routes'));
 app.use('/api/auth', require('./backend/routes/auth.routes'));
 // Asocia todas las rutas de auth bajo el prefijo /api/auth esto es para el login y registro
 
+app.use('/api/ventas', require('./backend/routes/ventas.routes'));
+// Asocia todas las rutas de auth bajo el prefijo /api/ventas esto es para carrito
+
 module.exports = app;
 // Exporta la app configurada para ser utilizada por el archivo principal del servidor (en este caso el archivo server.js)

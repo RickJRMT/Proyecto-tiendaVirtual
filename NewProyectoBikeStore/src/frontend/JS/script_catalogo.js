@@ -71,6 +71,9 @@ function mostrarProductos(productosMostrar) {
     }
 
     productosMostrar.forEach(producto => {
+
+        if (producto.saldo === 0) return;
+
         const productDiv = document.createElement('div');
         productDiv.classList.add('product');
 

@@ -218,6 +218,9 @@ async function mostrarProductos(productosMostrar) {
     contenedorProductos.innerHTML = '';
 
     for (const producto of productosMostrar) {
+
+        if (producto.saldo === 0)continue;
+
         const clone = templateProducto.content.cloneNode(true);
         const productContainer = clone.querySelector('.product1_dest');
         const img = clone.querySelector('.product-img');

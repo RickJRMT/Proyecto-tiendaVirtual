@@ -148,7 +148,7 @@ function renderProducts(products) {
             <td class="p-2 border"><img src="data:image/jpeg;base64,${product.imagen || ''}" alt="${product.nombre}" class="w-16 h-16 object-cover"></td>
             <td class="p-2 border">
                 <button onclick="editProduct(${product.id_producto})" class="bg-yellow-500 text-white p-1 rounded">Editar</button>
-                <button onclick="deactivateProduct(${product.id_producto})" class="bg-red-500 text-white p-1 rounded ml-2">Desactivar</button>
+                <button onclick="deactivateProduct(${product.id_producto})" class="bg-red-500 text-white p-1 rounded ml-2">Eliminar</button>
             </td>
         `;
         productsTable.appendChild(row);

@@ -30,7 +30,6 @@ CREATE TABLE ventas (
     id_venta INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     fecha_venta DATETIME DEFAULT CURRENT_TIMESTAMP,
-    metodo_pago ENUM('visa', 'mastercard', 'paypal') NOT NULL,
     estado ENUM('Pendiente', 'Despachado', 'Concluido') DEFAULT 'Pendiente',
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
