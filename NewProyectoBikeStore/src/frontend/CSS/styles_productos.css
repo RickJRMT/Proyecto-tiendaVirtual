@@ -138,7 +138,8 @@
     background-color: #a00d00;
 }
 
-/* Ajuste para el contenedor principal debajo del header */
+/* ajuste para el contenedor debajo del header */
+
 body > .container,
 body > .container.mx-auto {
     margin-top: 66px !important;
@@ -178,7 +179,7 @@ body > .container.mx-auto {
     margin-top: 2px;
 }
 
-/* Modal para formulario de producto */
+/* modal formulario producto */
 .modal-bg {
     position: fixed;
     top: 0;
@@ -215,7 +216,6 @@ body > .container.mx-auto {
     color: #a00d00;
 }
 
-/* ====== CLASES EN ESPAÑOL MIGRADAS DE productos.html ====== */
 .oculto {
     display: none;
 }
@@ -224,4 +224,55 @@ body > .container.mx-auto {
     max-width: 200px;
     max-height: 200px;
     margin-top: 10px;
+}
+
+
+/* Barra de búsqueda de productos */
+#searchBarContainer {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+#searchInput {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+}
+#searchBtn {
+    padding: 0.5rem 1rem;
+    background-color:#c11000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#searchBtn:hover {
+    background-color: #a00d00;
+}
+
+/* Scroll para la lista de productos */
+#productsTable {
+    display: block;
+    max-height: 350px;
+    overflow-y: auto;
+    width: 100%;
+}
+#productsTable thead, #productsTable tbody, #productsTable tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+#productsTable thead {
+    width: 100%;
+}
+#productsTable tbody {
+    display: block;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
 }

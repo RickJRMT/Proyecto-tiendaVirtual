@@ -13,10 +13,13 @@ const showFormBtn = document.getElementById('showFormBtn');
 const formContainer = document.getElementById('formContainer');
 const modalFormBg = document.getElementById('modalFormBg');
 const closeFormModal = document.getElementById('closeFormModal');
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
 let editingProductId = null;
 let currentSalida = 0; // Variable para almacenar el valor de salida actual al editar
+let allProducts = [];
 
-// ================== HEADER USUARIO ==================
+// header usuario
 const userProfileProductos = document.getElementById('userProfileProductos');
 const profileModalProductos = document.getElementById('profileModalProductos');
 const profileUserNameProductos = document.getElementById('profileUserNameProductos');
@@ -28,6 +31,63 @@ document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
     verificarAutenticacionProductos();
 });
+
+// Cerrar sesión
+btnCerrarSesionModalProductos.addEventListener('click', function () {
+    localStorage.clear();
+    usuarioAutenticado = false;
+    closeProfileModalProductos();
+    verificarAutenticacionProductos();
+    window.location.href = '../HTML/index_login.html';
+});
+
+// Cerrar modal al hacer click fuera
+window.onclick = function (event) {
+    if (event.target === profileModalProductos) {
+        closeProfileModalProductos();
+    }
+};
+
+// Mostrar el formulario al hacer clic en "Agregar producto"
+showFormBtn.addEventListener('click', () => {
+    resetForm();
+    modalFormBg.classList.remove('oculto');
+    showFormBtn.classList.add('oculto');
+});
+
+// Botón para cerrar el modal
+closeFormModal.addEventListener('click', () => {
+    modalFormBg.classList.add('oculto');
+    showFormBtn.classList.remove('oculto');
+});
+
+// Cerrar modal al hacer clic fuera del formulario
+modalFormBg.addEventListener('click', (event) => {
+    if (event.target === modalFormBg) {
+        modalFormBg.classList.add('oculto');
+        showFormBtn.classList.remove('oculto');
+    }
+});
+
+function closeProfileModalProductos() {
+    profileModalProductos.style.display = 'none';
+}
+
+// Agrego función para filtrar productos
+function filterProducts() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const filtered = allProducts.filter(product =>
+        product.nombre.toLowerCase().includes(searchTerm) ||
+        (product.descripcion && product.descripcion.toLowerCase().includes(searchTerm))
+    );
+    renderProducts(filtered);
+}
+
+// Eventos de búsqueda
+if (searchBtn && searchInput) {
+    searchBtn.addEventListener('click', filterProducts);
+    searchInput.addEventListener('input', filterProducts);
+}
 
 // Vista previa de la imagen
 imageInput.addEventListener('change', (e) => {
@@ -108,6 +168,7 @@ async function createProduct(productData) {
 async function loadProducts() {
     const response = await fetch(`${API_URL}/productos`);
     const products = await response.json();
+    allProducts = products;
     renderProducts(products);
 }
 
@@ -133,7 +194,7 @@ async function deactivateProduct(id) {
     });
     if (!response.ok) throw new Error('Error al desactivar');
     loadProducts();
-    alert('Producto desactivado correctamente');
+    alert('Producto eliminado correctamente');
 }
 
 // Renderizar productos en la tabla
@@ -193,7 +254,7 @@ function resetForm() {
     showFormBtn.classList.remove('oculto');
 }
 
-// Mostrar/ocultar modal de perfil SOLO si hay sesión
+// Mostrar o ocultar modal de perfil solo si hay sesión
 userProfileProductos.onclick = function () {
     if (usuarioAutenticado) {
         profileModalProductos.style.display = profileModalProductos.style.display === 'block' ? 'none' : 'block';
@@ -229,43 +290,3 @@ function verificarAutenticacionProductos() {
     }
 }
 
-// Cerrar sesión
-btnCerrarSesionModalProductos.addEventListener('click', function () {
-    localStorage.clear();
-    usuarioAutenticado = false;
-    closeProfileModalProductos();
-    verificarAutenticacionProductos();
-    window.location.href = '../HTML/index_login.html';
-});
-
-// Cerrar modal al hacer click fuera
-window.onclick = function (event) {
-    if (event.target === profileModalProductos) {
-        closeProfileModalProductos();
-    }
-};
-
-// Mostrar el formulario al hacer clic en "Agregar producto"
-showFormBtn.addEventListener('click', () => {
-    resetForm();
-    modalFormBg.classList.remove('oculto');
-    showFormBtn.classList.add('oculto');
-});
-
-// Botón para cerrar el modal
-closeFormModal.addEventListener('click', () => {
-    modalFormBg.classList.add('oculto');
-    showFormBtn.classList.remove('oculto');
-});
-
-// Cerrar modal al hacer clic fuera del formulario
-modalFormBg.addEventListener('click', (event) => {
-    if (event.target === modalFormBg) {
-        modalFormBg.classList.add('oculto');
-        showFormBtn.classList.remove('oculto');
-    }
-});
-
-function closeProfileModalProductos() {
-    profileModalProductos.style.display = 'none';
-}
