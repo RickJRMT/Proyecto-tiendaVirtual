@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/ciclista.png">
+    <title>Actualizar Datos</title>
+    <link rel="stylesheet" href="../CSS/styles_actualizarUser.css">
+</head>
+
+<body>
+    <div class="form_actualizar">
+        <form method="POST" id="formularioActualizar">
+            <div class="texto">
+                <h1>Actualizar tus datos</h1>
+            </div>
+            <div class="nombre">
+                <input type="text" name="nombre" placeholder="Nombre" id="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                    inputmode="text" required>
+            </div>
+            <div class="apellido">
+                <input type="text" name="apellido" placeholder="Apellido" id="apellido"
+                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" inputmode="text" required>
+            </div>
+            <div class="telefono">
+                <input type="tel" name="telefono" placeholder="Teléfono" id="telefono" pattern="[0-9]+"
+                    inputmode="numeric" required>
+            </div>
+            <div class="direccion">
+                <input type="text" placeholder="Dirección" id="direccion" required>
+            </div>
+            <div class="correo">
+                <input type="email" placeholder="Correo electrónico" id="correo" disabled>
+            </div>
+            <div class="contrasena">
+                <input type="password" placeholder="Nueva contraseña (opcional)" id="contrasena">
+            </div>
+            <div class="confirmar_contra">
+                <input type="password" placeholder="Confirmar nueva contraseña" id="confirmar_contrasena">
+            </div>
+            <div class="terminos">
+                <div class="custom-checkbox">
+                    <input type="checkbox" id="terminos">
+                    <span class="checkbox-toggle"></span>
+                </div>
+                <label for="terminos">Acepto los <a href="#" id="abrir_modal">términos y condiciones</a></label>
+            </div>
+            <div class="actualizar">
+                <input type="submit" class="boton" id="btn_actualizar" value="Guardar cambios">
+            </div>
+            <div class="intermedio"></div>
+            <div class="cancelar">
+                <input type="button" class="btn" id="btn_volver" value="Cancelar">
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal para términos y condiciones -->
+    <div id="modal_terminos" class="modal">
+        <div class="modal_contenido">
+            <span class="cerrar" id="cerrar_modal">×</span>
+            <h3>Términos y Condiciones</h3>
+            <p>A continuación, se presentan los términos y condiciones de uso para nuestra tienda de bicicletas:</p>
+            <ul>
+                <li>Los datos proporcionados deben ser veraces y correctos.</li>
+                <li>El usuario es responsable de mantener la confidencialidad de su cuenta y contraseña.</li>
+                <li>Nos reservamos el derecho de cancelar o modificar pedidos en caso de errores de precio o
+                    disponibilidad.</li>
+                <li>Los productos adquiridos cuentan con garantía limitada según las políticas de devolución.</li>
+                <li>El uso de este sitio implica la aceptación de nuestras políticas de privacidad.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="notificacion" id="notificacion"></div>
+
+    <script src="../JS/actualizarUser.js"></script>
+</body>
+
+</html>

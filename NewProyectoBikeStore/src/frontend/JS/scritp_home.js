@@ -1,4 +1,3 @@
-// URL base de la API
 const API_URL = 'http://localhost:3000/api';
 
 // Arreglo para almacenar los productos
@@ -74,6 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
         cartCountElement.textContent = totalCartCount;
         cartCountElement.classList.toggle('hidden', totalCartCount === 0);
     }
+
+    // Verificar que carritoManager esté definido
+    if (typeof carritoManager === 'undefined') {
+        console.error('carritoManager no está definido. Verifica que carrito_manager.js se cargue correctamente.');
+    } else {
+        console.log('carritoManager está definido:', carritoManager);
+    }
 });
 
 // Funciones para manejar el modal de perfil
@@ -140,8 +146,7 @@ function verificarAutenticacion() {
                 document.getElementById('btnActualizarDatos').style.display = 'block';
                 document.getElementById('btnCerrarSesionModal').addEventListener('click', cerrarSesion);
                 document.getElementById('btnActualizarDatos').addEventListener('click', () => {
-                    console.log('Funcionalidad de actualizar datos no implementada aún');
-                    showNotification('Funcionalidad de actualizar datos no disponible');
+                    window.location.href = '../HTML/index_actualizarUser.html';
                 });
 
                 menuDesplegable.innerHTML = `
@@ -155,8 +160,7 @@ function verificarAutenticacion() {
                 `;
                 document.getElementById('btnCerrarSesionMenu').addEventListener('click', cerrarSesion);
                 document.getElementById('btnActualizarDatosMenu').addEventListener('click', () => {
-                    console.log('Funcionalidad de actualizar datos no implementada aún');
-                    showNotification('Funcionalidad de actualizar datos no disponible');
+                    window.location.href = '../HTML/index_actualizarUser.html';
                 });
             } else {
                 console.log('Usuario no válido según el servidor, mostrando "Iniciar sesión"');
@@ -204,6 +208,9 @@ async function cargarProductos() {
             console.log('No hay productos destacados');
             contenedorProductos.innerHTML = '<p>No hay productos destacados disponibles.</p>';
         } else {
+            productos.forEach(p => {
+                console.log(`Producto: ${p.nombre}, Imagen disponible: ${!!p.imagen}`);
+            });
             mostrarProductos(productos);
         }
     } catch (error) {
@@ -218,8 +225,7 @@ async function mostrarProductos(productosMostrar) {
     contenedorProductos.innerHTML = '';
 
     for (const producto of productosMostrar) {
-
-        if (producto.saldo === 0)continue;
+        if (producto.saldo === 0) continue;
 
         const clone = templateProducto.content.cloneNode(true);
         const productContainer = clone.querySelector('.product1_dest');
@@ -239,19 +245,8 @@ async function mostrarProductos(productosMostrar) {
         addButton.setAttribute('data-name', producto.nombre);
         addButton.setAttribute('data-price', producto.precio_venta);
 
-        try {
-            const response = await fetch(`${API_URL}/imagenes/obtener/productos/id_producto/${producto.id_producto}`);
-            if (!response.ok) throw new Error('Error al obtener la imagen');
-            const data = await response.json();
-            if (data.imagen) {
-                img.src = `data:image/jpeg;base64,${data.imagen}`;
-            } else {
-                img.src = 'https://via.placeholder.com/120x80?text=Sin+imagen';
-            }
-        } catch (error) {
-            console.error('Error al cargar imagen para producto ID:', producto.id_producto, error);
-            img.src = 'https://via.placeholder.com/120x80?text=Sin+imagen';
-        }
+        // Cargar la imagen del producto
+        img.src = producto.imagen ? `data:image/jpeg;base64,${producto.imagen}` : '../img/no-image.jpg';
 
         minusButton.addEventListener('click', () => {
             if (currentQuantity > 1) {
@@ -266,9 +261,11 @@ async function mostrarProductos(productosMostrar) {
         });
 
         addButton.addEventListener('click', async () => {
+            console.log('Botón "Añadir al carrito" clicado para producto:', producto.nombre);
             const quantityToAdd = parseInt(quantitySpan.textContent);
             const stockDisponible = await verificarStock(producto.id_producto, quantityToAdd);
             if (!stockDisponible) {
+                console.log('Stock insuficiente para:', producto.nombre);
                 showStockMessage('No hay suficiente stock disponible');
                 return;
             }
@@ -278,8 +275,9 @@ async function mostrarProductos(productosMostrar) {
                 nombre: producto.nombre,
                 precio_venta: producto.precio_venta,
                 cantidad: quantityToAdd,
-                imagen: img.src
+                imagen: producto.imagen ? `data:image/jpeg;base64,${producto.imagen}` : '../img/no-image.jpg'
             };
+            console.log('Producto a añadir al carrito:', productoCarrito);
             if (typeof carritoManager !== 'undefined' && carritoManager.agregarProducto) {
                 carritoManager.agregarProducto(productoCarrito);
                 totalCartCount += quantityToAdd;
@@ -288,9 +286,11 @@ async function mostrarProductos(productosMostrar) {
                     cartCountElement.classList.remove('hidden');
                 }
                 localStorage.setItem('totalCartCount', totalCartCount);
-                showNotification(`Se añadieron ${quantityToAdd} ${producto.nombre}(s) al carrito`);
+                console.log('Mostrando notificación para:', producto.nombre, quantityToAdd);
+                showNotification(`${producto.nombre} ha sido añadido (${quantityToAdd} ${quantityToAdd === 1 ? 'unidad' : 'unidades'})`);
             } else {
                 console.error('carritoManager no está definido o no tiene agregarProducto');
+                showNotification('Error al añadir el producto al carrito');
             }
 
             currentQuantity = 1;
@@ -322,18 +322,29 @@ function filtrarProductos(filter, searchTerm) {
 // Verificar stock disponible
 async function verificarStock(idProducto, cantidad) {
     try {
-        const response = await fetch(`${API_URL}/productos/${idProducto}`);
-        if (!response.ok) throw new Error('Error al verificar stock');
+        console.log('Verificando stock para ID:', idProducto);
+        const response = await fetch(`${API_URL}/productos/${idProducto}`, {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        if (!response.ok) {
+            console.error(`Error HTTP al verificar stock: ${response.status}`);
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
         const producto = await response.json();
+        console.log('Stock verificado para ID:', idProducto, 'Saldo:', producto.saldo, 'Cantidad solicitada:', cantidad);
         return producto.saldo >= cantidad;
     } catch (error) {
-        console.error('Error al verificar stock:', error);
+        console.error('Error al verificar stock:', error.message);
+        showNotification('Error al verificar el stock del producto');
         return false;
     }
 }
 
 // Mostrar mensaje de stock en el modal
 function showStockMessage(message) {
+    console.log('Mostrando mensaje de stock:', message);
     stockMessage.textContent = message;
     stockModal.classList.add('mostrar');
     setTimeout(() => {
@@ -343,16 +354,23 @@ function showStockMessage(message) {
 
 // Mostrar notificaciones
 function showNotification(message) {
+    console.log('Creando notificación:', message);
     const notification = document.createElement('div');
-    notification.className = 'notification show';
+    notification.className = 'notification';
     notification.textContent = message;
     notificationContainer.appendChild(notification);
+    
+    setTimeout(() => {
+        console.log('Mostrando notificación en el DOM:', message);
+        notification.classList.add('show');
+    }, 10);
 
     setTimeout(() => {
+        console.log('Ocultando notificación:', message);
         notification.classList.remove('show');
         setTimeout(() => {
             notificationContainer.removeChild(notification);
-        }, 500);
+        }, 300);
     }, 3000);
 }
 

@@ -302,18 +302,17 @@ body {
     display: none;
     position: absolute;
     top: 80px;
-    right: 60px; /* Desplazado más a la izquierda */
+    right: 60px;
     background-color: #1c1c1c;
     border: 1px solid #c11000;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,介绍
-0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    min-width: 250px; /* Aumentado de 200px a 250px */
+    min-width: 250px;
 }
 
 .profile-modal-content {
-    padding: 30px; /* Más espacio interno */
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -338,22 +337,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px; /* Aumentado para más espacio entre elementos */
+    gap: 15px;
 }
 
 .profile-avatar {
-    width: 60px; /* Ligeramente más grande */
+    width: 60px;
     height: 60px;
     border-radius: 50%;
-    margin-bottom: 15px; /* Más espacio debajo del avatar */
+    margin-bottom: 15px;
 }
 
 .profile-user-name {
     color: #fff;
-    font-size: 18px; /* Ligeramente más grande */
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
-    max-width: 180px; /* Ajustado para el modal más grande */
+    max-width: 180px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -375,7 +374,7 @@ body {
 
 .slider_frame ul {
     display: flex;
-    width: 400%; /* 4 imágenes */
+    width: 400%;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -397,14 +396,14 @@ body {
     position: absolute;
     bottom: 20px;
     left: 20px;
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo negro semitransparente */
-    color: #ffffff; /* Texto blanco */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
     padding: 10px 20px;
     border-radius: 5px;
     font-size: 1.2rem;
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    border-left: 4px solid #c11000; /* Borde rojo */
+    border-left: 4px solid #c11000;
 }
 
 .slider-prev,
@@ -412,8 +411,8 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgb(39, 39, 39); /* Botones grises */
-    color: #ffffff; /* Texto blanco */
+    background-color: rgb(39, 39, 39);
+    color: #ffffff;
     border: none;
     padding: 10px;
     cursor: pointer;
@@ -433,37 +432,19 @@ body {
 
 .slider-prev:hover,
 .slider-next:hover {
-    background-color: gray; /* gris más oscuro al pasar el ratón */
+    background-color: gray;
 }
 
 @keyframes slide {
-    0% {
-        transform: translateX(0%);
-    }
-    20% {
-        transform: translateX(0%);
-    }
-    25% {
-        transform: translateX(-25%);
-    }
-    45% {
-        transform: translateX(-25%);
-    }
-    50% {
-        transform: translateX(-50%);
-    }
-    70% {
-        transform: translateX(-50%);
-    }
-    75% {
-        transform: translateX(-75%);
-    }
-    95% {
-        transform: translateX(-75%);
-    }
-    100% {
-        transform: translateX(0%);
-    }
+    0% { transform: translateX(0%); }
+    20% { transform: translateX(0%); }
+    25% { transform: translateX(-25%); }
+    45% { transform: translateX(-25%); }
+    50% { transform: translateX(-50%); }
+    70% { transform: translateX(-50%); }
+    75% { transform: translateX(-75%); }
+    95% { transform: translateX(-75%); }
+    100% { transform: translateX(0%); }
 }
 
 .slider_frame ul {
@@ -626,10 +607,10 @@ body {
     padding: 20px;
     background: white;
     transition: transform 0.3s ease;
-    max-width: 250px; /* Límite máximo de ancho para consistencia */
-    width: 100%; /* Ajuste responsivo */
-    height: auto; /* Altura automática para adaptarse al contenido */
-    margin: 0 auto; /* Centrado */
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
 }
 
 .product1_dest:hover {
@@ -638,11 +619,11 @@ body {
 }
 
 .product-img {
-    width: 100%; /* Imagen ocupa todo el ancho del contenedor */
-    height: 150px; /* Altura fija para mantener proporción */
-    object-fit: cover; /* Recorta la imagen para ajustarse sin distorsión */
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
     border-radius: 5px;
-    margin-bottom: 10px; /* Espacio debajo de la imagen */
+    margin-bottom: 10px;
 }
 
 .product-nombre {
@@ -662,27 +643,13 @@ body {
     font-weight: bold;
 }
 
-/* Ajustes responsivos para las cards */
-@media screen and (max-width: 768px) {
-    .product-img {
-        height: 120px; /* Altura menor en móviles */
-    }
-    .product1_dest {
-        max-width: 200px;
-    }
-    .destacados {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Menor tamaño en móvil */
-    }
-}
-
-/* Ajustes para los botones de cantidad y añadir al carrito */
 .quantity-control {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     margin: 10px 0;
-    background-color: #f0f0f0; /* Fondo gris claro para destacar el contenedor */
+    background-color: #f0f0f0;
     border-radius: 20px;
     padding: 5px 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -692,7 +659,7 @@ body {
     width: 35px;
     height: 35px;
     border: none;
-    background: #c11000; /* Fondo rojo */
+    background: #c11000;
     color: white;
     border-radius: 50%;
     cursor: pointer;
@@ -706,7 +673,7 @@ body {
 }
 
 .quantity_btn:hover {
-    background: #a00d00; /* Rojo más oscuro al pasar el ratón */
+    background: #a00d00;
     transform: scale(1.1);
 }
 
@@ -715,14 +682,14 @@ body {
     min-width: 30px;
     text-align: center;
     font-weight: bold;
-    color: #000000; /* Texto negro */
+    color: #000000;
 }
 
 .agregar-carrito {
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    background-color: #c11000; /* Fondo rojo */
+    background-color: #c11000;
     color: white;
     width: 100%;
     max-width: 150px;
@@ -735,11 +702,10 @@ body {
 }
 
 .agregar-carrito:hover {
-    background-color: #a00d00; /* Rojo más oscuro al pasar el ratón */
+    background-color: #a00d00;
     transform: scale(1.05);
 }
 
-/* Eliminamos .boton1 ya que no se usa en el template */
 .quantity_selector {
     display: flex;
     align-items: center;
@@ -897,6 +863,63 @@ footer {
     transform: scale(1.1);
 }
 
+/* Estilos Notificación */
+.notification-container {
+    position: fixed;
+    top: 100px; /* Justo debajo del header */
+    right: 20px;
+    z-index: 1000;
+}
+
+.notification {
+    background-color: #1c1c1c; /* Fondo negro para contraste */
+    color: #ffffff; /* Texto blanco */
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid #c11000; /* Borde rojo */
+    font-size: 1rem;
+    font-weight: bold;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    max-width: 300px;
+}
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Estilos Modal Stock */
+.stock-modal {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #1c1c1c;
+    color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    border-left: 4px solid #c11000;
+    max-width: 300px;
+}
+
+.stock-modal.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+.stock-modal p {
+    margin: 0;
+    font-weight: bold;
+}
+
 /* Estilos Responsive */
 @media screen and (max-width: 1024px) {
     .user-profile {
@@ -921,11 +944,9 @@ footer {
     .users .iniciar_session a {
         font-size: 11px;
     }
-
     .container_users_carrito .user-profile {
         display: none;
     }
-
     .buscar {
         width: 35%;
     }
@@ -946,14 +967,12 @@ footer {
     .slider_frame {
         height: 60vh;
     }
-
-    /* Ajuste para el modal en tabletas */
     .modal-content {
         margin: 20% auto;
         width: 90%;
     }
     .profile-modal {
-        right: 40px; /* Ajustado para tabletas */
+        right: 40px;
     }
 }
 
@@ -992,7 +1011,6 @@ footer {
         font-size: 12px;
         padding: 2px 10px;
     }
-
     .user-profile {
         margin-right: 10px;
     }
@@ -1028,11 +1046,9 @@ footer {
         margin-top: 13px;
         margin-left: 1rem;
     }
-
     .container_users_carrito .user-profile {
         display: flex;
     }
-
     .botonera_container {
         grid-template-columns: 1fr;
     }
@@ -1052,23 +1068,21 @@ footer {
     .slider_frame {
         height: 40vh;
     }
-
-    /* Ajuste para el modal en móviles */
     .modal-content {
         margin: 20% auto;
         width: 90%;
     }
     .profile-modal {
-        right: 20px; /* Ajustado para móviles */
+        right: 20px;
         top: 70px;
-        min-width: 220px; /* Ajustado para móviles */
+        min-width: 220px;
     }
     .profile-avatar {
-        width: 50px; /* Ajustado para móviles */
+        width: 50px;
         height: 50px;
     }
     .profile-user-name {
-        font-size: 16px; /* Ajustado para móviles */
+        font-size: 16px;
     }
 }
 
@@ -1093,55 +1107,4 @@ body.menu_active {
 
 #btn_menu:checked ~ .container_menu_desple {
     right: 0;
-}
-
-/* Estilos Modal Stock */
-.stock-modal {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #000000; /* Fondo negro */
-    color: #ffffff; /* Texto blanco */
-    padding: 15px 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    font-size: 1rem;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-    border-left: 4px solid #c11000; /* Borde rojo */
-    max-width: 300px;
-}
-
-.stock-modal.mostrar {
-    opacity: 1;
-    visibility: visible;
-}
-
-.stock-modal p {
-    margin: 0;
-    font-weight: bold;
-}
-
-/* Estilos Notificación */
-.notification-container {
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.notification {
-    background-color: #c11000;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.notification.show {
-    opacity: 1;
 }

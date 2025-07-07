@@ -134,7 +134,7 @@ function cerrarSesion(e) {
  * Redirige a la página de actualización de datos del usuario.
  */
 function actualizarDatos() {
-  window.location.href = '../HTML/index_actualizar.html';
+  window.location.href = '../HTML/index_actualizarUser.html';
 }
 
 /**
@@ -146,8 +146,10 @@ function actualizarResumenCarrito() {
       const precio = Number(producto.precio_venta) || 0;
       return sum + (precio * producto.cantidad);
     }, 0);
-    const iva = subtotal * 0.16; // IVA del 16%
+    const iva = subtotal * 0.16; // IVA del 16% para consistencia con HTML
     const total = subtotal + iva;
+
+    console.log('Resumen del carrito - Subtotal:', subtotal, 'IVA:', iva, 'Total:', total); // Depuración
 
     subtotalElement.textContent = `$${subtotal.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     ivaElement.textContent = `$${iva.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -278,7 +280,15 @@ async function manejarCompra() {
  */
 function mostrarDetalleVenta(venta) {
   const detalleLista = document.getElementById('detalle-venta-lista');
-  const total = venta.detalles.reduce((sum, detalle) => sum + detalle.total, 0);
+  console.log('Datos de la venta:', venta); // Depuración
+  console.log('Detalles de la venta:', venta.detalles); // Depuración
+  const total = venta.detalles.reduce((sum, detalle) => {
+    const detalleTotal = parseFloat(detalle.total) || 0; // Convertir a número
+    console.log(`Procesando detalle: ${detalle.nombre}, Total: ${detalleTotal}`); // Depuración
+    return sum + detalleTotal;
+  }, 0);
+  console.log('Total calculado:', total); // Depuración
+
   detalleLista.innerHTML = `
     <h3>Venta #${venta.id_venta}</h3>
     <p>Fecha: ${new Date(venta.fecha_venta).toLocaleString('es-CO')}</p>
@@ -287,12 +297,12 @@ function mostrarDetalleVenta(venta) {
       ${venta.detalles.map(detalle => `
         <li>
           ${detalle.nombre} x${detalle.cantidad} - 
-          $${detalle.precio_unitario.toLocaleString('es-CO', { minimumFractionDigits: 2 })} c/u - 
-          Subtotal: $${detalle.total.toLocaleString('es-CO', { minimumFractionDigits: 2 })}
+          $${(parseFloat(detalle.precio_unitario) || 0).toLocaleString('es-CO', { minimumFractionDigits: 2 })} c/u - 
+          Subtotal: $${(parseFloat(detalle.total) || 0).toLocaleString('es-CO', { minimumFractionDigits: 2 })}
         </li>
       `).join('')}
     </ul>
-    <p>Total: $${total.toLocaleString('es-CO', { minimumFractionDigits: 2 })}</p>
+    <p>Total: $${total.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
   `;
   detalleVentaModal.style.display = 'block';
   detalleVentaModal.classList.add('visible');

@@ -1,4 +1,3 @@
-// Constantes y Variables Globales
 const API_URL = 'http://localhost:3000/api';
 
 // Elementos del DOM
@@ -71,7 +70,6 @@ function mostrarProductos(productosMostrar) {
     }
 
     productosMostrar.forEach(producto => {
-
         if (producto.saldo === 0) return;
 
         const productDiv = document.createElement('div');
@@ -225,6 +223,7 @@ function verificarAutenticacion() {
                 menuDesplegable.innerHTML = `
                     <li><span class="user-name">Bienvenido, ${usuarioNombre} ${usuarioApellido}</span></li>
                     <li><button id="btnCerrarSesionMenu" class="logout-btn">Cerrar sesión</button></li>
+                    <li><button id="btnActualizarDatosMenu" class="update-btn">Actualizar datos</button></li>
                     <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
                     <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
                     <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
@@ -233,6 +232,7 @@ function verificarAutenticacion() {
                 document.querySelector('.profile-user-name').textContent = `${usuarioNombre} ${usuarioApellido}`;
                 const profileInfo = document.querySelector('.profile-info');
                 const logoutBtnModal = document.querySelector('.profile-modal .logout-btn');
+                const actualizarDatosBtnModal = document.getElementById('btnActualizarDatos');
                 profileInfo.addEventListener('click', () => {
                     profileModal.style.display = 'block';
                 });
@@ -246,6 +246,12 @@ function verificarAutenticacion() {
                 });
                 document.getElementById('btnCerrarSesionMenu').addEventListener('click', cerrarSesion);
                 logoutBtnModal.addEventListener('click', cerrarSesion);
+                actualizarDatosBtnModal.addEventListener('click', () => {
+                    window.location.href = '../HTML/index_actualizarUser.html';
+                });
+                document.getElementById('btnActualizarDatosMenu').addEventListener('click', () => {
+                    window.location.href = '../HTML/index_actualizarUser.html';
+                });
             } else {
                 localStorage.clear();
                 userProfileContainer.innerHTML = `

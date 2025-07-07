@@ -14,13 +14,14 @@ const formContainer = document.getElementById('formContainer');
 const modalFormBg = document.getElementById('modalFormBg');
 const closeFormModal = document.getElementById('closeFormModal');
 let editingProductId = null;
+let currentSalida = 0; // Variable para almacenar el valor de salida actual al editar
 
 // ================== HEADER USUARIO ==================
 const userProfileProductos = document.getElementById('userProfileProductos');
 const profileModalProductos = document.getElementById('profileModalProductos');
 const profileUserNameProductos = document.getElementById('profileUserNameProductos');
 const btnCerrarSesionModalProductos = document.getElementById('btnCerrarSesionModalProductos');
-let usuarioAutenticado = false; // <-- Variable para saber si hay sesión
+let usuarioAutenticado = false;
 
 // Cargar productos al iniciar
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,14 +50,14 @@ productForm.addEventListener('submit', async (e) => {
     const precio_venta = document.getElementById('precio_venta').value;
     const descripcion = document.getElementById('descripcion').value;
     const entrada = document.getElementById('entrada').value || 0;
-    const salida = document.getElementById('salida').value || 0;
+    const salida = editingProductId ? currentSalida : 0; // Usar salida de la BD o 0 para nuevos productos
     let imagenBase64 = null;
 
     // Convertir imagen a base64 si se seleccionó una
     if (imageInput.files[0]) {
         const reader = new FileReader();
         imagenBase64 = await new Promise((resolve) => {
-            reader.onload = (e) => resolve(e.target.result.split(',')[1]); // Obtener solo la parte base64
+            reader.onload = (e) => resolve(e.target.result.split(',')[1]);
             reader.readAsDataURL(imageInput.files[0]);
         });
     }
@@ -69,7 +70,7 @@ productForm.addEventListener('submit', async (e) => {
         salida,
         imagenBase64
     };
-    console.log('Datos enviados al actualizar:', productData); // se agrega log
+    console.log('Datos enviados al actualizar:', productData);
 
     try {
         if (editingProductId) {
@@ -83,7 +84,7 @@ productForm.addEventListener('submit', async (e) => {
         loadProducts();
     } catch (error) {
         console.error('Error detallado:', error);
-        alert(error.message); // Mostrar el mensaje de error específico
+        alert(error.message);
     }
 });
 
@@ -163,7 +164,8 @@ async function editProduct(id) {
     document.getElementById('precio_venta').value = product.precio_venta;
     document.getElementById('descripcion').value = product.descripcion || '';
     document.getElementById('entrada').value = product.entrada;
-    document.getElementById('salida').value = product.salida;
+    document.getElementById('salida').value = product.salida || 0; // Mostrar salida de la BD
+    currentSalida = product.salida || 0; // Almacenar salida actual
     if (product.imagen) {
         imagePreview.src = `data:image/jpeg;base64,${product.imagen}`;
         imagePreview.classList.remove('oculto');
@@ -179,12 +181,14 @@ async function editProduct(id) {
 // Resetear formulario
 function resetForm() {
     productForm.reset();
+    document.getElementById('salida').value = 0; // Forzar salida a 0 para nuevos productos
     imagePreview.classList.add('oculto');
     imagePreview.src = '';
     formTitle.textContent = 'Añadir Nuevo Producto';
     submitBtn.textContent = 'Guardar';
     cancelBtn.classList.add('oculto');
     editingProductId = null;
+    currentSalida = 0; // Reiniciar salida
     modalFormBg.classList.add('oculto');
     showFormBtn.classList.remove('oculto');
 }
@@ -210,7 +214,6 @@ function verificarAutenticacionProductos() {
         `;
         profileUserNameProductos.textContent = `${usuarioNombre} ${usuarioApellido}`;
         btnCerrarSesionModalProductos.style.display = 'block';
-        // Mostrar el modal en el DOM
         profileModalProductos.style.display = 'none';
     } else {
         usuarioAutenticado = false;
@@ -222,7 +225,6 @@ function verificarAutenticacionProductos() {
         `;
         profileUserNameProductos.textContent = 'Iniciar sesión';
         btnCerrarSesionModalProductos.style.display = 'none';
-        // Ocultar el modal si no hay sesión
         profileModalProductos.style.display = 'none';
     }
 }
@@ -263,6 +265,7 @@ modalFormBg.addEventListener('click', (event) => {
         showFormBtn.classList.remove('oculto');
     }
 });
-function  closeProfileModalProductos(){
+
+function closeProfileModalProductos() {
     profileModalProductos.style.display = 'none';
 }
