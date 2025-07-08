@@ -12,6 +12,8 @@ const menuDesplegable = document.querySelector('#menuDesplegable');
 const profileModal = document.querySelector('#profileModal');
 const profileUserName = document.querySelector('#profileUserName');
 const profileAvatar = document.querySelector('.profile-avatar');
+const searchInput = document.querySelector('.buscar_input');
+const searchButton = document.querySelector('.buscador_boton');
 
 // Contador total inicial (sincronizado con localStorage)
 let totalCartCount = parseInt(localStorage.getItem('totalCartCount')) || 0;
@@ -28,6 +30,11 @@ stockModal.innerHTML = `<p id="stock-message"></p>`;
 document.body.appendChild(stockModal);
 
 const stockMessage = document.getElementById('stock-message');
+
+// Crear contenedor para el desplegable de búsqueda
+const searchDropdown = document.createElement('div');
+searchDropdown.className = 'search-dropdown';
+document.querySelector('.buscar_container').appendChild(searchDropdown);
 
 // =========================
 // EVENTOS PRINCIPALES
@@ -49,23 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const containerMenu = document.querySelector('.container_menu_desple');
         containerMenu.classList.toggle('active', this.checked);
         closeProfileModal(); // Cerrar modal de perfil al abrir/cerrar menú hamburguesa
+        hideSearchDropdown(); // Ocultar desplegable de búsqueda
     });
 
     const filterButtons = document.querySelectorAll('.bt2');
-    const searchInput = document.querySelector('.barra_buscadora');
+    const barraBuscadora = document.querySelector('.barra_buscadora');
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const filter = button.getAttribute('data-filter');
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-            filtrarProductos(filter, searchInput.value);
+            filtrarProductos(filter, barraBuscadora.value);
         });
     });
 
-    searchInput.addEventListener('input', () => {
+    barraBuscadora.addEventListener('input', () => {
         const filter = document.querySelector('.bt2.active')?.getAttribute('data-filter') || 'precio';
-        filtrarProductos(filter, searchInput.value);
+        filtrarProductos(filter, barraBuscadora.value);
     });
 
     // Actualizar contador del carrito desde localStorage al cargar
@@ -73,6 +81,29 @@ document.addEventListener('DOMContentLoaded', () => {
         cartCountElement.textContent = totalCartCount;
         cartCountElement.classList.toggle('hidden', totalCartCount === 0);
     }
+
+    // Manejar búsqueda en tiempo real para el desplegable
+    searchInput.addEventListener('input', async () => {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm.length > 0) {
+            await cargarProductosDesplegable(searchTerm);
+        } else {
+            hideSearchDropdown();
+        }
+    });
+
+    // Redirigir al catálogo al hacer clic en el botón de búsqueda
+    searchButton.addEventListener('click', () => {
+        const searchTerm = searchInput.value.trim();
+        window.location.href = `../HTML/index_catalogo.html?search=${encodeURIComponent(searchTerm)}`;
+    });
+
+    // Ocultar desplegable al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+            hideSearchDropdown();
+        }
+    });
 
     // Verificar que carritoManager esté definido
     if (typeof carritoManager === 'undefined') {
@@ -85,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Funciones para manejar el modal de perfil
 function toggleProfileModal() {
     profileModal.style.display = profileModal.style.display === 'block' ? 'none' : 'block';
+    hideSearchDropdown(); // Ocultar desplegable de búsqueda al abrir modal de perfil
 }
 
 function closeProfileModal() {
@@ -196,7 +228,7 @@ function cerrarSesion(e) {
     window.location.href = '../HTML/index_login.html';
 }
 
-// Cargar productos desde la API
+// Cargar productos desde la API (para destacados)
 async function cargarProductos() {
     try {
         console.log('Intentando cargar productos desde:', `${API_URL}/productos?destacado=true`);
@@ -218,6 +250,61 @@ async function cargarProductos() {
         contenedorProductos.innerHTML = '<p>Error al cargar los productos. Verifica la conexión con la API.</p>';
         showNotification('Error al cargar los productos');
     }
+}
+
+// Cargar productos para el desplegable de búsqueda
+async function cargarProductosDesplegable(searchTerm) {
+    try {
+        console.log('Cargando productos para desplegable con búsqueda:', searchTerm);
+        const response = await fetch(`${API_URL}/productos`);
+        if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+        const allProductos = await response.json();
+        const productosFiltrados = allProductos.filter(producto =>
+            producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            producto.descripcion?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        mostrarProductosDesplegable(productosFiltrados);
+    } catch (error) {
+        console.error('Error al cargar productos para desplegable:', error);
+        showNotification('Error al cargar los productos para búsqueda');
+        hideSearchDropdown();
+    }
+}
+
+// Mostrar productos en el desplegable
+function mostrarProductosDesplegable(productosFiltrados) {
+    searchDropdown.innerHTML = '';
+    if (productosFiltrados.length === 0) {
+        hideSearchDropdown();
+        return;
+    }
+
+    productosFiltrados.forEach(producto => {
+        const item = document.createElement('div');
+        item.className = 'search-dropdown-item';
+        item.innerHTML = `
+            ${producto.imagen 
+                ? `<img src="data:image/jpeg;base64,${producto.imagen}" alt="${producto.nombre}">`
+                : `<div class="no-image">Sin imagen</div>`}
+            <div class="item-info">
+                <div class="item-name">${producto.nombre}</div>
+                <div class="item-price">$${producto.precio_venta.toLocaleString('es-CO')}</div>
+            </div>
+        `;
+        item.addEventListener('click', () => {
+            window.location.href = `../HTML/index_catalogo.html?search=${encodeURIComponent(producto.nombre)}`;
+            hideSearchDropdown();
+        });
+        searchDropdown.appendChild(item);
+    });
+
+    searchDropdown.classList.add('show');
+}
+
+// Ocultar desplegable de búsqueda
+function hideSearchDropdown() {
+    searchDropdown.classList.remove('show');
+    searchDropdown.innerHTML = '';
 }
 
 // Mostrar productos en el contenedor usando la plantilla

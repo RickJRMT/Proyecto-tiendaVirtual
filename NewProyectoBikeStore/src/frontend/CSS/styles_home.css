@@ -98,6 +98,7 @@ body {
     border-radius: 30px;
     background-color: white;
     margin-top: 12px;
+    position: relative; /* Necesario para posicionar el desplegable */
 }
 
 .buscar_container {
@@ -108,6 +109,7 @@ body {
     padding: 5px 20px 5px 20px;
     border-radius: 30px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .buscar_input {
@@ -357,6 +359,76 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Estilos Desplegable de Búsqueda */
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    margin-top: 5px;
+}
+
+.search-dropdown.show {
+    display: block;
+}
+
+.search-dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-dropdown-item:hover {
+    background-color: #f8f8f8;
+}
+
+.search-dropdown-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-dropdown-item .item-info {
+    flex-grow: 1;
+}
+
+.search-dropdown-item .item-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.search-dropdown-item .item-price {
+    font-size: 12px;
+    color: #c11000;
+}
+
+.search-dropdown-item .no-image {
+    width: 50px;
+    height: 50px;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #666;
+    border-radius: 5px;
+    margin-right: 10px;
 }
 
 /* Estilos Carrusel */
@@ -975,6 +1047,9 @@ footer {
     .profile-modal {
         right: 40px;
     }
+    .search-dropdown {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -1084,6 +1159,9 @@ footer {
     }
     .profile-user-name {
         font-size: 16px;
+    }
+    .search-dropdown {
+        width: 100%;
     }
 }
 

@@ -5,10 +5,18 @@ const userProfileContainer = document.querySelector('.users');
 const menuDesplegable = document.querySelector('#menuDesplegable');
 const contenedorProductos = document.querySelector('.product_content');
 const searchInput = document.querySelector('.buscar_input');
+const searchButton = document.querySelector('.buscador_boton');
 const filterSelect = document.querySelector('#filtrado');
 const cartCountElement = document.getElementById('contador_carrito');
 const notificationContainer = document.getElementById('notificacion');
 const profileModal = document.querySelector('#profileModal');
+const profileUserName = document.querySelector('.profile-user-name');
+const templateProducto = document.querySelector('#templateProducto');
+
+// Crear contenedor para el desplegable de búsqueda
+const searchDropdown = document.createElement('div');
+searchDropdown.className = 'search-dropdown';
+document.querySelector('.buscar_container').appendChild(searchDropdown);
 
 let productos = [];
 let totalCartCount = parseInt(localStorage.getItem('totalCartCount')) || 0;
@@ -61,6 +69,63 @@ function guardarProductoEnCarrito(producto) {
     showNotification(`Se añadieron ${producto.cantidad} ${producto.nombre}(s) al carrito`);
 }
 
+// Cargar productos para el desplegable de búsqueda
+async function cargarProductosDesplegable(searchTerm) {
+    try {
+        console.log('Cargando productos para desplegable con búsqueda:', searchTerm);
+        const response = await fetch(`${API_URL}/productos`);
+        if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+        const allProductos = await response.json();
+        const productosFiltrados = allProductos.filter(producto =>
+            producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            producto.descripcion?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        mostrarProductosDesplegable(productosFiltrados);
+    } catch (error) {
+        console.error('Error al cargar productos para desplegable:', error);
+        showNotification('Error al cargar los productos para búsqueda');
+        hideSearchDropdown();
+    }
+}
+
+// Mostrar productos en el desplegable
+function mostrarProductosDesplegable(productosFiltrados) {
+    searchDropdown.innerHTML = '';
+    if (productosFiltrados.length === 0) {
+        hideSearchDropdown();
+        return;
+    }
+
+    productosFiltrados.forEach(producto => {
+        const item = document.createElement('div');
+        item.className = 'search-dropdown-item';
+        item.innerHTML = `
+            ${producto.imagen 
+                ? `<img src="data:image/jpeg;base64,${producto.imagen}" alt="${producto.nombre}">`
+                : `<div class="no-image">Sin imagen</div>`}
+            <div class="item-info">
+                <div class="item-name">${producto.nombre}</div>
+                <div class="item-price">$${producto.precio_venta.toLocaleString('es-CO')}</div>
+            </div>
+        `;
+        item.addEventListener('click', () => {
+            searchInput.value = producto.nombre;
+            filtrarProductos();
+            hideSearchDropdown();
+        });
+        searchDropdown.appendChild(item);
+    });
+
+    searchDropdown.classList.add('show');
+}
+
+// Ocultar desplegable de búsqueda
+function hideSearchDropdown() {
+    searchDropdown.classList.remove('show');
+    searchDropdown.innerHTML = '';
+}
+
+// Mostrar productos en el contenedor
 function mostrarProductos(productosMostrar) {
     contenedorProductos.innerHTML = '';
 
@@ -72,64 +137,25 @@ function mostrarProductos(productosMostrar) {
     productosMostrar.forEach(producto => {
         if (producto.saldo === 0) return;
 
-        const productDiv = document.createElement('div');
-        productDiv.classList.add('product');
+        const clone = templateProducto.content.cloneNode(true);
+        const productContainer = clone.querySelector('.product');
+        const img = clone.querySelector('.product-img');
+        const nombre = clone.querySelector('.product-nombre');
+        const precio = clone.querySelector('.precio');
+        const addButton = clone.querySelector('.agregar_carrito');
+        const minusButton = clone.querySelector('.disminuir-btn');
+        const plusButton = clone.querySelector('.aumentar-btn');
+        const quantityInput = clone.querySelector('.mostrar-cantidad');
 
-        const img = document.createElement('img');
+        let currentQuantity = 1;
+
+        nombre.textContent = producto.nombre;
+        precio.textContent = `$${producto.precio_venta.toLocaleString('es-CO')}`;
         img.src = producto.imagen ? `data:image/jpeg;base64,${producto.imagen}` : 'https://via.placeholder.com/120x80?text=Sin+imagen';
         img.alt = producto.nombre;
-        img.classList.add('product-img');
-
-        const productTxt = document.createElement('div');
-        productTxt.classList.add('product_txt');
-
-        const nombre = document.createElement('h3');
-        nombre.classList.add('product-nombre');
-        nombre.textContent = producto.nombre;
-
-        const precio = document.createElement('p');
-        precio.classList.add('precio');
-        precio.textContent = `$${producto.precio_venta.toLocaleString('es-CO')}`;
-
-        productTxt.appendChild(nombre);
-        productTxt.appendChild(precio);
-
-        const cantidadControl = document.createElement('div');
-        cantidadControl.classList.add('cantidad-control-btn');
-
-        const minusButton = document.createElement('button');
-        minusButton.classList.add('cantidad-btn', 'disminuir-btn');
-        minusButton.textContent = '-';
-
-        const quantityInput = document.createElement('input');
-        quantityInput.type = 'text';
-        quantityInput.classList.add('mostrar-cantidad');
-        quantityInput.value = '1';
-        quantityInput.readOnly = true;
-
-        const plusButton = document.createElement('button');
-        plusButton.classList.add('cantidad-btn', 'aumentar-btn');
-        plusButton.textContent = '+';
-
-        cantidadControl.appendChild(minusButton);
-        cantidadControl.appendChild(quantityInput);
-        cantidadControl.appendChild(plusButton);
-
-        const addButton = document.createElement('button');
-        addButton.classList.add('agregar_carrito');
-        addButton.textContent = 'Añadir al carrito';
         addButton.setAttribute('data-id', producto.id_producto);
         addButton.setAttribute('data-name', producto.nombre);
         addButton.setAttribute('data-price', producto.precio_venta);
-
-        productDiv.appendChild(img);
-        productDiv.appendChild(productTxt);
-        productDiv.appendChild(cantidadControl);
-        productDiv.appendChild(addButton);
-
-        contenedorProductos.appendChild(productDiv);
-
-        let currentQuantity = 1;
 
         minusButton.addEventListener('click', () => {
             if (currentQuantity > 1) {
@@ -163,12 +189,15 @@ function mostrarProductos(productosMostrar) {
             currentQuantity = 1;
             quantityInput.value = currentQuantity;
         });
+
+        contenedorProductos.appendChild(clone);
     });
 }
 
+// Filtrar y ordenar productos
 function filtrarProductos() {
     let productosFiltrados = [...productos];
-    const searchTerm = searchInput.value.toLowerCase();
+    const searchTerm = searchInput.value.trim().toLowerCase();
     const filter = filterSelect.value || 'menor';
 
     if (searchTerm) {
@@ -187,6 +216,7 @@ function filtrarProductos() {
     mostrarProductos(productosFiltrados);
 }
 
+// Verificar autenticación del usuario
 function verificarAutenticacion() {
     const usuarioId = localStorage.getItem('usuarioId');
     const usuarioNombre = localStorage.getItem('usuarioNombre');
@@ -197,6 +227,9 @@ function verificarAutenticacion() {
             <li><img src="../img/img_home/avatar.png" alt="Avatar" class="avatar_img"></li>
             <li class="iniciar_session"><a href="../HTML/index_login.html?redirect=catalogo">Iniciar sesión</a></li>
         `;
+        profileUserName.textContent = 'Iniciar sesión';
+        document.querySelector('.logout-btn').style.display = 'none';
+        document.getElementById('btnActualizarDatos').style.display = 'none';
         menuDesplegable.innerHTML = `
             <li><a href="../HTML/index_login.html?redirect=catalogo">Iniciar sesión</a></li>
             <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
@@ -220,6 +253,9 @@ function verificarAutenticacion() {
                         <span class="user-name">${usuarioNombre} ${usuarioApellido}</span>
                     </div>
                 `;
+                profileUserName.textContent = `${usuarioNombre} ${usuarioApellido}`;
+                document.querySelector('.logout-btn').style.display = 'block';
+                document.getElementById('btnActualizarDatos').style.display = 'block';
                 menuDesplegable.innerHTML = `
                     <li><span class="user-name">Bienvenido, ${usuarioNombre} ${usuarioApellido}</span></li>
                     <li><button id="btnCerrarSesionMenu" class="logout-btn">Cerrar sesión</button></li>
@@ -229,102 +265,129 @@ function verificarAutenticacion() {
                     <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
                     <li><a href="#">Contáctanos</a></li>
                 `;
-                document.querySelector('.profile-user-name').textContent = `${usuarioNombre} ${usuarioApellido}`;
-                const profileInfo = document.querySelector('.profile-info');
-                const logoutBtnModal = document.querySelector('.profile-modal .logout-btn');
-                const actualizarDatosBtnModal = document.getElementById('btnActualizarDatos');
-                profileInfo.addEventListener('click', () => {
-                    profileModal.style.display = 'block';
-                });
-                document.querySelector('.profile-close').addEventListener('click', () => {
-                    profileModal.style.display = 'none';
-                });
-                profileModal.addEventListener('click', (e) => {
-                    if (e.target === profileModal) {
-                        profileModal.style.display = 'none';
-                    }
-                });
                 document.getElementById('btnCerrarSesionMenu').addEventListener('click', cerrarSesion);
-                logoutBtnModal.addEventListener('click', cerrarSesion);
-                actualizarDatosBtnModal.addEventListener('click', () => {
-                    window.location.href = '../HTML/index_actualizarUser.html';
-                });
                 document.getElementById('btnActualizarDatosMenu').addEventListener('click', () => {
                     window.location.href = '../HTML/index_actualizarUser.html';
                 });
             } else {
                 localStorage.clear();
-                userProfileContainer.innerHTML = `
-                    <li><img src="../img/img_home/avatar.png" alt="Avatar" class="avatar_img"></li>
-                    <li class="iniciar_session"><a href="../HTML/index_login.html?redirect=catalogo">Iniciar sesión</a></li>
-                `;
-                menuDesplegable.innerHTML = `
-                    <li><a href="../HTML/index_login.html?redirect=catalogo">Iniciar sesión</a></li>
-                    <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
-                    <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
-                    <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
-                    <li><a href="#">Contáctanos</a></li>
-                `;
-                showNotification('Sesión inválida. Por favor, inicia sesión nuevamente.');
+                window.location.href = '../HTML/index_login.html?redirect=catalogo';
             }
         })
         .catch(error => {
             console.error('Error al verificar sesión:', error);
-            localStorage.clear();
             userProfileContainer.innerHTML = `
                 <li><img src="../img/img_home/avatar.png" alt="Avatar" class="avatar_img"></li>
                 <li class="iniciar_session"><a href="../HTML/index_login.html?redirect=catalogo">Iniciar sesión</a></li>
             `;
+            profileUserName.textContent = 'Iniciar sesión';
+            document.querySelector('.logout-btn').style.display = 'none';
+            document.getElementById('btnActualizarDatos').style.display = 'none';
             menuDesplegable.innerHTML = `
                 <li><a href="../HTML/index_login.html?redirect=catalogo">Iniciar sesión</a></li>
-                <li><a href="../HTML/index_home.html">Home</a></li>
                 <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
                 <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
                 <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
                 <li><a href="#">Contáctanos</a></li>
             `;
-            showNotification('Error al verificar la sesión. Por favor, inicia sesión nuevamente.');
         });
 }
 
+// Cerrar sesión
 function cerrarSesion(e) {
     e.preventDefault();
     localStorage.clear();
     window.location.href = '../HTML/index_login.html?redirect=catalogo';
 }
 
+// Cargar productos desde la API
 async function cargarProductos() {
     try {
         const response = await fetch(`${API_URL}/productos`);
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
         productos = await response.json();
-        if (productos.length === 0) {
-            showNotification('No se encontraron productos disponibles.');
-        } else {
-            mostrarProductos(productos);
-        }
+        filtrarProductos();
     } catch (error) {
         console.error('Error al cargar productos:', error);
-        showNotification('Error al cargar los productos. Verifica la conexión con la API.');
+        contenedorProductos.innerHTML = '<p>Error al cargar los productos.</p>';
+        showNotification('Error al cargar los productos');
     }
 }
 
-// Gestión de Eventos
+// Manejar eventos al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     verificarAutenticacion();
     cargarProductos();
 
-    searchInput.addEventListener('input', filtrarProductos);
+    // Obtener parámetro de búsqueda de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchTerm = urlParams.get('search') || '';
+    if (searchTerm) {
+        searchInput.value = decodeURIComponent(searchTerm);
+        filtrarProductos();
+    }
+
+    // Actualizar contador del carrito
+    updateCartCount(totalCartCount);
+
+    // Evento para el filtro por precio
     filterSelect.addEventListener('change', filtrarProductos);
 
-    document.querySelector('#btn_menu').addEventListener('change', function () {
-        document.body.classList.toggle('menu_active', this.checked);
+    // Evento para búsqueda en tiempo real (desplegable)
+    searchInput.addEventListener('input', async () => {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm.length > 0) {
+            await cargarProductosDesplegable(searchTerm);
+        } else {
+            hideSearchDropdown();
+            filtrarProductos();
+        }
     });
 
-    const header = document.querySelector('header');
-    const alturaHeader = parseFloat(getComputedStyle(header).height);
-    window.addEventListener('scroll', () => {
-        let opa = window.scrollY === 0 ? '80%' : window.scrollY >= alturaHeader && window.scrollY < 2 * alturaHeader ? '100%' : '80%';
-        header.style.setProperty('opacity', opa);
+    // Evento para el botón de búsqueda
+    searchButton.addEventListener('click', () => {
+        filtrarProductos();
+        hideSearchDropdown();
     });
+
+    // Ocultar desplegable al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+            hideSearchDropdown();
+        }
+    });
+
+    // Ocultar desplegable al abrir el menú hamburguesa
+    document.querySelector('#btn_menu').addEventListener('change', function () {
+        hideSearchDropdown();
+        profileModal.style.display = 'none';
+    });
+
+    // Manejar modal de perfil
+    userProfileContainer.addEventListener('click', () => {
+        profileModal.style.display = profileModal.style.display === 'block' ? 'none' : 'block';
+        hideSearchDropdown();
+    });
+
+    document.querySelector('.profile-close').addEventListener('click', () => {
+        profileModal.style.display = 'none';
+    });
+
+    document.querySelector('.logout-btn').addEventListener('click', cerrarSesion);
+});
+
+// Control del carrusel
+document.addEventListener('DOMContentLoaded', () => {
+    const sliderUl = document.querySelector('.slider_frame ul');
+    let currentIndex = 0;
+    const totalSlides = 4;
+
+    function moveToSlide(index) {
+        sliderUl.style.transform = `translateX(-${index * 25}%)`;
+    }
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        moveToSlide(currentIndex);
+    }, 5000);
 });
