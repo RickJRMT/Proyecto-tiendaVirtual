@@ -112,13 +112,14 @@ body {
 
 .buscar_input {
     height: 38px;
-    width: 75%;
+    width: 90%;
     font-size: 13px;
     outline: none;
     border: none;
-    border-radius: 20px;
+    border-radius: 35px;
     padding: 10px 15px;
     transition: all 0.3s ease;
+    margin-left: 7px;
 }
 
 .buscador_boton {

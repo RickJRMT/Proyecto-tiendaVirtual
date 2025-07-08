@@ -114,6 +114,10 @@ function validarFormulario(datos) {
         mostrarNotificacion('El teléfono solo puede contener números.', false);
         return false;
     }
+    if (datos.contrasena && datos.contrasena.length < 6) {
+        mostrarNotificacion('La contraseña debe tener al menos 6 caracteres.', false);
+        return false;
+    }
     if (datos.contrasena && datos.contrasena !== datos.confirmarContrasena) {
         mostrarNotificacion('Las contraseñas no coinciden.', false);
         return false;
@@ -153,7 +157,10 @@ async function actualizarUsuario(e) {
         const usuarioId = localStorage.getItem('usuarioId');
         if (!usuarioId) throw new Error('ID de usuario no encontrado');
 
-        console.log('Enviando actualización:', payload);
+        console.log('Enviando actualización (PUT /usuarios):', {
+            ...payload,
+            clave: datos.contrasena ? '[CONTRASEÑA]' : '[SIN CONTRASEÑA]'
+        });
         const response = await fetch(`${API_URL}/usuarios/${usuarioId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -163,7 +170,6 @@ async function actualizarUsuario(e) {
         const resultado = await response.json();
         console.log('Respuesta del servidor (PUT /usuarios):', resultado);
 
-        // Considerar la petición exitosa si el código HTTP es 200
         if (response.ok) {
             localStorage.setItem('usuarioNombre', datos.nombre);
             localStorage.setItem('usuarioApellido', datos.apellido);
