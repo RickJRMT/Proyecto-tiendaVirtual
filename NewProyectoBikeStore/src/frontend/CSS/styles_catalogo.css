@@ -304,7 +304,7 @@
     display: block;
     top: 20px;
     cursor: pointer;
-    padding: 20px;
+    padding: 10px;
     border-left: 5px solid transparent;
     transition: all 400ms ease;
 }
@@ -323,12 +323,12 @@
     transition: all 0.3s ease;
 }
 
-#btn_menu:checked ~ .container_menu_desple {
+#btn_menu:checked~.container_menu_desple {
     opacity: 1;
     visibility: visible;
 }
 
-#btn_menu:checked ~ .container_menu_desple .cont_menu {
+#btn_menu:checked~.container_menu_desple .cont_menu {
     transform: translateX(0%);
 }
 
@@ -390,14 +390,37 @@ h2 {
 }
 
 @keyframes slide {
-    0% { margin-left: 0%; }
-    20% { margin-left: 0%; }
-    25% { margin-left: -100%; }
-    45% { margin-left: -100%; }
-    50% { margin-left: -200%; }
-    70% { margin-left: -200%; }
-    75% { margin-left: -300%; }
-    100% { margin-left: -300%; }
+    0% {
+        margin-left: 0%;
+    }
+
+    20% {
+        margin-left: 0%;
+    }
+
+    25% {
+        margin-left: -100%;
+    }
+
+    45% {
+        margin-left: -100%;
+    }
+
+    50% {
+        margin-left: -200%;
+    }
+
+    70% {
+        margin-left: -200%;
+    }
+
+    75% {
+        margin-left: -300%;
+    }
+
+    100% {
+        margin-left: -300%;
+    }
 }
 
 /* Estilos del Catálogo de Productos */
@@ -414,6 +437,12 @@ h2 {
     border: none;
     outline: none;
     color: black;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.products_container_todos {
+    margin: 0 15px;
 }
 
 .product_content {
@@ -422,6 +451,7 @@ h2 {
     place-items: center;
     margin-top: 15px;
     gap: 20px;
+    padding: 0 15px;
 }
 
 .product {
@@ -435,6 +465,8 @@ h2 {
     padding: 20px;
     background: white;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 250px;
 }
 
 .product:hover {
@@ -464,23 +496,23 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 6px;
     margin: 10px 0;
     background-color: #f0f0f0;
     border-radius: 20px;
-    padding: 5px 10px;
+    padding: 4px 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .cantidad-btn {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     border: none;
     background: #c11000;
     color: white;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -495,13 +527,70 @@ h2 {
 }
 
 .mostrar-cantidad {
-    font-size: 16px;
-    min-width: 30px;
+    font-size: 14px;
+    min-width: 24px;
     text-align: center;
     font-weight: bold;
     color: #000000;
     border: none;
     background: transparent;
+}
+
+/* Ajustes para tabletas (pantallas entre 769px y 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .cantidad-control-btn {
+        gap: 5px;
+        padding: 3px 7px;
+    }
+
+    .cantidad-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+    }
+
+    .mostrar-cantidad {
+        font-size: 13px;
+        min-width: 22px;
+    }
+}
+
+/* Ajustes para móviles (pantallas menores a 768px) */
+@media screen and (max-width: 768px) {
+    .cantidad-control-btn {
+        gap: 4px;
+        padding: 3px 6px;
+    }
+
+    .cantidad-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 14px;
+    }
+
+    .mostrar-cantidad {
+        font-size: 12px;
+        min-width: 18px;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas (menores a 480px) */
+@media screen and (max-width: 480px) {
+    .cantidad-control-btn {
+        gap: 3px;
+        padding: 2px 4px;
+    }
+
+    .cantidad-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 13px;
+    }
+
+    .mostrar-cantidad {
+        font-size: 11px;
+        min-width: 16px;
+    }
 }
 
 /* Estilo del botón "Añadir al carrito" */
@@ -608,11 +697,27 @@ footer {
     margin-top: 5px;
 }
 
-.logout-btn:hover {
+.update-btn {
+    background-color: #c11000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    width: 6rem;
+    height: 2.4rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+}
+
+.logout-btn:hover,
+.update-btn:hover {
     background-color: #a00d00;
 }
 
-.cont_menu .logout-btn {
+.cont_menu .logout-btn,
+.cont_menu .update-btn {
     width: 100%;
     text-align: left;
     padding: 10px;
@@ -681,7 +786,7 @@ footer {
 
 /* Media Queries para Responsividad */
 
-/* Ajustes para tabletas (pantallas entre 768px y 1024px) */
+/* Ajustes para tabletas (pantallas entre 769px y 1024px) */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
     .slider_frame {
         height: 60vh;
@@ -710,6 +815,51 @@ footer {
     .profile-modal {
         right: 40px;
     }
+
+    .products_container_todos {
+        margin: 0 20px;
+    }
+
+    .product_content {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .product {
+        padding: 15px;
+        max-width: 200px;
+    }
+
+    .product img {
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .product_txt h3 {
+        font-size: 1.1rem;
+    }
+
+    .product_txt .precio {
+        font-size: 0.9rem;
+    }
+
+    .cantidad-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+    .mostrar-cantidad {
+        font-size: 14px;
+        min-width: 25px;
+    }
+
+    .agregar_carrito {
+        max-width: 130px;
+        padding: 8px;
+        font-size: 13px;
+    }
 }
 
 /* Ajustes para móviles (pantallas menores a 768px) */
@@ -727,8 +877,10 @@ footer {
     }
 
     .buscar {
-        width: 420px;
-        margin-left: 80px;
+        width: 80%;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .buscar_container {
@@ -737,7 +889,7 @@ footer {
     }
 
     .buscar_input {
-        width: 70%;
+        width: 85%;
         font-size: 12px;
     }
 
@@ -766,6 +918,7 @@ footer {
 
     h2 {
         margin-top: 30vh;
+        font-size: 1.2rem;
     }
 
     .profile-modal {
@@ -785,5 +938,119 @@ footer {
 
     .search-dropdown {
         width: 100%;
+    }
+
+    .products_container_todos {
+        margin: 0 10px;
+    }
+
+    .product_content {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        padding: 0 5px;
+    }
+
+    .product {
+        padding: 10px;
+        max-width: 180px;
+    }
+
+    .product img {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .product_txt h3 {
+        font-size: 1rem;
+        margin: 8px 0;
+    }
+
+    .product_txt .precio {
+        font-size: 0.85rem;
+    }
+
+    .cantidad-control-btn {
+        gap: 8px;
+        padding: 4px 8px;
+    }
+
+    .cantidad-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .mostrar-cantidad {
+        font-size: 12px;
+        min-width: 20px;
+    }
+
+    .agregar_carrito {
+        max-width: 120px;
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    .filtraje {
+        margin-right: 15px;
+        justify-content: center;
+    }
+
+    .filtraje select {
+        font-size: 12px;
+        padding: 4px;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas (menores a 480px) */
+@media screen and (max-width: 480px) {
+    .product_content {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 0 10px;
+    }
+
+    .product {
+        max-width: 100%;
+        padding: 8px;
+    }
+
+    .product img {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .product_txt h3 {
+        font-size: 0.95rem;
+    }
+
+    .product_txt .precio {
+        font-size: 0.8rem;
+    }
+
+    .cantidad-control-btn {
+        gap: 6px;
+        padding: 3px 6px;
+    }
+
+    .cantidad-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 13px;
+    }
+
+    .mostrar-cantidad {
+        font-size: 11px;
+        min-width: 18px;
+    }
+
+    .agregar_carrito {
+        max-width: 110px;
+        padding: 6px;
+        font-size: 11px;
+    }
+
+    .filtraje {
+        margin-right: 10px;
     }
 }

@@ -260,10 +260,10 @@ function verificarAutenticacion() {
                     <li><span class="user-name">Bienvenido, ${usuarioNombre} ${usuarioApellido}</span></li>
                     <li><button id="btnCerrarSesionMenu" class="logout-btn">Cerrar sesión</button></li>
                     <li><button id="btnActualizarDatosMenu" class="update-btn">Actualizar datos</button></li>
+                    <li><a href="../HTML/index_home.html">Home</a></li>
                     <li><a href="../HTML/index_catalogo.html">Bicicletas</a></li>
                     <li><a href="../HTML/index_catalogo.html">Accesorios</a></li>
                     <li><a href="../HTML/index_catalogo.html">Repuestos</a></li>
-                    <li><a href="#">Contáctanos</a></li>
                 `;
                 document.getElementById('btnCerrarSesionMenu').addEventListener('click', cerrarSesion);
                 document.getElementById('btnActualizarDatosMenu').addEventListener('click', () => {

@@ -7,14 +7,13 @@ const carritoManager = {
 
     // Agregar un producto al carrito
     agregarProducto(producto) {
-        console.log('Agregando producto al carrito:', producto); // Depuración
-        console.log('Imagen del producto:', producto.imagen); // Depuración específica
+        console.log('Agregando producto al carrito:', producto);
+        console.log('Imagen del producto:', producto.imagen);
         let carrito = this.init();
         const productoExistente = carrito.find(item => item.id_producto === producto.id_producto);
 
         if (productoExistente) {
             productoExistente.cantidad += producto.cantidad;
-            // Asegurar que la imagen se mantenga actualizada
             productoExistente.imagen = producto.imagen;
         } else {
             carrito.push(producto);
@@ -22,7 +21,6 @@ const carritoManager = {
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
         this.actualizarContador();
-        // Solo ejecutar renderizarCarrito y actualizarResumen si estamos en la página del carrito
         if (document.getElementById('contenedorCarrito')) {
             this.renderizarCarrito();
             this.actualizarResumen();
@@ -32,14 +30,13 @@ const carritoManager = {
 
     // Eliminar un producto del carrito
     eliminarProducto(idProducto) {
-        console.log('Eliminando producto ID:', idProducto); // Depuración
+        console.log('Eliminando producto ID:', idProducto);
         let carrito = this.init();
         const index = carrito.findIndex(item => item.id_producto === idProducto);
         if (index !== -1) {
             carrito.splice(index, 1);
             localStorage.setItem('carrito', JSON.stringify(carrito));
             this.actualizarContador();
-            // Solo ejecutar renderizarCarrito y actualizarResumen si estamos en la página del carrito
             if (document.getElementById('contenedorCarrito')) {
                 this.renderizarCarrito();
                 this.actualizarResumen();
@@ -49,14 +46,13 @@ const carritoManager = {
 
     // Actualizar la cantidad de un producto
     actualizarCantidad(idProducto, nuevaCantidad) {
-        console.log('Actualizando cantidad para producto ID:', idProducto, 'Nueva cantidad:', nuevaCantidad); // Depuración
+        console.log('Actualizando cantidad para producto ID:', idProducto, 'Nueva cantidad:', nuevaCantidad);
         let carrito = this.init();
         const producto = carrito.find(item => item.id_producto === idProducto);
         if (producto && nuevaCantidad > 0) {
             producto.cantidad = nuevaCantidad;
             localStorage.setItem('carrito', JSON.stringify(carrito));
             this.actualizarContador();
-            // Solo ejecutar renderizarCarrito y actualizarResumen si estamos en la página del carrito
             if (document.getElementById('contenedorCarrito')) {
                 this.renderizarCarrito();
                 this.actualizarResumen();
@@ -77,14 +73,14 @@ const carritoManager = {
                 element.classList.toggle('hidden', totalCartCount === 0);
             }
         });
-        console.log('Contador actualizado:', totalCartCount); // Depuración
+        console.log('Contador actualizado:', totalCartCount);
     },
 
     // Renderizar el carrito en el DOM
     renderizarCarrito() {
         const contenedorCarrito = document.getElementById('contenedorCarrito');
         if (!contenedorCarrito) {
-            console.log('No se encontró #contenedorCarrito, omitiendo renderizado'); // Depuración
+            console.log('No se encontró #contenedorCarrito, omitiendo renderizado');
             return;
         }
 
@@ -97,33 +93,54 @@ const carritoManager = {
         }
 
         carrito.forEach(producto => {
-            console.log(`Renderizando producto: ${producto.nombre}, Imagen: ${producto.imagen}`); // Depuración
             const divProducto = document.createElement('div');
             divProducto.classList.add('producto_carrito');
 
             const imgContainer = document.createElement('div');
             imgContainer.classList.add('imagen_carrito');
             const img = document.createElement('img');
-            img.src = producto.imagen || '../img/no-image.jpg'; // Usar imagen local como respaldo
+            img.src = producto.imagen || '../img/no-image.jpg';
             img.alt = producto.nombre || 'Producto sin nombre';
             imgContainer.appendChild(img);
 
             const nombre = document.createElement('span');
+            nombre.classList.add('nombre');
             nombre.textContent = producto.nombre || 'Producto sin nombre';
 
             const precio = document.createElement('span');
+            precio.classList.add('precio');
             precio.textContent = producto.precio_venta
                 ? `$${Number(producto.precio_venta).toLocaleString('es-CO')}`
                 : '$0.00';
 
-            const cantidad = document.createElement('input');
-            cantidad.type = 'number';
-            cantidad.value = producto.cantidad || 1;
-            cantidad.min = '1';
-            cantidad.classList.add('cantidad_input');
-            cantidad.addEventListener('change', (e) => {
-                this.actualizarCantidad(producto.id_producto, parseInt(e.target.value) || 1);
+            const cantidadControl = document.createElement('div');
+            cantidadControl.classList.add('cantidad_control');
+
+            const minusBtn = document.createElement('button');
+            minusBtn.classList.add('cantidad_btn', 'minus');
+            minusBtn.textContent = '-';
+            minusBtn.addEventListener('click', () => {
+                const nuevaCantidad = (producto.cantidad || 1) - 1;
+                if (nuevaCantidad > 0) {
+                    this.actualizarCantidad(producto.id_producto, nuevaCantidad);
+                }
             });
+
+            const cantidad = document.createElement('span');
+            cantidad.classList.add('cantidad_input');
+            cantidad.textContent = producto.cantidad || 1;
+
+            const plusBtn = document.createElement('button');
+            plusBtn.classList.add('cantidad_btn', 'plus');
+            plusBtn.textContent = '+';
+            plusBtn.addEventListener('click', () => {
+                const nuevaCantidad = (producto.cantidad || 1) + 1;
+                this.actualizarCantidad(producto.id_producto, nuevaCantidad);
+            });
+
+            cantidadControl.appendChild(minusBtn);
+            cantidadControl.appendChild(cantidad);
+            cantidadControl.appendChild(plusBtn);
 
             const eliminarBtn = document.createElement('button');
             eliminarBtn.textContent = 'X';
@@ -133,19 +150,19 @@ const carritoManager = {
             divProducto.appendChild(imgContainer);
             divProducto.appendChild(nombre);
             divProducto.appendChild(precio);
-            divProducto.appendChild(cantidad);
+            divProducto.appendChild(cantidadControl);
             divProducto.appendChild(eliminarBtn);
 
             contenedorCarrito.appendChild(divProducto);
         });
-        console.log('Carrito renderizado:', carrito); // Depuración
+        console.log('Carrito renderizado:', carrito);
     },
 
     // Calcular y actualizar el resumen de la orden
     actualizarResumen() {
         const contenedorCarrito = document.getElementById('contenedorCarrito');
         if (!contenedorCarrito) {
-            console.log('No se encontró #contenedorCarrito, omitiendo actualización del resumen'); // Depuración
+            console.log('No se encontró #contenedorCarrito, omitiendo actualización del resumen');
             return;
         }
 
@@ -154,10 +171,9 @@ const carritoManager = {
             const precio = Number(producto.precio_venta) || 0;
             return sum + (precio * producto.cantidad);
         }, 0);
-        const iva = subtotal * 0.16; // IVA del 16% para consistencia con HTML
+        const iva = subtotal * 0.16;
         const total = subtotal + iva;
 
-        // Actualizar los valores en el DOM
         const subtotalElement = document.querySelector('.subtotal');
         const ivaElement = document.querySelector('.iva');
         const totalElement = document.querySelector('.total');
@@ -171,7 +187,7 @@ const carritoManager = {
         if (totalElement) {
             totalElement.textContent = `$${total.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         }
-        console.log('Resumen actualizado - Subtotal:', subtotal, 'IVA:', iva, 'Total:', total); // Depuración
+        console.log('Resumen actualizado - Subtotal:', subtotal, 'IVA:', iva, 'Total:', total);
     },
 
     // Calcular el total del carrito
@@ -181,7 +197,7 @@ const carritoManager = {
             const precio = Number(producto.precio_venta) || 0;
             return total + (precio * producto.cantidad);
         }, 0);
-        const iva = subtotal * 0.16; // IVA del 16% para consistencia
+        const iva = subtotal * 0.16;
         const total = subtotal + iva;
         return total.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
     }
@@ -189,7 +205,6 @@ const carritoManager = {
 
 // Inicializar el carrito al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-    // Solo inicializar si estamos en la página del carrito
     if (document.getElementById('contenedorCarrito')) {
         console.log('Inicializando carritoManager en página con #contenedorCarrito');
         carritoManager.renderizarCarrito();
@@ -197,9 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.log('No se encontró #contenedorCarrito, omitiendo inicialización de renderizado y resumen');
     }
-    carritoManager.actualizarContador(); // Actualizar contador en todas las páginas
+    carritoManager.actualizarContador();
 
-    // Sincronizar contador al cambiar la ventana
     window.addEventListener('storage', () => {
         carritoManager.actualizarContador();
         if (document.getElementById('contenedorCarrito')) {
