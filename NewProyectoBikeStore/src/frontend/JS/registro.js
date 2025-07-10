@@ -1,4 +1,3 @@
-// API URL base
 const API_URL = 'http://localhost:3000/api';
 
 // Elementos del DOM
@@ -30,18 +29,30 @@ if (apellido) {
         e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
     });
 }
-  const charCode = direccion.charCode;
-  if (charCode == 37 || charCode == 47 || charCode == 64) {
-    return false;
-  }
-
-function restringirCaracteres(direccion) {
-  direccion.value = direccion.value.replace(/[@/%]/g, '');
+if (direccion) {
+    direccion.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,.\-#]/g, '');
+    });
 }
-
 if (telefono) {
     telefono.addEventListener('input', (e) => {
-        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+    });
+}
+if (correo) {
+    correo.addEventListener('blur', (e) => {
+        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/i;
+        if (!regex.test(e.target.value)) {
+            mostrarMensaje('Correo no válido', false);
+        }
+    });
+}
+if (claveInput) {
+    claveInput.addEventListener('blur', (e) => {
+        const regex = /^.{5,}$/;
+        if (!regex.test(e.target.value)) {
+            mostrarMensaje('La contraseña debe tener al menos 5 caracteres', false);
+        }
     });
 }
 
@@ -111,17 +122,31 @@ async function manejarRegistro(e) {
         return;
     }
 
-    // Validacion de correo electronico
-    const valCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if(!valCorreo.test(correoValue)){
-        mostrarMensaje('El correo no es valido', false);
+    // Validar que la dirección contenga solo caracteres permitidos
+    const regexDireccion = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,.\-#]+$/;
+    if (!regexDireccion.test(direccionValue)) {
+        mostrarMensaje('La dirección contiene caracteres no permitidos (@, %, / no están permitidos)', false);
         return;
     }
 
-    // Validar que el teléfono contenga solo números
-    const regexTelefono = /^[0-9]+$/;
+    // Validar que el teléfono tenga exactamente 10 dígitos
+    const regexTelefono = /^[0-9]{10}$/;
     if (!regexTelefono.test(telefonoValue)) {
-        mostrarMensaje('El teléfono solo puede contener números', false);
+        mostrarMensaje('El teléfono debe contener exactamente 10 dígitos numéricos', false);
+        return;
+    }
+
+    // Validar formato de correo
+    const regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/i;
+    if (!regexCorreo.test(correoValue)) {
+        mostrarMensaje('Correo no válido', false);
+        return;
+    }
+
+    // Validar que la contraseña tenga al menos 5 caracteres
+    const regexContrasena = /^.{5,}$/;
+    if (!regexContrasena.test(clave)) {
+        mostrarMensaje('La contraseña debe tener al menos 5 caracteres', false);
         return;
     }
 

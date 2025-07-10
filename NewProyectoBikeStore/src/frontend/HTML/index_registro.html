@@ -16,23 +16,26 @@
                 <h1>Registra tu cuenta</h1>
             </div>
             <div class="nombre">
-                <input type="text" name="nombre" placeholder="Nombre" id="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" inputmode="text" minlength="3" required>
+                <input type="text" name="nombre" placeholder="Nombre" id="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                    inputmode="text" minlength="3" required>
             </div>
             <div class="apellido">
-                <input type="text" name="apellido" placeholder="Apellido" id="apellido" pattern="[a-zA-ZáéíóúúÁÉÍÓÚñÑ\s]+" inputmode="text" minlength="3" required>
+                <input type="text" name="apellido" placeholder="Apellido" id="apellido"
+                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" inputmode="text" minlength="3" required>
             </div>
             <div class="telefono">
-                <input type="tel" name="telefono" placeholder="Teléfono" id="telefono" pattern="[0-9]+" inputmode="numeric" minlength="10" required>
+                <input type="tel" name="telefono" placeholder="Teléfono" id="telefono" pattern="[0-9]{10}"
+                    inputmode="numeric" minlength="10" maxlength="10" required>
             </div>
-            <!-- en el direccion quitar los "@" "%" y el "/" -->
             <div class="direccion">
-                <input type="text" placeholder="Dirección" id="direccion" pattern="[^@/%]*" required>
+                <input type="text" placeholder="Dirección" id="direccion" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,.\-#]+"
+                    required>
             </div>
             <div class="correo">
                 <input type="email" placeholder="Correo electrónico" id="correo" required>
             </div>
             <div class="contrasena">
-                <input type="password" placeholder="Contraseña" id="contraseña"  required>
+                <input type="password" placeholder="Contraseña" id="contraseña" required>
             </div>
             <div class="confirmar_contra">
                 <input type="password" placeholder="Confirmar contraseña" id="confirmar_contraseña" required>
@@ -73,7 +76,6 @@
     </div>
 
     <script src="../JS/registro.js"></script>
-    <script src="../JS/validacionRegistro.js"></script>
 </body>
 
 </html>
