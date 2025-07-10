@@ -102,6 +102,13 @@ async function manejarRegistro(e) {
         return;
     }
 
+    // Validacion de correo electronico
+    const valCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if(!valCorreo.test(correoValue)){
+        mostrarMensaje('El correo no es valido', false);
+        return;
+    }
+
     // Validar que el teléfono contenga solo números
     const regexTelefono = /^[0-9]+$/;
     if (!regexTelefono.test(telefonoValue)) {
