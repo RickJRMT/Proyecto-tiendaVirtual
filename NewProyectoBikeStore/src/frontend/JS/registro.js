@@ -30,6 +30,15 @@ if (apellido) {
         e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
     });
 }
+  const charCode = direccion.charCode;
+  if (charCode == 37 || charCode == 47 || charCode == 64) {
+    return false;
+  }
+
+function restringirCaracteres(direccion) {
+  direccion.value = direccion.value.replace(/[@/%]/g, '');
+}
+
 if (telefono) {
     telefono.addEventListener('input', (e) => {
         e.target.value = e.target.value.replace(/[^0-9]/g, '');

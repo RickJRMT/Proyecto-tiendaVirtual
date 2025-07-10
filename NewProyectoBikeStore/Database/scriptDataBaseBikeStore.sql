@@ -49,3 +49,27 @@ CREATE TABLE detalles_venta (
 /*UPDATE usuarios
 SET rol = 'admin'
 WHERE id_usuario = 1;*/
+
+-- script para reportes de ventas en el panel de administrador
+use bike_store;
+
+select * from detalles_venta;
+select * from ventas;
+select * from usuarios;
+
+-- de la tabla usuarios se trae el nombre, el correo
+-- de la tabla ventas se trae la fecha_venta 
+-- de la tabla detalles_venta se trae la cantidad, precio_unitario, total
+
+USE bike_store;
+
+SELECT 
+    u.nombre AS nombre_usuario,
+    u.correo AS correo_usuario,
+    v.fecha_venta,
+    dv.cantidad,
+    dv.precio_unitario,
+    dv.total
+FROM detalles_venta dv
+INNER JOIN ventas v ON dv.id_venta = v.id_venta
+INNER JOIN usuarios u ON v.id_usuario = u.id_usuario;
