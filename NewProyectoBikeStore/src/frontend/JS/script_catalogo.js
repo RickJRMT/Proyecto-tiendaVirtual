@@ -42,6 +42,40 @@ function updateCartCount(count) {
     localStorage.setItem('totalCartCount', totalCartCount);
 }
 
+// Formatear precios al formato colombiano ($12.345.678)
+function formatearPrecio(valor) {
+    console.log('Formateando precio, entrada:', valor, 'tipo:', typeof valor);
+    
+    // Manejar valores no válidos
+    if (valor == null || isNaN(parseFloat(valor))) {
+        console.warn('Valor no válido para formatear:', valor);
+        return '$0';
+    }
+
+    // Convertir a número y redondear a entero
+    const numero = Math.round(parseFloat(valor));
+    if (isNaN(numero)) {
+        console.warn('No se pudo convertir a número:', valor);
+        return '$0';
+    }
+
+    // Formatear parte entera con puntos cada tres dígitos
+    let enteraFormateada = '';
+    const entera = numero.toString();
+    for (let i = entera.length - 1, count = 0; i >= 0; i--) {
+        enteraFormateada = entera[i] + enteraFormateada;
+        count++;
+        if (count % 3 === 0 && i > 0) {
+            enteraFormateada = '.' + enteraFormateada;
+        }
+    }
+
+    // Combinar con el símbolo de peso
+    const resultado = `$${enteraFormateada}`;
+    console.log('Precio formateado:', resultado);
+    return resultado;
+}
+
 async function verificarStock(idProducto, cantidad) {
     try {
         const response = await fetch(`${API_URL}/productos/${idProducto}`);
@@ -105,7 +139,7 @@ function mostrarProductosDesplegable(productosFiltrados) {
                 : `<div class="no-image">Sin imagen</div>`}
             <div class="item-info">
                 <div class="item-name">${producto.nombre}</div>
-                <div class="item-price">$${producto.precio_venta.toLocaleString('es-CO')}</div>
+                <div class="item-price">${formatearPrecio(producto.precio_venta)}</div> <!-- Cambiado aquí -->
             </div>
         `;
         item.addEventListener('click', () => {
@@ -118,7 +152,6 @@ function mostrarProductosDesplegable(productosFiltrados) {
 
     searchDropdown.classList.add('show');
 }
-
 // Ocultar desplegable de búsqueda
 function hideSearchDropdown() {
     searchDropdown.classList.remove('show');
@@ -150,7 +183,7 @@ function mostrarProductos(productosMostrar) {
         let currentQuantity = 1;
 
         nombre.textContent = producto.nombre;
-        precio.textContent = `$${producto.precio_venta.toLocaleString('es-CO')}`;
+        precio.textContent = formatearPrecio(producto.precio_venta); // Cambiado aquí
         img.src = producto.imagen ? `data:image/jpeg;base64,${producto.imagen}` : 'https://via.placeholder.com/120x80?text=Sin+imagen';
         img.alt = producto.nombre;
         addButton.setAttribute('data-id', producto.id_producto);

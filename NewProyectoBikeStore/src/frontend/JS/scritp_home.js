@@ -36,6 +36,40 @@ const searchDropdown = document.createElement('div');
 searchDropdown.className = 'search-dropdown';
 document.querySelector('.buscar_container').appendChild(searchDropdown);
 
+// Formatear precios al formato colombiano ($12.345.678)
+function formatearPrecio(valor) {
+    console.log('Formateando precio, entrada:', valor, 'tipo:', typeof valor);
+    
+    // Manejar valores no válidos
+    if (valor == null || isNaN(parseFloat(valor))) {
+        console.warn('Valor no válido para formatear:', valor);
+        return '$0';
+    }
+
+    // Convertir a número y redondear a entero
+    const numero = Math.round(parseFloat(valor));
+    if (isNaN(numero)) {
+        console.warn('No se pudo convertir a número:', valor);
+        return '$0';
+    }
+
+    // Formatear parte entera con puntos cada tres dígitos
+    let enteraFormateada = '';
+    const entera = numero.toString();
+    for (let i = entera.length - 1, count = 0; i >= 0; i--) {
+        enteraFormateada = entera[i] + enteraFormateada;
+        count++;
+        if (count % 3 === 0 && i > 0) {
+            enteraFormateada = '.' + enteraFormateada;
+        }
+    }
+
+    // Combinar con el símbolo de peso
+    const resultado = `$${enteraFormateada}`;
+    console.log('Precio formateado:', resultado);
+    return resultado;
+}
+
 // =========================
 // EVENTOS PRINCIPALES
 // =========================
@@ -241,7 +275,7 @@ async function cargarProductos() {
             contenedorProductos.innerHTML = '<p>No hay productos destacados disponibles.</p>';
         } else {
             productos.forEach(p => {
-                console.log(`Producto: ${p.nombre}, Imagen disponible: ${!!p.imagen}`);
+                console.log(`Producto: ${p.nombre}, Precio: ${p.precio_venta}, Imagen disponible: ${!!p.imagen}`);
             });
             mostrarProductos(productos);
         }
@@ -259,6 +293,7 @@ async function cargarProductosDesplegable(searchTerm) {
         const response = await fetch(`${API_URL}/productos`);
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
         const allProductos = await response.json();
+        console.log('Productos obtenidos para desplegable:', allProductos);
         const productosFiltrados = allProductos.filter(producto =>
             producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
             producto.descripcion?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -280,6 +315,7 @@ function mostrarProductosDesplegable(productosFiltrados) {
     }
 
     productosFiltrados.forEach(producto => {
+        console.log('Mostrando producto en desplegable:', producto.nombre, 'Precio:', producto.precio_venta);
         const item = document.createElement('div');
         item.className = 'search-dropdown-item';
         item.innerHTML = `
@@ -288,7 +324,7 @@ function mostrarProductosDesplegable(productosFiltrados) {
                 : `<div class="no-image">Sin imagen</div>`}
             <div class="item-info">
                 <div class="item-name">${producto.nombre}</div>
-                <div class="item-price">$${producto.precio_venta.toLocaleString('es-CO')}</div>
+                <div class="item-price">${formatearPrecio(producto.precio_venta)}</div>
             </div>
         `;
         item.addEventListener('click', () => {
@@ -314,6 +350,7 @@ async function mostrarProductos(productosMostrar) {
     for (const producto of productosMostrar) {
         if (producto.saldo === 0) continue;
 
+        console.log('Mostrando producto:', producto.nombre, 'Precio:', producto.precio_venta);
         const clone = templateProducto.content.cloneNode(true);
         const productContainer = clone.querySelector('.product1_dest');
         const img = clone.querySelector('.product-img');
@@ -327,7 +364,7 @@ async function mostrarProductos(productosMostrar) {
         let currentQuantity = 1;
 
         nombre.textContent = producto.nombre;
-        precio.textContent = `$${producto.precio_venta.toLocaleString('es-CO')}`;
+        precio.textContent = formatearPrecio(producto.precio_venta);
         addButton.setAttribute('data-id', producto.id_producto);
         addButton.setAttribute('data-name', producto.nombre);
         addButton.setAttribute('data-price', producto.precio_venta);
