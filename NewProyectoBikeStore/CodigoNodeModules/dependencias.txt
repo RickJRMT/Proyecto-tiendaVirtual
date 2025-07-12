@@ -1,4 +1,0 @@
-El siguiente codigo es para las dependencias y tener la carpeta de "node_modules" y asi poder ejecutar o correr el proyecto
-
-npm install express mysql2 dotenv cors multer bcrypt jsonwebtoken
- (Para las dependencias)
