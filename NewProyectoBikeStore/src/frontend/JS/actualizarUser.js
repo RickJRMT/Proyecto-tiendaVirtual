@@ -29,10 +29,15 @@ function restringirEntrada(input, regex) {
     input?.addEventListener('input', (e) => {
         e.target.value = e.target.value.replace(regex, '');
     });
+    if (telefono) {
+        telefono.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+        });
+    }
 }
 restringirEntrada(elements.nombre, /[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g);
 restringirEntrada(elements.apellido, /[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g);
-restringirEntrada(elements.telefono, /[^0-9]/g);
+restringirEntrada(elements.direccion, /[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,.\-#]/g);
 
 // Mostrar notificaciones
 function mostrarNotificacion(texto, esExito) {

@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalSlides;
+        currentIndex = (currentIndex) % totalSlides;
         moveToSlide(currentIndex);
     }, 5000);
 });
